@@ -44,12 +44,16 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           className="absolute inset-0 object-cover"
         />
       )}
-      {/* Minimal left scrim — a soft navy wash only on the left third
-          so the headline holds legibility while the image reads bright
-          and clean across the rest of the hero. */}
+      {/* Slightly darker navy wash — left-weighted for headline legibility
+          and carries a bit more weight across the whole hero so the
+          featured strip pops against the image. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-navy-900/70 via-navy-900/20 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-navy-900/80 via-navy-900/35 to-navy-900/15"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy-900/60 to-transparent"
       />
 
       <Container className="relative flex min-h-[88vh] flex-col justify-between pt-40 pb-16 md:pt-48 md:pb-20 lg:min-h-[94vh] lg:pt-56 lg:pb-24">
@@ -132,24 +136,24 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               </LinkArrow>
             </div>
 
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3 md:gap-y-0 lg:gap-x-10">
+            <ul className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-3 md:gap-y-0 lg:gap-x-14">
               {insights.slice(0, 3).map((insight) => {
                 const thumb = getImage(imagery, insight.imageId);
                 return (
                   <li key={insight.id} className="group">
                     <Link
                       href={localizedPath(insight.href, locale)}
-                      className="flex items-start gap-4"
+                      className="flex items-start gap-5"
                     >
                       {thumb && (
-                        <div className="relative aspect-square w-[60px] shrink-0 overflow-hidden sm:w-[68px]">
+                        <div className="relative aspect-square w-[80px] shrink-0 overflow-hidden sm:w-[92px]">
                           <Image
                             src={thumb.src}
                             alt=""
                             fill
-                            sizes="68px"
+                            sizes="92px"
                             className={cn(
-                              "object-cover opacity-[0.9]",
+                              "object-cover opacity-[0.92]",
                               HOVER_IMAGE,
                               "group-hover:opacity-100",
                             )}
@@ -157,14 +161,16 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-paper/55">
-                          <span className="tabular-nums">{insight.category.en === "Briefing" ? "BR" : "PV"}</span>
-                          <span aria-hidden className="mx-2 text-paper/25">·</span>
+                        <p className="text-[0.75rem] uppercase tracking-[0.16em] text-paper/60">
+                          {t(insight.category, locale)}
+                          <span aria-hidden className="mx-2 text-paper/25">
+                            ·
+                          </span>
                           {t(insight.date, locale)}
                         </p>
                         <h3
                           className={cn(
-                            "mt-2 line-clamp-2 text-[0.9375rem] leading-[1.35] tracking-[-0.005em] text-paper",
+                            "mt-3 line-clamp-2 text-[1.125rem] leading-[1.3] tracking-[-0.015em] text-paper",
                             HOVER_LINK,
                             "group-hover:text-gold-soft",
                           )}
@@ -173,7 +179,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                         </h3>
                         <span
                           aria-hidden
-                          className="mt-3 block h-px w-6 origin-left bg-gold/60 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-12"
+                          className="mt-4 block h-px w-8 origin-left bg-gold/70 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-16"
                         />
                       </div>
                     </Link>
