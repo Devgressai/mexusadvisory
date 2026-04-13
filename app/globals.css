@@ -209,7 +209,7 @@
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.7;
-    font-weight: 350;
+    font-weight: 320;
     transition:
       background-color 240ms ease,
       color 240ms ease;
@@ -220,14 +220,14 @@
     color: var(--color-paper);
   }
 
-  /* Display sans tuning — lighter editorial weight for BCG-adjacent
-     restraint. Inter 400 reads refined and calm, not marketing-heavy. */
+  /* Display sans tuning — BCG-weight. Inter 300 (Light) with tight tracking
+     gives the airy editorial feel the reference shows. */
   .font-display {
     font-family: var(--font-display);
     font-variation-settings: "opsz" 32;
     font-feature-settings: "ss01", "cv11", "lnum";
-    letter-spacing: -0.022em;
-    font-weight: 400;
+    letter-spacing: -0.02em;
+    font-weight: 300;
   }
 
   /* Eyebrow — disciplined label */
@@ -237,7 +237,7 @@
     line-height: 1.4;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    font-weight: 450;
+    font-weight: 400;
     color: var(--color-ink-muted);
   }
 
