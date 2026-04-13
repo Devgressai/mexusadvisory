@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Locale } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
 import { Container } from "@/components/primitives/Container";
@@ -6,8 +7,11 @@ import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { WhatsAppButton } from "@/components/shell/WhatsAppButton";
 import { Reveal } from "@/components/motion/Reveal";
 import { imagery } from "@/content/imagery";
+import { insights } from "@/content/insights";
 import { getImage } from "@/lib/imagery";
 import { localizedPath, t } from "@/lib/i18n";
+import { cn } from "@/lib/cn";
+import { HOVER_IMAGE, HOVER_LINK } from "@/components/motion/editorial";
 
 interface HeroHomeProps {
   locale: Locale;
@@ -103,24 +107,80 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           </div>
         </div>
 
-        {/* Bottom meta strip */}
+        {/* Hero featured insights strip — BCG-style 3 compact teasers */}
         <Reveal variant="soft" delay={0.4}>
-          <div className="mt-20 border-t border-paper/15 pt-6 md:mt-28">
-            <div className="grid grid-cols-1 gap-y-4 md:grid-cols-12 md:items-baseline md:gap-x-6">
-              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4">
+          <div className="mt-20 border-t border-paper/15 pt-10 md:mt-24 md:pt-12">
+            <div className="mb-8 flex items-center justify-between gap-6">
+              <p className="eyebrow text-paper/50">
                 {locale === "es"
-                  ? "Américas · Internacional"
-                  : "Americas · International"}
+                  ? "Perspectivas destacadas"
+                  : "Featured perspectives"}
               </p>
-              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4">
-                {locale === "es" ? "Fundado en 2019" : "Founded 2019"}
-              </p>
-              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4 md:text-right">
-                {locale === "es"
-                  ? "5 prácticas · 4 oficinas"
-                  : "5 practices · 4 offices"}
-              </p>
+              <LinkArrow
+                href={localizedPath("/focus/immigration-volatility", locale)}
+                tone="paper"
+              >
+                {dict.common.exploreInsights}
+              </LinkArrow>
             </div>
+
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
+              {insights.slice(0, 3).map((insight, idx) => {
+                const thumb = getImage(imagery, insight.imageId);
+                return (
+                  <li
+                    key={insight.id}
+                    className={cn(
+                      "group",
+                      idx > 0 && "md:border-l md:border-paper/10 md:pl-6",
+                    )}
+                  >
+                    <Link
+                      href={localizedPath(insight.href, locale)}
+                      className="flex items-start gap-4"
+                    >
+                      {thumb && (
+                        <div className="relative aspect-square w-16 shrink-0 overflow-hidden sm:w-20">
+                          <Image
+                            src={thumb.src}
+                            alt=""
+                            fill
+                            sizes="80px"
+                            className={cn(
+                              "object-cover opacity-[0.88]",
+                              HOVER_IMAGE,
+                              "group-hover:opacity-100",
+                            )}
+                          />
+                          <span
+                            aria-hidden
+                            className="absolute bottom-0 left-0 h-px w-6 origin-left bg-gold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-paper/50">
+                          {t(insight.category, locale)}
+                          <span aria-hidden className="mx-2 text-paper/20">
+                            ·
+                          </span>
+                          {t(insight.date, locale)}
+                        </p>
+                        <h3
+                          className={cn(
+                            "mt-2 text-[0.9375rem] leading-[1.35] tracking-[-0.005em] text-paper",
+                            HOVER_LINK,
+                            "group-hover:text-gold-soft",
+                          )}
+                        >
+                          {t(insight.title, locale)}
+                        </h3>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </Reveal>
       </Container>
