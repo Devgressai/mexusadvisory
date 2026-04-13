@@ -109,67 +109,12 @@
 }
 
 /* ============================================================================
-   SIGNATURE — default
-   Brand-faithful. Logo-exact navy (#131525) and gold (#CEA669). Cool whites.
-   Closest to the original identity.
-============================================================================ */
-:root,
-:root[data-theme="signature"] {
-  --t-paper: #ffffff;
-  --t-mist: #fbfbfd;
-  --t-bone: #f7f8fa;
-  --t-rule: #e6e7eb;
-  --t-rule-strong: #cfd2d9;
-  --t-ink: #0b1220;
-  --t-ink-muted: #5b6576;
-
-  --t-navy-950: #0a0c18;
-  --t-navy-900: #131525;
-  --t-navy-800: #1c1e33;
-  --t-navy-700: #272a42;
-
-  --t-action: #1d4ed8;
-  --t-action-hover: #1e40af;
-
-  --t-gold: #cea669;
-  --t-gold-soft: #d8ae6c;
-  --t-gold-deep: #a88250;
-}
-
-/* ============================================================================
-   REFINED — warmer editorial
-   Softer warm off-whites. Muted bronze-gold. Softened mid-navy that reads
-   more premium and less black. The "old money" direction.
-============================================================================ */
-:root[data-theme="refined"] {
-  --t-paper: #faf8f3;
-  --t-mist: #f4f1e9;
-  --t-bone: #ebe7db;
-  --t-rule: #ddd8c9;
-  --t-rule-strong: #c6bfa8;
-  --t-ink: #1b2030;
-  --t-ink-muted: #60677e;
-
-  --t-navy-950: #101733;
-  --t-navy-900: #1a2442;
-  --t-navy-800: #263055;
-  --t-navy-700: #343f68;
-
-  --t-action: #2a4fb0;
-  --t-action-hover: #1f4296;
-
-  --t-gold: #b08858;
-  --t-gold-soft: #c9a67d;
-  --t-gold-deep: #836030;
-}
-
-/* ============================================================================
-   MODERN — editorial consulting
+   MODERN — the single theme shipped to production.
    Pure white + cool blue-gray tinted surfaces. Desaturated navy that reads
    like an editorial publication. Matte gold reserved strictly for accents.
-   Strongest BCG-inspired clarity.
+   BCG-inspired clarity.
 ============================================================================ */
-:root[data-theme="modern"] {
+:root {
   --t-paper: #ffffff;
   --t-mist: #f5f7fa;
   --t-bone: #edf1f6;
@@ -241,29 +186,31 @@
     color: var(--color-ink-muted);
   }
 
-  /* Fluid scale — locked tokens consumed across every home section */
-  .text-display {
+  /* Fluid scale — locked tokens consumed across every section.
+     Class names use the `type-*` prefix (not `text-*`) so that tailwind-merge
+     inside cn() never mistakes them for text-color or text-size utilities
+     and silently strips them. */
+  .type-display {
     font-size: clamp(2.625rem, 4.8vw, 5rem);
     line-height: 1.02;
     letter-spacing: -0.035em;
   }
-  .text-h1 {
+  .type-h1 {
     font-size: clamp(2rem, 3.2vw, 3.25rem);
     line-height: 1.06;
     letter-spacing: -0.03em;
   }
-  .text-h2 {
+  .type-h2 {
     font-size: clamp(1.5rem, 2.1vw, 2.25rem);
     line-height: 1.14;
     letter-spacing: -0.025em;
   }
-  .text-h3 {
+  .type-h3 {
     font-size: clamp(1.125rem, 1.4vw, 1.375rem);
     line-height: 1.28;
     letter-spacing: -0.018em;
   }
-  .text-lead,
-  .text-lede {
+  .type-lede {
     font-size: 1.125rem;
     line-height: 1.65;
     letter-spacing: -0.005em;

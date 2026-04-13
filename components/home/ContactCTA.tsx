@@ -49,7 +49,7 @@ export function ContactCTA({ locale, dict }: ContactCTAProps) {
                 </Reveal>
 
                 <Reveal delay={0.08}>
-                  <h2 className="font-display text-h1 mt-10 max-w-[18ch] text-paper md:mt-12">
+                  <h2 className="font-display type-h1 mt-10 max-w-[18ch] text-paper md:mt-12">
                     {dict.home.contactTitle}
                   </h2>
                 </Reveal>

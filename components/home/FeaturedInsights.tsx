@@ -41,12 +41,12 @@ export function FeaturedInsights({ locale, dict }: FeaturedInsightsProps) {
               <Eyebrow className="mb-8">
                 {locale === "es" ? "Artículos" : "Articles"}
               </Eyebrow>
-              <h2 className="font-display text-h1 max-w-[22ch] text-ink">
+              <h2 className="font-display type-h1 max-w-[22ch] text-ink">
                 {locale === "es"
                   ? "Lecturas para conversaciones en curso."
                   : "Readings for conversations already under way."}
               </h2>
-              <p className="text-lede mt-7 max-w-[56ch]">
+              <p className="type-lede mt-7 max-w-[56ch]">
                 {locale === "es"
                   ? "Perspectivas privadas sobre migración, capital, jurisdicción y riesgo — escritas para quienes toman decisiones transfronterizas."
                   : "Private perspectives on immigration, capital, jurisdiction, and risk — written for the people who make cross-border decisions."}
@@ -146,7 +146,7 @@ function FeatureCard({ insight, locale, dict, large, compact }: FeatureCardProps
       <h3
         className={cn(
           "font-display mt-5 max-w-[24ch] text-ink",
-          large ? "text-h1" : compact ? "text-h3" : "text-h3",
+          large ? "type-h1" : compact ? "type-h3" : "type-h3",
           HOVER_LINK,
           "group-hover:text-navy-900",
         )}

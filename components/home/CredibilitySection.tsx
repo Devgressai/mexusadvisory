@@ -50,7 +50,7 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
               </div>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="font-display text-h1 mt-10 max-w-[24ch] text-paper">
+              <h2 className="font-display type-h1 mt-10 max-w-[24ch] text-paper">
                 {dict.home.credibilityTitle}
               </h2>
             </Reveal>

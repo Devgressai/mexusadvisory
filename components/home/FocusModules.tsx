@@ -76,7 +76,7 @@ export function FocusModules({ locale, dict }: FocusModulesProps) {
 
                       <h3
                         className={cn(
-                          "font-display text-h2 mt-5 max-w-[22ch] text-ink",
+                          "font-display type-h2 mt-5 max-w-[22ch] text-ink",
                           HOVER_LINK,
                           "group-hover:text-navy-900",
                         )}

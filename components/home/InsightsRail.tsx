@@ -76,7 +76,7 @@ export function InsightsRail({ locale, dict }: InsightsRailProps) {
         >
           <div className="max-w-xl">
             <Eyebrow>{locale === "es" ? "Perspectivas" : "Featured perspectives"}</Eyebrow>
-            <h2 className="font-display text-h2 mt-7 max-w-[24ch] text-ink">
+            <h2 className="font-display type-h2 mt-7 max-w-[24ch] text-ink">
               {locale === "es"
                 ? "Seis lecturas para conversaciones en curso."
                 : "Six readings for conversations already under way."}
@@ -181,7 +181,7 @@ export function InsightsRail({ locale, dict }: InsightsRailProps) {
               {/* Title */}
               <h3
                 className={cn(
-                  "font-display text-h3 mt-5 max-w-[24ch] text-ink",
+                  "font-display type-h3 mt-5 max-w-[24ch] text-ink",
                   HOVER_LINK,
                   "group-hover:text-navy-900",
                 )}

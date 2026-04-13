@@ -20,8 +20,17 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   const eyebrowTone = tone === "navy" ? "paper" : "muted";
-  const titleColor = tone === "navy" ? "text-paper" : "text-ink";
-  const ledeColor = tone === "navy" ? "text-paper/70" : "text-ink-muted";
+  // Direct string concat — cn() runs tailwind-merge which strips the custom
+  // .type-h1 / .type-lede classes by mistaking them for tailwind text
+  // utilities. Concat preserves them and applies the theme color alongside.
+  const titleClass =
+    tone === "navy"
+      ? "font-display type-h1 max-w-[24ch] text-paper"
+      : "font-display type-h1 max-w-[24ch] text-ink";
+  const ledeClass =
+    tone === "navy"
+      ? "type-lede mt-7 max-w-[52ch] text-paper/70"
+      : "type-lede mt-7 max-w-[52ch] text-ink-muted";
 
   return (
     <header
@@ -36,12 +45,8 @@ export function SectionHeader({
           {eyebrow}
         </Eyebrow>
       )}
-      <h2 className={cn("font-display text-h1 max-w-[22ch]", titleColor)}>
-        {title}
-      </h2>
-      {lede && (
-        <p className={cn("text-lede mt-7 max-w-[52ch]", ledeColor)}>{lede}</p>
-      )}
+      <h2 className={titleClass}>{title}</h2>
+      {lede && <p className={ledeClass}>{lede}</p>}
     </header>
   );
 }

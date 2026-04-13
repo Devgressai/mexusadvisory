@@ -64,7 +64,7 @@ export default async function FocusTopicPage({ params }: Props) {
               <Eyebrow>{locale === "es" ? "El panorama" : "The landscape"}</Eyebrow>
             </div>
             <div className="md:col-span-8">
-              <p className="text-lead max-w-[60ch] text-ink">{t(topic.lede, locale)}</p>
+              <p className="type-lede max-w-[60ch] text-ink">{t(topic.lede, locale)}</p>
               <div className="mt-12 space-y-6 border-t border-rule pt-10 text-[1.0625rem] leading-[1.75] text-ink-muted">
                 {tl(topic.landscape, locale).map((para, idx) => (
                   <p key={idx}>{para}</p>
@@ -131,7 +131,7 @@ export default async function FocusTopicPage({ params }: Props) {
       <Section tone="bone" size="standard">
         <Container>
           <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-end">
-            <h2 className="font-display text-h2 max-w-xl text-ink">
+            <h2 className="font-display type-h2 max-w-xl text-ink">
               {dict.home.contactTitle}
             </h2>
             <ButtonLink href={localizedPath("/contact", locale)} variant="primary">

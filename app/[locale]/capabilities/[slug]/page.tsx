@@ -197,7 +197,7 @@ export default async function CapabilityPage({ params }: Props) {
       <Section tone="paper" size="standard">
         <Container>
           <div className="flex flex-col items-start justify-between gap-10 border-t border-rule pt-14 md:flex-row md:items-end">
-            <h2 className="font-display text-h2 max-w-xl text-ink">
+            <h2 className="font-display type-h2 max-w-xl text-ink">
               {dict.home.contactTitle}
             </h2>
             <ButtonLink href={localizedPath("/contact", locale)} variant="primary">

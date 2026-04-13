@@ -10,7 +10,7 @@ interface ProseProps {
 
 export function Prose({ children, tone = "ink", size = "default", className }: ProseProps) {
   const color = tone === "paper" ? "text-paper/80" : "text-ink-muted";
-  const textSize = size === "lead" ? "text-lead" : "text-[1.0625rem] leading-[1.75]";
+  const textSize = size === "lead" ? "type-lede" : "text-[1.0625rem] leading-[1.75]";
   return (
     <div
       className={cn(

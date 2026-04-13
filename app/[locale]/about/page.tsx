@@ -96,13 +96,13 @@ export default async function AboutPage({ params }: Props) {
               <Eyebrow>{copy.practiceEyebrow}</Eyebrow>
             </div>
             <div className="md:col-span-8">
-              <p className="text-lede max-w-[62ch] text-ink">{copy.intro}</p>
+              <p className="type-lede max-w-[62ch] text-ink">{copy.intro}</p>
               <div className="mt-10 space-y-6 text-[1.0625rem] leading-[1.8] text-ink-muted">
                 {copy.practiceBody.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}
               </div>
-              <p className="font-display mt-12 max-w-[28ch] text-h3 text-ink">
+              <p className="font-display mt-12 max-w-[28ch] type-h3 text-ink">
                 {copy.tagline}
               </p>
             </div>
@@ -118,7 +118,7 @@ export default async function AboutPage({ params }: Props) {
               <Eyebrow>{copy.teamEyebrow}</Eyebrow>
             </div>
             <div className="md:col-span-8">
-              <h2 className="font-display text-h2 max-w-[26ch] text-ink">
+              <h2 className="font-display type-h2 max-w-[26ch] text-ink">
                 {copy.teamTitle}
               </h2>
             </div>
@@ -154,7 +154,7 @@ export default async function AboutPage({ params }: Props) {
                     )}
                     <h3
                       className={cn(
-                        "font-display text-h3 mt-6 text-ink",
+                        "font-display type-h3 mt-6 text-ink",
                         HOVER_LINK,
                         "group-hover:text-navy-900",
                       )}

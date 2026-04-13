@@ -20,9 +20,9 @@ export function PageHero({ eyebrow, title, lede, meta, breadcrumb, className }: 
       <Container>
         {breadcrumb && <Breadcrumb items={breadcrumb} className="mb-10" />}
         {eyebrow && <Eyebrow className="mb-8">{eyebrow}</Eyebrow>}
-        <h1 className="font-display text-h1 max-w-5xl text-ink">{title}</h1>
+        <h1 className="font-display type-h1 max-w-5xl text-ink">{title}</h1>
         {lede && (
-          <p className="text-lead mt-8 max-w-2xl text-ink-muted">{lede}</p>
+          <p className="type-lede mt-8 max-w-2xl text-ink-muted">{lede}</p>
         )}
         {meta && <p className="mt-10 eyebrow text-ink-muted">{meta}</p>}
         <div className="mt-14 max-w-[6rem]">

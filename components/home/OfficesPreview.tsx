@@ -81,7 +81,7 @@ export function OfficesPreview({ locale, dict }: OfficesPreviewProps) {
                     </p>
                     <h3
                       className={cn(
-                        "font-display text-h3 mt-4 text-ink",
+                        "font-display type-h3 mt-4 text-ink",
                         HOVER_LINK,
                         "group-hover:text-navy-900",
                       )}

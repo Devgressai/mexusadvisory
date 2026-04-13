@@ -41,10 +41,10 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
           <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
             <div className="max-w-3xl">
               <Eyebrow className="mb-6">{dict.home.capabilitiesEyebrow}</Eyebrow>
-              <h2 className="font-display text-h1 max-w-[22ch] text-ink">
+              <h2 className="font-display type-h1 max-w-[22ch] text-ink">
                 {dict.home.capabilitiesTitle}
               </h2>
-              <p className="text-lede mt-5 max-w-[56ch]">
+              <p className="type-lede mt-5 max-w-[56ch]">
                 {dict.home.capabilitiesLede}
               </p>
             </div>
@@ -93,7 +93,7 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
 
                     <h3
                       className={cn(
-                        "font-display text-h3 mt-4 text-ink",
+                        "font-display type-h3 mt-4 text-ink",
                         HOVER_LINK,
                         "group-hover:text-navy-900",
                       )}

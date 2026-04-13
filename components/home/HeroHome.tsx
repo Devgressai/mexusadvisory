@@ -135,13 +135,13 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
 
         {/* Centered headline */}
         <Reveal delay={0.08}>
-          <h1 className="font-display text-display mx-auto mt-10 max-w-[22ch] text-center text-ink md:mt-12 lg:mt-14">
+          <h1 className="font-display type-display mx-auto mt-10 max-w-[22ch] text-center text-ink md:mt-12 lg:mt-14">
             {dict.home.heroTitle}
           </h1>
         </Reveal>
 
         <Reveal delay={0.16}>
-          <p className="text-lede mx-auto mt-8 max-w-[58ch] text-center md:mt-10">
+          <p className="type-lede mx-auto mt-8 max-w-[58ch] text-center md:mt-10">
             {dict.home.heroLede}
           </p>
         </Reveal>

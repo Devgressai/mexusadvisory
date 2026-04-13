@@ -100,7 +100,7 @@ export default async function PeopleIndex({ params }: Props) {
                     <div className="mt-6">
                       <h3
                         className={cn(
-                          "font-display text-h3 text-ink",
+                          "font-display type-h3 text-ink",
                           HOVER_LINK,
                           "group-hover:text-navy-900",
                         )}
