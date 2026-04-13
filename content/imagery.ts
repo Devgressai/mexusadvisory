@@ -12,6 +12,18 @@ import type { ImageRegistry } from "@/lib/imagery";
  */
 export const imagery: ImageRegistry = {
   // ———————————————————————————————————————————— Hero & credibility
+  "hero-bridge": {
+    id: "hero-bridge",
+    src: "/imagery/hero-bridge.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Cinematic aerial photograph of a vast modern cable-stayed international bridge spanning a wide river at blue-gold dawn, soft low mist hovering over the water, long architectural shadows, no people, no vehicles, no text, no logos, muted cinematic palette of deep navy blue and warm golden light, shot from helicopter at mid-altitude, large format editorial photography, photorealistic, quiet monumentality",
+    alt: {
+      en: "Aerial view of a modern cable-stayed international bridge spanning a wide river at dawn",
+      es: "Vista aérea de un puente internacional moderno con atirantados cruzando un río amplio al amanecer",
+    },
+  },
   "hero-atmosphere": {
     id: "hero-atmosphere",
     src: "/imagery/hero-atmosphere.webp",

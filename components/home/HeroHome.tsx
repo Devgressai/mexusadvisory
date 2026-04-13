@@ -15,118 +15,118 @@ interface HeroHomeProps {
 }
 
 /**
- * BCG-adjacent hero: content-led on the left, large atmospheric editorial
- * image on the right. Image is the canvas, headline and lede sit on the
- * left column with disciplined whitespace. Single numbered gold-hairline
- * eyebrow, two text-led CTAs plus the WhatsApp ghost pill.
+ * Full-bleed editorial hero — BCG-adjacent. A large atmospheric image
+ * fills the viewport width with a navy scrim and vertical gradient for
+ * legibility. Text is overlaid on the left: gold-hairline eyebrow,
+ * display headline, short dek, text-led CTAs. A bottom meta strip with
+ * three micro-facts anchors the composition against a 1px gold rule.
  */
 export function HeroHome({ locale, dict }: HeroHomeProps) {
-  const img = getImage(imagery, "hero-atmosphere");
+  const img = getImage(imagery, "hero-bridge");
 
   return (
-    <section className="relative bg-paper pt-32 pb-24 md:pt-36 md:pb-28 lg:pt-40 lg:pb-36">
-      <Container>
-        <div className="grid grid-cols-12 gap-x-6 gap-y-16 lg:gap-x-10">
-          {/* Text column */}
-          <div className="col-span-12 lg:col-span-6 lg:pt-8">
+    <section className="relative isolate overflow-hidden bg-navy-900 text-paper">
+      {/* Full-bleed image */}
+      {img && (
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src={img.src}
+            alt={t(img.alt, locale)}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* Legibility scrim — stronger on the left where the text lives */}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-r from-navy-900/85 via-navy-900/55 to-navy-900/30"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-navy-900/30"
+          />
+        </div>
+      )}
+
+      {/* Gold top hairline to anchor the hero against the header */}
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gold/40" />
+
+      <Container className="relative flex min-h-[88vh] flex-col justify-between pt-40 pb-16 md:pt-48 md:pb-20 lg:min-h-[94vh] lg:pt-56 lg:pb-24">
+        {/* Top content block */}
+        <div className="grid grid-cols-12 gap-x-6">
+          <div className="col-span-12 lg:col-span-9 xl:col-span-8">
             <Reveal>
               <div className="flex items-center gap-5">
-                <span aria-hidden className="eyebrow text-ink-muted tabular-nums">
+                <span
+                  aria-hidden
+                  className="eyebrow text-paper/60 tabular-nums"
+                >
                   01
                 </span>
-                <span aria-hidden className="h-px w-10 bg-gold" />
-                <span className="eyebrow text-ink-muted">
+                <span aria-hidden className="h-px w-12 bg-gold" />
+                <span className="eyebrow text-paper/60">
                   {dict.home.heroEyebrow}
                 </span>
               </div>
             </Reveal>
 
             <Reveal delay={0.08}>
-              <h1 className="font-display text-display mt-12 max-w-[20ch] text-ink md:mt-14 lg:mt-16 lg:max-w-[18ch]">
+              <h1 className="font-display text-display mt-10 max-w-[20ch] text-paper md:mt-14 lg:mt-16 lg:max-w-[22ch]">
                 {dict.home.heroTitle}
               </h1>
             </Reveal>
 
             <Reveal delay={0.18}>
-              <p className="text-lede mt-10 max-w-[52ch] md:mt-12">
+              <p className="mt-10 max-w-[52ch] text-[1.0625rem] leading-[1.7] text-paper/80 md:mt-12 md:text-[1.125rem]">
                 {dict.home.heroLede}
               </p>
             </Reveal>
 
             <Reveal delay={0.26}>
-              <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-6 md:mt-12">
-                <LinkArrow href={localizedPath("/contact", locale)}>
+              <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-6 md:mt-14">
+                <LinkArrow
+                  href={localizedPath("/contact", locale)}
+                  tone="paper"
+                >
                   {dict.common.discussOpportunity}
                 </LinkArrow>
-                <LinkArrow href={localizedPath("/capabilities", locale)}>
+                <LinkArrow
+                  href={localizedPath("/capabilities", locale)}
+                  tone="paper"
+                >
                   {dict.common.viewCapabilities}
                 </LinkArrow>
-                <WhatsAppButton label={dict.nav.whatsapp} variant="cta" />
-              </div>
-            </Reveal>
-
-            {/* Meta strip under CTAs — BCG-style micro-metadata */}
-            <Reveal variant="soft" delay={0.36}>
-              <div className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule pt-6 md:mt-16">
-                <p className="eyebrow text-ink-muted">
-                  {locale === "es"
-                    ? "Américas · Internacional"
-                    : "Americas · International"}
-                </p>
-                <span aria-hidden className="h-3 w-px bg-rule" />
-                <p className="eyebrow text-ink-muted">
-                  {locale === "es" ? "Desde 2019" : "Since 2019"}
-                </p>
-                <span aria-hidden className="h-3 w-px bg-rule" />
-                <p className="eyebrow text-ink-muted">
-                  {locale === "es"
-                    ? "5 prácticas · 4 oficinas"
-                    : "5 practices · 4 offices"}
-                </p>
+                <WhatsAppButton
+                  label={dict.nav.whatsapp}
+                  variant="cta"
+                  tone="navy"
+                />
               </div>
             </Reveal>
           </div>
-
-          {/* Large atmospheric image */}
-          {img && (
-            <Reveal
-              variant="soft"
-              delay={0.2}
-              className="relative col-span-12 lg:col-span-6"
-            >
-              <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/11] lg:aspect-[4/5]">
-                <Image
-                  src={img.src}
-                  alt={t(img.alt, locale)}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 48vw, 100vw"
-                  className="object-cover"
-                />
-                {/* Very subtle paper gradient on top-left for legibility of the meta strip */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-br from-paper/0 via-transparent to-navy-900/10"
-                />
-                {/* Gold hairline frame on the left edge */}
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0 h-full w-px bg-gold/60"
-                />
-              </div>
-
-              {/* Image caption — BCG uses tiny credit lines beneath featured imagery */}
-              <div className="mt-5 flex items-center gap-3">
-                <span aria-hidden className="h-px w-6 bg-gold" />
-                <p className="eyebrow text-ink-muted">
-                  {locale === "es"
-                    ? "Consejo privado transfronterizo"
-                    : "Private cross-border counsel"}
-                </p>
-              </div>
-            </Reveal>
-          )}
         </div>
+
+        {/* Bottom meta strip */}
+        <Reveal variant="soft" delay={0.4}>
+          <div className="mt-20 border-t border-paper/15 pt-6 md:mt-28">
+            <div className="grid grid-cols-1 gap-y-4 md:grid-cols-12 md:items-baseline md:gap-x-6">
+              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4">
+                {locale === "es"
+                  ? "Américas · Internacional"
+                  : "Americas · International"}
+              </p>
+              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4">
+                {locale === "es" ? "Fundado en 2019" : "Founded 2019"}
+              </p>
+              <p className="eyebrow col-span-12 text-paper/50 md:col-span-4 md:text-right">
+                {locale === "es"
+                  ? "5 prácticas · 4 oficinas"
+                  : "5 practices · 4 offices"}
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </Container>
     </section>
   );
