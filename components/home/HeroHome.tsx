@@ -40,17 +40,17 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           {/* Legibility scrim — stronger on the left where the text lives */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-r from-navy-900/85 via-navy-900/55 to-navy-900/30"
+            className="absolute inset-0 bg-gradient-to-r from-navy-900/90 via-navy-900/65 to-navy-900/40"
           />
+          {/* Vertical gradient — fully opaque navy at the top and bottom so
+              the hero seams cleanly into the header above and the Services
+              section below */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-navy-900/30"
+            className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-900/50 to-navy-900"
           />
         </div>
       )}
-
-      {/* Gold top hairline to anchor the hero against the header */}
-      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gold/40" />
 
       <Container className="relative flex min-h-[88vh] flex-col justify-between pt-40 pb-16 md:pt-48 md:pb-20 lg:min-h-[94vh] lg:pt-56 lg:pb-24">
         {/* Top content block */}

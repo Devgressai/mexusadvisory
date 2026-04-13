@@ -35,8 +35,8 @@ export function Header({ locale, dict }: HeaderProps) {
         className={cn(
           "fixed inset-x-0 top-0 z-40 transition-[background,height,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
           scrolled
-            ? "bg-paper/95 shadow-[inset_0_-1px_0_0_var(--color-rule)] backdrop-blur-md"
-            : "bg-paper/80 backdrop-blur-md",
+            ? "bg-paper shadow-[inset_0_-1px_0_0_var(--color-rule)]"
+            : "bg-paper/95 backdrop-blur-md",
         )}
       >
         <div
