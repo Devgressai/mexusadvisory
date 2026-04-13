@@ -3,7 +3,6 @@ import { getDictionary, isLocale } from "@/lib/i18n";
 import { HeroHome } from "@/components/home/HeroHome";
 import { CapabilitiesOverview } from "@/components/home/CapabilitiesOverview";
 import { CredibilitySection } from "@/components/home/CredibilitySection";
-import { FeaturedInsights } from "@/components/home/FeaturedInsights";
 import { OfficesPreview } from "@/components/home/OfficesPreview";
 import { ContactCTA } from "@/components/home/ContactCTA";
 
@@ -30,7 +29,6 @@ export default async function HomePage({ params }: HomePageProps) {
       <HeroHome locale={locale} dict={dict} />
       <CapabilitiesOverview locale={locale} dict={dict} />
       <CredibilitySection locale={locale} dict={dict} />
-      <FeaturedInsights locale={locale} dict={dict} />
       <OfficesPreview locale={locale} dict={dict} />
       <ContactCTA locale={locale} dict={dict} />
     </>
