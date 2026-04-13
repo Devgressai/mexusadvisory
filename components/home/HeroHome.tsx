@@ -25,37 +25,28 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   const img = getImage(imagery, "hero-bridge");
 
   return (
-    <section className="relative isolate overflow-hidden bg-navy-900 text-paper">
-      {/* Full-bleed image */}
+    <section className="relative overflow-hidden bg-navy-900 text-paper">
+      {/* Full-bleed image — blends with the navy section via its own opacity.
+          No vertical gradient overlays or seam bands, so there is nothing to
+          produce a visible fade edge at the top or bottom. The section's
+          own bg-navy-900 handles any pixel-level edge. */}
       {img && (
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src={img.src}
-            alt={t(img.alt, locale)}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          {/* Minimal left scrim — just enough for the headline to hold its
-              legibility against the naturally dark water at the bottom-left
-              of the image. The right two-thirds of the image read clearly. */}
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-r from-navy-900/70 via-navy-900/15 to-transparent"
-          />
-          {/* Thin seam bands so the hero meets the header above and the
-              Services section below without a visible fade edge */}
-          <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-navy-900/90 to-transparent"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-navy-900 to-transparent"
-          />
-        </div>
+        <Image
+          src={img.src}
+          alt={t(img.alt, locale)}
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 object-cover opacity-80"
+        />
       )}
+      {/* Single horizontal scrim — darker on the left where the headline
+          lives, fading to transparent so the image reads cleanly on the
+          right. No top or bottom overlays. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-r from-navy-900/85 via-navy-900/35 to-transparent"
+      />
 
       <Container className="relative flex min-h-[88vh] flex-col justify-between pt-40 pb-16 md:pt-48 md:pb-20 lg:min-h-[94vh] lg:pt-56 lg:pb-24">
         {/* Top content block */}
