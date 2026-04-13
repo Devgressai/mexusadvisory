@@ -13,7 +13,7 @@ export const people: Person[] = [
     slug: "mace-miller",
     name: "Mace Miller",
     role: { en: "Member", es: "Socio" },
-    location: { en: "Americas", es: "Américas" },
+    location: { en: "United States", es: "Estados Unidos" },
     bio: {
       en: [
         "Mace advises principals on cross-border mobility, capital pathways, and jurisdictional strategy across the United States and Mexico.",
@@ -35,7 +35,7 @@ export const people: Person[] = [
       en: "Planning & Insurance Coordinator",
       es: "Coordinadora de Planeación y Seguros",
     },
-    location: { en: "Americas", es: "Américas" },
+    location: { en: "United States", es: "Estados Unidos" },
     bio: {
       en: [
         "Darilu coordinates long-horizon planning and insurance structures for Mexus clients, with particular focus on family continuity and cross-border asset protection.",
@@ -54,7 +54,7 @@ export const people: Person[] = [
     slug: "jeremy-anderson",
     name: "Jeremy Anderson",
     role: { en: "Member", es: "Socio" },
-    location: { en: "Americas", es: "Américas" },
+    location: { en: "United States", es: "Estados Unidos" },
     bio: {
       en: [
         "Jeremy advises operators and investors on alternative capital sourcing, cross-border structuring, and the practical realities of deploying capital outside standard bank channels.",
@@ -92,7 +92,7 @@ export const people: Person[] = [
     slug: "federico-vielledent",
     name: "Federico Vielledent",
     role: { en: "Member", es: "Socio" },
-    location: { en: "Americas", es: "Américas" },
+    location: { en: "United States", es: "Estados Unidos" },
     bio: {
       en: [
         "Federico advises on international talent mobility, executive relocation, and the interaction between immigration strategy and private capital decisions.",
