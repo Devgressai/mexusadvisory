@@ -60,7 +60,7 @@ export const es: Dictionary = {
       languages: "Idiomas",
     },
     officesEyebrow: "Presencia",
-    officesTitle: "Una red discreta en Estados Unidos.",
+    officesTitle: "Una red discreta en las Américas.",
     officesLede:
       "Mantenemos una huella deliberada. Cada oficina existe para atender un tipo específico de decisión.",
     contactTitle: "¿En qué podemos ayudarle?",

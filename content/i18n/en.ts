@@ -124,7 +124,7 @@ export const en: Dictionary = {
       languages: "Languages",
     },
     officesEyebrow: "Presence",
-    officesTitle: "A quiet network across the United States.",
+    officesTitle: "A quiet network across the Americas.",
     officesLede:
       "We maintain a deliberate footprint. Each office exists to serve a specific kind of decision.",
     contactTitle: "How can we help?",
