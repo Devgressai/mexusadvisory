@@ -67,11 +67,11 @@ export function Header({ locale, dict }: HeaderProps) {
 
             <Link
               href={localizedPath("/", locale)}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3.5"
               aria-label="Mexus Advisory — Home"
             >
-              <Logo size={32} />
-              <span className="font-display hidden text-[0.9375rem] font-medium tracking-[0.015em] text-ink md:inline">
+              <Logo size={scrolled ? 40 : 44} className="transition-[width,height] duration-300" />
+              <span className="font-display hidden text-[1.0625rem] font-medium tracking-[-0.005em] text-ink md:inline">
                 Mexus Advisory
               </span>
             </Link>

@@ -3,26 +3,27 @@ import { cn } from "@/lib/cn";
 
 interface LogoProps {
   /**
-   * Which native container the logo sits in.
-   * The mark is gold-on-navy at rest; it should never be recolored.
-   * On paper headers the navy square becomes a small brand badge.
+   * Square side in pixels. Renders the owl mark inside its native navy
+   * container exactly as the brand mandates — colors are never altered.
    */
   size?: number;
   className?: string;
 }
 
-export function Logo({ size = 40, className }: LogoProps) {
+/**
+ * Mexus mark — the owl, tightly cropped from the official logo via
+ * ImageMagick into a clean square. The navy background is part of the
+ * brand and is preserved at every size.
+ */
+export function Logo({ size = 44, className }: LogoProps) {
   return (
     <span
       aria-label="Mexus Advisory"
-      className={cn(
-        "inline-flex shrink-0 items-center justify-center bg-navy-900",
-        className,
-      )}
+      className={cn("inline-flex shrink-0 items-center justify-center", className)}
       style={{ width: size, height: size }}
     >
       <Image
-        src="/brand/mexus-mark.png"
+        src="/brand/mexus-mark-square.png"
         alt=""
         width={size}
         height={size}
