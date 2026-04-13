@@ -36,6 +36,18 @@ export const imagery: ImageRegistry = {
       es: "Biblioteca de asesoría privada con altas estanterías de nogal e iluminación indirecta cálida",
     },
   },
+  "contact-sky": {
+    id: "contact-sky",
+    src: "/imagery/contact-sky.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial photograph looking up at a pristine deep blue sky with soft cirrus clouds and the glass and stone edge of a modernist tower at the corner of the frame catching soft morning light, no people, no text, muted cool blue palette, cinematic wide composition, shot on medium format, photorealistic, quiet and expansive",
+    alt: {
+      en: "Deep blue sky with soft cirrus clouds framed by the edge of a modernist tower",
+      es: "Cielo azul profundo con nubes cirros suaves enmarcado por el borde de una torre modernista",
+    },
+  },
   "about-practice": {
     id: "about-practice",
     src: "/imagery/about-practice.webp",
