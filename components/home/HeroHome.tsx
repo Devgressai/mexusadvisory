@@ -37,15 +37,15 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 object-cover opacity-80"
+          className="absolute inset-0 object-cover"
         />
       )}
-      {/* Single horizontal scrim — darker on the left where the headline
-          lives, fading to transparent so the image reads cleanly on the
-          right. No top or bottom overlays. */}
+      {/* Minimal left scrim — a soft navy wash only on the left third
+          so the headline holds legibility while the image reads bright
+          and clean across the rest of the hero. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-navy-900/85 via-navy-900/35 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-navy-900/70 via-navy-900/20 to-transparent"
       />
 
       <Container className="relative flex min-h-[88vh] flex-col justify-between pt-40 pb-16 md:pt-48 md:pb-20 lg:min-h-[94vh] lg:pt-56 lg:pb-24">
