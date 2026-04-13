@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { HeroHome } from "@/components/home/HeroHome";
+import { InsightsRail } from "@/components/home/InsightsRail";
 import { FocusModules } from "@/components/home/FocusModules";
 import { CapabilitiesOverview } from "@/components/home/CapabilitiesOverview";
 import { CredibilitySection } from "@/components/home/CredibilitySection";
@@ -19,6 +20,7 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <>
       <HeroHome locale={locale} dict={dict} />
+      <InsightsRail locale={locale} dict={dict} />
       <FocusModules locale={locale} dict={dict} />
       <CapabilitiesOverview locale={locale} dict={dict} />
       <CredibilitySection locale={locale} dict={dict} />
