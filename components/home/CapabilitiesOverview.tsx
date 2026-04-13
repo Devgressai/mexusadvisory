@@ -85,15 +85,9 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
                       </div>
                     )}
 
-                    <div className="mt-6 flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.16em] text-ink-muted">
-                      <span className="tabular-nums">{cap.number}</span>
-                      <span aria-hidden className="h-px w-4 bg-ink-muted/30" />
-                      <span>{locale === "es" ? "Servicio" : "Service"}</span>
-                    </div>
-
                     <h3
                       className={cn(
-                        "font-display type-h3 mt-4 text-ink",
+                        "font-display type-h3 mt-6 text-ink",
                         HOVER_LINK,
                         "group-hover:text-navy-900",
                       )}
