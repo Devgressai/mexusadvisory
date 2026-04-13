@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Locale } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
 import { Container } from "@/components/primitives/Container";
@@ -13,11 +12,11 @@ interface CredibilitySectionProps {
   dict: Dictionary;
 }
 
-const CREDIBILITY_ALT = {
-  en: "Private advisory library with tall walnut bookshelves and warm indirect lighting",
-  es: "Biblioteca de asesoría privada con altas estanterías de nogal e iluminación indirecta cálida",
-} as const;
-
+/**
+ * The single navy moment on the homepage. Architectural composition.
+ * No imagery — the metadata list and editorial typography carry the
+ * weight that background photography was doing before.
+ */
 export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
   const meta = [
     { label: dict.home.credibilityMeta.founded, value: "2019" },
@@ -27,35 +26,26 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-navy-900 text-paper">
-      {/* Ambient background image — far behind, heavy navy wash */}
-      <div aria-hidden className="absolute inset-0">
-        <Image
-          src="/imagery/credibility.webp"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover opacity-[0.18]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-900/85 to-navy-900" />
-      </div>
-
+    <section className="relative bg-navy-900 text-paper">
       {/* Gold top rule */}
       <div className="absolute inset-x-0 top-0 h-px">
         <HairlineDraw tone="gold" />
       </div>
 
-      <Container className="relative py-24 md:py-32 lg:py-40">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-x-6">
+      <Container className="relative py-28 md:py-36 lg:py-48">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-16 md:grid-cols-12">
           {/* Header */}
           <div className="md:col-span-12">
             <FadeRise>
-              <Eyebrow tone="gold" withMarker className="text-gold">
-                {dict.home.credibilityEyebrow}
-              </Eyebrow>
+              <div className="flex items-center gap-5">
+                <span aria-hidden className="h-px w-10 bg-gold" />
+                <Eyebrow tone="gold" withMarker={false} className="text-gold">
+                  {dict.home.credibilityEyebrow}
+                </Eyebrow>
+              </div>
             </FadeRise>
             <FadeRise delay={0.08}>
-              <h2 className="font-display mt-8 max-w-4xl text-h2 text-paper">
+              <h2 className="font-display text-h1 mt-10 max-w-[24ch] text-paper">
                 {dict.home.credibilityTitle}
               </h2>
             </FadeRise>
@@ -63,7 +53,7 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
 
           {/* Body */}
           <FadeRise delay={0.15} className="md:col-span-6 md:col-start-1">
-            <div className="space-y-6 text-[1.0625rem] leading-[1.75] text-paper/75">
+            <div className="space-y-6 text-[1.0625rem] leading-[1.8] text-paper/75">
               {dict.home.credibilityBody.map((para, idx) => (
                 <p key={idx}>{para}</p>
               ))}
@@ -80,11 +70,11 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
 
           {/* Meta list */}
           <FadeRise delay={0.22} className="md:col-span-5 md:col-start-8">
-            <dl>
+            <dl className="border-t border-paper/15">
               {meta.map((item, idx) => (
                 <div
                   key={idx}
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-6 border-t border-paper/15 py-6 last:border-b"
+                  className="grid grid-cols-[1fr_auto] items-baseline gap-6 border-b border-paper/15 py-6"
                 >
                   <dt className="eyebrow text-paper/45">{item.label}</dt>
                   <dd className="font-display text-[1.25rem] tracking-[-0.01em] text-paper">
@@ -96,9 +86,6 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
           </FadeRise>
         </div>
       </Container>
-
-      {/* Hidden decorative element for alt-only asset reference (screen readers skip) */}
-      <span className="sr-only">{CREDIBILITY_ALT[locale]}</span>
     </section>
   );
 }

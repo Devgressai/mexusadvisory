@@ -32,13 +32,15 @@ export function SectionHeader({
       )}
     >
       {eyebrow && (
-        <Eyebrow tone={eyebrowTone} className="mb-6">
+        <Eyebrow tone={eyebrowTone} className="mb-8">
           {eyebrow}
         </Eyebrow>
       )}
-      <h2 className={cn("font-display text-h2", titleColor)}>{title}</h2>
+      <h2 className={cn("font-display text-h2 max-w-[22ch]", titleColor)}>
+        {title}
+      </h2>
       {lede && (
-        <p className={cn("text-lead mt-6 max-w-2xl", ledeColor)}>{lede}</p>
+        <p className={cn("text-lede mt-7 max-w-[52ch]", ledeColor)}>{lede}</p>
       )}
     </header>
   );

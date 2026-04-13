@@ -32,40 +32,58 @@ export function Header({ locale, dict }: HeaderProps) {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-40 transition-all duration-300",
-          "bg-paper/90 backdrop-blur-md",
-          scrolled ? "shadow-[inset_0_-1px_0_0_var(--color-rule)]" : "",
+          "fixed inset-x-0 top-0 z-40 transition-[background,height,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          scrolled
+            ? "bg-paper/95 shadow-[inset_0_-1px_0_0_var(--color-rule)] backdrop-blur-md"
+            : "bg-paper/80 backdrop-blur-md",
         )}
       >
-        <div className="shell-gutter mx-auto flex h-16 max-w-[1440px] items-center justify-between md:h-20">
+        <div
+          className={cn(
+            "shell-gutter mx-auto flex max-w-[1440px] items-center justify-between transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            scrolled ? "h-14 md:h-[72px]" : "h-16 md:h-20",
+          )}
+        >
           {/* Left cluster */}
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center gap-5 md:gap-7">
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label={dict.nav.menu}
-              className="group -ml-1 flex items-center gap-2 p-1 text-ink transition-colors hover:text-navy-900"
+              className="group flex items-center gap-2.5 text-ink transition-opacity hover:opacity-70"
             >
-              <span className="flex h-6 w-6 items-center justify-center">
-                <Menu size={20} strokeWidth={1.5} aria-hidden />
+              <span className="flex h-5 w-5 items-center justify-center">
+                <Menu size={18} strokeWidth={1.5} aria-hidden />
               </span>
-              <span className="eyebrow hidden md:inline">{dict.nav.menu}</span>
+              <span className="eyebrow hidden lg:inline">
+                {dict.nav.menu}
+              </span>
             </button>
+
+            <span
+              aria-hidden
+              className="hidden h-5 w-px bg-rule md:inline-block"
+            />
+
             <Link
               href={localizedPath("/", locale)}
               className="flex items-center gap-3"
               aria-label="Mexus Advisory — Home"
             >
-              <Logo size={36} />
-              <span className="font-display hidden text-[1.0625rem] font-medium tracking-[-0.01em] text-ink md:inline">
+              <Logo size={32} />
+              <span className="font-display hidden text-[0.9375rem] font-medium tracking-[0.015em] text-ink md:inline">
                 Mexus Advisory
               </span>
             </Link>
           </div>
 
           {/* Right cluster */}
-          <div className="flex items-center gap-3 md:gap-5">
+          <div className="flex items-center gap-4 md:gap-6">
             <WhatsAppButton label={dict.nav.whatsapp} />
+            <span
+              aria-hidden
+              className="hidden h-5 w-px bg-rule md:inline-block"
+            />
             <LanguageSwitcher current={locale} />
           </div>
         </div>

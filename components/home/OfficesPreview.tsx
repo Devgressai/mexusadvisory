@@ -16,24 +16,26 @@ interface OfficesPreviewProps {
 
 export function OfficesPreview({ locale, dict }: OfficesPreviewProps) {
   return (
-    <Section tone="paper" size="standard">
+    <Section tone="paper" size="compact">
       <Container>
         <SectionHeader
           eyebrow={dict.home.officesEyebrow}
           title={dict.home.officesTitle}
           lede={dict.home.officesLede}
-          className="mb-20"
+          className="mb-16 md:mb-20"
         />
 
-        <Stagger className="grid grid-cols-1 gap-x-6 gap-y-12 border-t border-rule pt-14 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="grid grid-cols-1 gap-x-6 gap-y-14 border-t border-rule pt-14 sm:grid-cols-2 lg:grid-cols-4">
           {offices.map((office) => (
             <StaggerItem key={office.id}>
               <Link
                 href={localizedPath(`/about/offices#${office.id}`, locale)}
                 className="group block"
               >
-                <p className="eyebrow text-ink-muted">{t(office.country, locale)}</p>
-                <h3 className="font-display mt-4 text-[clamp(1.5rem,2vw,1.875rem)] tracking-[-0.015em] text-ink">
+                <p className="eyebrow text-ink-muted">
+                  {t(office.country, locale)}
+                </p>
+                <h3 className="font-display text-h3 mt-5 text-ink">
                   <span className="relative inline-block">
                     {t(office.city, locale)}
                     <span
@@ -45,7 +47,7 @@ export function OfficesPreview({ locale, dict }: OfficesPreviewProps) {
                 <p className="mt-6 text-[0.9375rem] leading-[1.6] text-ink-muted">
                   {office.address}
                 </p>
-                <p className="mt-3 text-[0.8125rem] text-ink-muted/80">
+                <p className="mt-3 text-[0.8125rem] text-ink-muted/70">
                   {office.languages.join(" · ")}
                 </p>
               </Link>

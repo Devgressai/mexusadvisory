@@ -1,5 +1,6 @@
 import type { Locale } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
+import { Section } from "@/components/primitives/Section";
 import { Container } from "@/components/primitives/Container";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { WhatsAppButton } from "@/components/shell/WhatsAppButton";
@@ -13,42 +14,44 @@ interface ContactCTAProps {
 }
 
 /**
- * Contact invitation — per brief, this must feel like a refined editorial
- * invitation to connect, not a boxed lead-capture widget. No bg fill, no
- * container card, no form. A single gold hairline is the only structural mark.
+ * Editorial invitation. No box. No widget. A single gold hairline draws
+ * at the top of the section, headline spans with generous max-w, CTAs are
+ * tertiary LinkArrows — not filled buttons, which would read as widget.
  */
 export function ContactCTA({ locale, dict }: ContactCTAProps) {
   return (
-    <section className="relative bg-paper pt-32 pb-40 md:pt-40 md:pb-48 lg:pt-48 lg:pb-56">
+    <Section tone="mist" size="hero">
       <Container>
-        {/* Full-width gold hairline — the only structural mark */}
-        <div className="mb-20 md:mb-24 lg:mb-28">
-          <HairlineDraw tone="gold" />
-        </div>
+        <HairlineDraw tone="gold" />
 
-        <div className="grid grid-cols-12 items-end gap-x-6">
+        <div className="mt-20 grid grid-cols-12 gap-x-6 md:mt-24 lg:mt-28">
           <div className="col-span-12 lg:col-span-10">
             <FadeRise>
-              <p className="eyebrow text-ink-muted">
-                <span aria-hidden className="mr-3 inline-block h-px w-6 bg-gold align-middle" />
-                {dict.nav.contact}
-              </p>
+              <div className="flex items-center gap-5">
+                <span aria-hidden className="eyebrow text-ink-muted tabular-nums">
+                  06
+                </span>
+                <span aria-hidden className="h-px w-10 bg-gold" />
+                <span className="eyebrow text-ink-muted">
+                  {dict.nav.contact}
+                </span>
+              </div>
             </FadeRise>
 
             <FadeRise delay={0.08}>
-              <h2 className="font-display mt-10 max-w-[14ch] text-[clamp(2.75rem,5vw,5rem)] leading-[1.02] tracking-[-0.025em] text-ink">
+              <h2 className="font-display text-display mt-14 max-w-[18ch] text-ink md:mt-16">
                 {dict.home.contactTitle}
               </h2>
             </FadeRise>
 
             <FadeRise delay={0.16}>
-              <p className="text-lead mt-12 max-w-[58ch] text-ink-muted">
+              <p className="text-lede mt-10 max-w-[56ch] md:mt-12">
                 {dict.home.contactLede}
               </p>
             </FadeRise>
 
             <FadeRise delay={0.24}>
-              <div className="mt-16 flex flex-wrap items-center gap-x-12 gap-y-6">
+              <div className="mt-14 flex flex-wrap items-center gap-x-12 gap-y-6 md:mt-16">
                 <LinkArrow href={localizedPath("/contact", locale)}>
                   {dict.common.contactFirm}
                 </LinkArrow>
@@ -58,6 +61,6 @@ export function ContactCTA({ locale, dict }: ContactCTAProps) {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

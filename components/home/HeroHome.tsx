@@ -1,8 +1,6 @@
-import Image from "next/image";
 import type { Locale } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
 import { Container } from "@/components/primitives/Container";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { ButtonLink } from "@/components/primitives/Button";
 import { WhatsAppButton } from "@/components/shell/WhatsAppButton";
 import { FadeRise } from "@/components/motion/FadeRise";
@@ -14,84 +12,76 @@ interface HeroHomeProps {
   dict: Dictionary;
 }
 
-const HERO_ALT = {
-  en: "Minimalist executive terrace in concrete and glass overlooking a calm coastal horizon at dawn",
-  es: "Terraza ejecutiva minimalista de concreto y vidrio con vista a un horizonte costero en calma al amanecer",
-} as const;
-
+/**
+ * Typography-led hero. No imagery. The composition is built entirely from
+ * display type, disciplined whitespace, a single eyebrow, and one primary
+ * CTA. A single gold hairline and meta row anchor the base of the page.
+ */
 export function HeroHome({ locale, dict }: HeroHomeProps) {
   return (
-    <section className="relative overflow-hidden bg-paper pt-40 pb-24 md:pt-48 md:pb-32 lg:min-h-[100svh] lg:pt-56 lg:pb-40">
+    <section className="relative bg-paper pt-40 pb-28 md:pt-48 md:pb-36 lg:pt-56 lg:pb-44">
       <Container>
-        <div className="grid grid-cols-12 items-start gap-x-6 lg:gap-x-10">
-          {/* Text column */}
-          <div className="col-span-12 lg:col-span-7">
-            <FadeRise>
-              <Eyebrow tone="gold">{dict.home.heroEyebrow}</Eyebrow>
-            </FadeRise>
-
-            <FadeRise delay={0.08}>
-              <h1 className="font-display text-display mt-10 max-w-[18ch] text-ink">
-                {dict.home.heroTitle}
-              </h1>
-            </FadeRise>
-
-            <FadeRise delay={0.18}>
-              <p className="text-lead mt-10 max-w-[52ch] text-ink-muted">
-                {dict.home.heroLede}
-              </p>
-            </FadeRise>
-
-            <FadeRise delay={0.26}>
-              <div className="mt-12 flex flex-wrap items-center gap-4">
-                <ButtonLink href={localizedPath("/contact", locale)} variant="primary">
-                  {dict.common.requestConsultation}
-                </ButtonLink>
-                <WhatsAppButton label={dict.nav.whatsapp} variant="cta" />
-              </div>
-            </FadeRise>
+        {/* Eyebrow — integrated gold marker + index counter */}
+        <FadeRise>
+          <div className="flex items-center gap-5">
+            <span aria-hidden className="eyebrow text-ink-muted tabular-nums">
+              01
+            </span>
+            <span aria-hidden className="h-px w-10 bg-gold" />
+            <span className="eyebrow text-ink-muted">
+              {dict.home.heroEyebrow}
+            </span>
           </div>
+        </FadeRise>
 
-          {/* Image column — visible from lg up */}
-          <FadeRise
-            delay={0.2}
-            className="relative col-span-12 mt-16 hidden lg:col-span-5 lg:mt-0 lg:block"
-          >
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
-              <Image
-                src="/imagery/hero-atmosphere.webp"
-                alt={HERO_ALT[locale]}
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="object-cover"
-              />
-              {/* Subtle navy veil to lock into palette without dominating */}
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-br from-navy-900/10 via-transparent to-navy-900/25"
-              />
-              {/* Gold hairline frame on left edge */}
-              <div aria-hidden className="absolute left-0 top-0 h-full w-px bg-gold/60" />
+        {/* Headline — spans 9/12 on lg, generous max-w for breathing room */}
+        <FadeRise delay={0.08}>
+          <h1 className="font-display text-display mt-14 max-w-[22ch] text-ink md:mt-16 lg:mt-20 lg:max-w-[24ch]">
+            {dict.home.heroTitle}
+          </h1>
+        </FadeRise>
+
+        {/* Lede — separate grid column to create typographic tension with H1 */}
+        <FadeRise delay={0.18}>
+          <div className="mt-14 grid grid-cols-12 gap-x-6 md:mt-16 lg:mt-20">
+            <p className="col-span-12 text-lede max-w-[56ch] md:col-span-10 lg:col-span-7 lg:col-start-6">
+              {dict.home.heroLede}
+            </p>
+          </div>
+        </FadeRise>
+
+        {/* Action row */}
+        <FadeRise delay={0.26}>
+          <div className="mt-14 grid grid-cols-12 gap-x-6 md:mt-16 lg:mt-20">
+            <div className="col-span-12 flex flex-wrap items-center gap-5 lg:col-span-7 lg:col-start-6">
+              <ButtonLink
+                href={localizedPath("/contact", locale)}
+                variant="primary"
+              >
+                {dict.common.requestConsultation}
+              </ButtonLink>
+              <WhatsAppButton label={dict.nav.whatsapp} variant="cta" />
             </div>
+          </div>
+        </FadeRise>
 
-            {/* Caption meta */}
-            <div className="mt-6 flex items-center gap-4">
-              <span aria-hidden className="h-px w-8 bg-gold" />
-              <p className="eyebrow text-ink-muted">Americas · International</p>
+        {/* Base meta strip — single gold hairline + locale/era meta */}
+        <div className="mt-32 md:mt-40 lg:mt-52">
+          <HairlineDraw tone="rule" delay={0.4} />
+          <FadeRise delay={0.5}>
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+              <p className="eyebrow text-ink-muted">
+                {locale === "es"
+                  ? "Américas · Internacional · Desde 2019"
+                  : "Americas · International · Since 2019"}
+              </p>
+              <p className="eyebrow text-ink-muted">
+                {locale === "es"
+                  ? "Consejo privado transfronterizo"
+                  : "Private cross-border counsel"}
+              </p>
             </div>
           </FadeRise>
-        </div>
-
-        {/* Vertical gold hairline ornament (mobile only — image replaces it on desktop) */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-6 top-[56%] hidden h-24 w-px -translate-y-1/2 md:flex lg:hidden"
-        >
-          <div className="relative h-full w-px">
-            <HairlineDraw tone="gold" className="absolute left-0 top-0 h-full w-px" />
-            <span className="absolute -left-[3px] top-0 h-[7px] w-[7px] rounded-full bg-gold" />
-          </div>
         </div>
       </Container>
     </section>

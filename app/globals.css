@@ -7,7 +7,8 @@
      Gold strokes of logo:    rgb(206,166,105) = #CEA669
   */
   --color-paper: #ffffff;
-  --color-bone: #faf9f6;
+  --color-mist: #fbfbfd;   /* near-imperceptible lift — hero, contact invitation */
+  --color-bone: #f7f8fa;   /* cooler architectural off-white — Focus Modules only */
   --color-rule: #e6e7eb;
   --color-ink: #0b1220;
   --color-ink-muted: #5b6576;
@@ -75,13 +76,15 @@
     color: var(--color-paper);
   }
 
-  /* Display sans tuning — BCG-adjacent presence via weight + tracking */
+  /* Display sans tuning — editorial authority via weight + tracking.
+     Inter 500 with tight tracking + optical size reads closer to BCG Sans
+     than the 600 weight, which drifts into "marketing header" territory. */
   .font-display {
     font-family: var(--font-display);
     font-variation-settings: "opsz" 32;
     font-feature-settings: "ss01", "cv11", "lnum";
-    letter-spacing: -0.028em;
-    font-weight: 600;
+    letter-spacing: -0.025em;
+    font-weight: 500;
   }
 
   /* Eyebrow: disciplined label */
@@ -95,31 +98,34 @@
     color: var(--color-ink-muted);
   }
 
-  /* Fluid display scale — sans-serif, editorial-weighted */
+  /* Fluid scale — locked. Every home section consumes these utilities.
+     Do NOT hand-roll text-[clamp(...)] inside components. */
   .text-display {
-    font-size: clamp(2.75rem, 5vw, 5.25rem);
+    font-size: clamp(2.625rem, 4.8vw, 5rem);
     line-height: 1.02;
     letter-spacing: -0.035em;
   }
   .text-h1 {
-    font-size: clamp(2.125rem, 3.4vw, 3.5rem);
+    font-size: clamp(2rem, 3.2vw, 3.25rem);
     line-height: 1.06;
     letter-spacing: -0.03em;
   }
   .text-h2 {
-    font-size: clamp(1.625rem, 2.2vw, 2.375rem);
-    line-height: 1.12;
+    font-size: clamp(1.5rem, 2.1vw, 2.25rem);
+    line-height: 1.14;
     letter-spacing: -0.025em;
   }
   .text-h3 {
-    font-size: clamp(1.1875rem, 1.5vw, 1.5rem);
-    line-height: 1.25;
+    font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+    line-height: 1.28;
     letter-spacing: -0.018em;
   }
-  .text-lead {
-    font-size: 1.1875rem;
-    line-height: 1.6;
+  .text-lead,
+  .text-lede {
+    font-size: 1.125rem;
+    line-height: 1.65;
     letter-spacing: -0.005em;
+    color: var(--color-ink-muted);
   }
 
   /* Focus rings — gold hairline, never default blue blob */
