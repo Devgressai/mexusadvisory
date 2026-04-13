@@ -165,28 +165,34 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                     ? "w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px]"
                     : "w-[130px] sm:w-[170px] md:w-[200px] lg:w-[240px]";
 
+                const itemVariants = {
+                  enter: (dir: 1 | -1) => ({
+                    x: dir > 0 ? ENTER_X : -ENTER_X,
+                    opacity: 0,
+                    scale: 0.68,
+                    y: 80,
+                  }),
+                  center: {
+                    x: targetX,
+                    opacity: targetOpacity,
+                    scale: targetScale,
+                    y: targetY,
+                  },
+                  exit: (dir: 1 | -1) => ({
+                    x: dir > 0 ? -ENTER_X : ENTER_X,
+                    opacity: 0,
+                    scale: 0.62,
+                    y: 80,
+                  }),
+                };
                 return (
                   <m.div
                     key={`${groupId}-${insight.id}`}
                     custom={direction}
-                    initial={(dir: 1 | -1) => ({
-                      x: dir > 0 ? ENTER_X : -ENTER_X,
-                      opacity: 0,
-                      scale: 0.68,
-                      y: 80,
-                    })}
-                    animate={{
-                      x: targetX,
-                      opacity: targetOpacity,
-                      scale: targetScale,
-                      y: targetY,
-                    }}
-                    exit={(dir: 1 | -1) => ({
-                      x: dir > 0 ? -ENTER_X : ENTER_X,
-                      opacity: 0,
-                      scale: 0.62,
-                      y: 80,
-                    })}
+                    variants={itemVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className={cn(
                       "absolute left-1/2 top-0 -translate-x-1/2",
