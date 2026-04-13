@@ -1,81 +1,110 @@
 import type { Person } from "@/types/content";
 
+/**
+ * People — sourced from mexusadvisory.com/about-us.
+ *
+ * Titles taken verbatim from the live site. Bios are not published on the
+ * source site; short advisory-tone descriptors are carried here as
+ * placeholders until the firm provides canonical copy.
+ */
 export const people: Person[] = [
   {
-    id: "ea",
-    slug: "e-alvarez",
-    name: "E. Álvarez",
-    role: { en: "Managing Partner", es: "Socio Director" },
-    location: { en: "Mexico City", es: "Ciudad de México" },
+    id: "mace-miller",
+    slug: "mace-miller",
+    name: "Mace Miller",
+    role: { en: "Member", es: "Socio" },
+    location: { en: "Americas", es: "Américas" },
     bio: {
       en: [
-        "Twenty years of private advisory work spanning immigration, capital structuring, and family governance across the Americas.",
-        "Leads the firm's US/Mexico practice and sits on the partners committee.",
+        "Mace advises principals on cross-border mobility, capital pathways, and jurisdictional strategy across the United States and Mexico.",
+        "He leads client engagements where immigration, corporate structure, and private capital decisions must be coordinated at a senior level.",
       ],
       es: [
-        "Veinte años de asesoría privada en migración, estructuración de capital y gobernanza familiar en las Américas.",
-        "Dirige la práctica EE. UU.–México del despacho y forma parte del comité de socios.",
+        "Mace asesora a principales en movilidad transfronteriza, rutas de capital y estrategia jurisdiccional entre Estados Unidos y México.",
+        "Lidera compromisos donde la migración, la estructura corporativa y las decisiones de capital privado deben coordinarse a nivel senior.",
       ],
     },
-    practices: ["global-immigration-consulting", "wealth-advisory", "jurisdictional-optimization"],
+    practices: ["global-immigration-consulting", "jurisdictional-optimization"],
+    languages: ["English", "Español"],
+  },
+  {
+    id: "darilu-cartagena",
+    slug: "darilu-cartagena",
+    name: "Darilu Cartagena",
+    role: {
+      en: "Planning & Insurance Coordinator",
+      es: "Coordinadora de Planeación y Seguros",
+    },
+    location: { en: "Americas", es: "Américas" },
+    bio: {
+      en: [
+        "Darilu coordinates long-horizon planning and insurance structures for Mexus clients, with particular focus on family continuity and cross-border asset protection.",
+        "She works closely with fiduciaries, legal counsel and private bankers across jurisdictions so that each client's posture remains coherent as circumstances evolve.",
+      ],
+      es: [
+        "Darilu coordina la planeación de largo plazo y las estructuras de aseguramiento para los clientes de Mexus, con especial enfoque en la continuidad familiar y la protección de activos transfronteriza.",
+        "Trabaja de cerca con fiduciarios, asesores legales y banqueros privados en distintas jurisdicciones para que la postura de cada cliente se mantenga coherente conforme cambian las circunstancias.",
+      ],
+    },
+    practices: ["wealth-advisory", "risk-management"],
     languages: ["Español", "English"],
   },
   {
-    id: "mc",
-    slug: "m-chen",
-    name: "M. Chen",
-    role: { en: "Partner, Risk & Jurisdiction", es: "Socia, Riesgo y Jurisdicción" },
-    location: { en: "New York", es: "Nueva York" },
+    id: "jeremy-anderson",
+    slug: "jeremy-anderson",
+    name: "Jeremy Anderson",
+    role: { en: "Member", es: "Socio" },
+    location: { en: "Americas", es: "Américas" },
     bio: {
       en: [
-        "Background in cross-border regulatory advisory and private-client risk management.",
-        "Advises principals on political, reputational, and regulatory exposure across multiple jurisdictions.",
+        "Jeremy advises operators and investors on alternative capital sourcing, cross-border structuring, and the practical realities of deploying capital outside standard bank channels.",
+        "His engagements span private credit, single-LP placements, and the coordination of cross-border transactions where structure is the product.",
       ],
       es: [
-        "Experiencia en asesoría regulatoria transfronteriza y gestión de riesgo para clientes privados.",
-        "Asesora a principales sobre exposición política, reputacional y regulatoria en múltiples jurisdicciones.",
-      ],
-    },
-    practices: ["risk-management", "jurisdictional-optimization"],
-    languages: ["English", "中文", "Español"],
-  },
-  {
-    id: "rs",
-    slug: "r-silva",
-    name: "R. Silva",
-    role: { en: "Partner, Capital", es: "Socio, Capital" },
-    location: { en: "Miami", es: "Miami" },
-    bio: {
-      en: [
-        "Senior practitioner in private credit, family-office capital, and cross-border structured transactions.",
-        "Works with operators whose capital needs fall outside standard bank channels.",
-      ],
-      es: [
-        "Practicante senior en crédito privado, capital de family offices y transacciones estructuradas transfronterizas.",
-        "Trabaja con operadores cuyas necesidades de capital quedan fuera de los canales bancarios estándar.",
+        "Jeremy asesora a operadores e inversionistas en fuentes alternativas de capital, estructuración transfronteriza y las realidades prácticas de desplegar capital fuera de los canales bancarios estándar.",
+        "Sus compromisos abarcan crédito privado, colocaciones con un solo inversionista y la coordinación de transacciones transfronterizas donde la estructura es el producto.",
       ],
     },
     practices: ["alternative-capital-sourcing", "wealth-advisory"],
-    languages: ["English", "Português", "Español"],
+    languages: ["English", "Español"],
   },
   {
-    id: "lh",
-    slug: "l-herrera",
-    name: "L. Herrera",
-    role: { en: "Partner, Immigration", es: "Socia, Migración" },
-    location: { en: "Monterrey", es: "Monterrey" },
+    id: "roberto-ortigoza",
+    slug: "roberto-ortigoza",
+    name: "Roberto Ortigoza",
+    role: { en: "Member", es: "Socio" },
+    location: { en: "México", es: "México" },
     bio: {
       en: [
-        "Coordinates the firm's global immigration practice, with particular depth in US, Canadian, and EU pathways.",
-        "Advises founders and families on parallel-pathway relocation strategy.",
+        "Roberto advises on Mexican corporate structures, cross-border holding architecture, and the US/Mexico trade considerations that shape operating decisions for Mexus clients.",
+        "He works with founders and families whose decisions span both sides of the border and must be executed with coordinated legal, fiscal, and operational substance.",
       ],
       es: [
-        "Coordina la práctica migratoria global del despacho, con especial profundidad en rutas a EE. UU., Canadá y la UE.",
-        "Asesora a fundadores y familias en estrategias de reubicación con rutas paralelas.",
+        "Roberto asesora en estructuras corporativas mexicanas, arquitectura de holdings transfronterizos y las consideraciones del comercio EE. UU.–México que dan forma a las decisiones operativas de los clientes de Mexus.",
+        "Trabaja con fundadores y familias cuyas decisiones cruzan ambos lados de la frontera y deben ejecutarse con sustancia legal, fiscal y operativa coordinada.",
       ],
     },
-    practices: ["global-immigration-consulting"],
-    languages: ["Español", "English", "Français"],
+    practices: ["jurisdictional-optimization", "risk-management"],
+    languages: ["Español", "English"],
+  },
+  {
+    id: "federico-vielledent",
+    slug: "federico-vielledent",
+    name: "Federico Vielledent",
+    role: { en: "Member", es: "Socio" },
+    location: { en: "Americas", es: "Américas" },
+    bio: {
+      en: [
+        "Federico advises on international talent mobility, executive relocation, and the interaction between immigration strategy and private capital decisions.",
+        "He coordinates engagements where people, entities, and assets need to move together — typically across multiple jurisdictions and over long time horizons.",
+      ],
+      es: [
+        "Federico asesora en movilidad de talento internacional, reubicación de ejecutivos y la interacción entre la estrategia migratoria y las decisiones de capital privado.",
+        "Coordina compromisos en los que personas, entidades y activos deben moverse juntos — típicamente en múltiples jurisdicciones y en horizontes de largo plazo.",
+      ],
+    },
+    practices: ["global-immigration-consulting", "alternative-capital-sourcing"],
+    languages: ["Español", "English", "Português"],
   },
 ];
 

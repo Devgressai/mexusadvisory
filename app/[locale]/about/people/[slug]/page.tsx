@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { people, getPerson } from "@/content/people";
@@ -9,6 +10,14 @@ import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { buildMetadata } from "@/lib/seo";
+
+const PORTRAIT_BY_SLUG: Record<string, string> = {
+  "mace-miller": "/people/mace-miller.webp",
+  "darilu-cartagena": "/people/darilu-cartagena.webp",
+  "jeremy-anderson": "/people/jeremy-anderson.webp",
+  "roberto-ortigoza": "/people/roberto-ortigoza.webp",
+  "federico-vielledent": "/people/federico-vielledent.webp",
+};
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -56,15 +65,30 @@ export default async function PersonPage({ params }: Props) {
         <Container>
           <div className="grid grid-cols-1 gap-16 md:grid-cols-12">
             <div className="md:col-span-5">
-              <div className="aspect-[4/5] w-full bg-bone ring-1 ring-rule">
-                <div className="flex h-full w-full items-end p-8">
-                  <span className="font-display text-[4rem] leading-none text-ink-muted/30">
-                    {person.name
-                      .split(" ")
-                      .map((p) => p[0])
-                      .join("")}
-                  </span>
-                </div>
+              <div className="relative aspect-[4/5] w-full overflow-hidden">
+                {PORTRAIT_BY_SLUG[person.slug] ? (
+                  <Image
+                    src={PORTRAIT_BY_SLUG[person.slug]!}
+                    alt={`${person.name} — ${t(person.role, locale)}`}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-end bg-bone p-8 ring-1 ring-rule">
+                    <span className="font-display text-[4rem] leading-none text-ink-muted/30">
+                      {person.name
+                        .split(" ")
+                        .map((p) => p[0])
+                        .join("")}
+                    </span>
+                  </div>
+                )}
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-0 h-full w-px bg-gold/60"
+                />
               </div>
             </div>
 
