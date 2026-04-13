@@ -20,10 +20,9 @@ interface CapabilitiesOverviewProps {
 }
 
 /**
- * Services — the first thing after the hero. Editorial stacked rows with
- * per-row atmospheric thumbnails, no boxed arrow buttons, single hover
- * pattern. Capabilities-anchor image lives above the list as a single
- * restrained atmospheric anchor.
+ * Services — alternating image/text rows in the BCG "Capabilities" pattern.
+ * Each row: ~5/7 split, image on left for odd rows, image on right for even
+ * rows. Generous vertical rhythm, single hover pattern, no boxed buttons.
  */
 const IMAGE_BY_SLUG: Record<string, string> = {
   "global-immigration-consulting": "cap-immigration",
@@ -34,134 +33,120 @@ const IMAGE_BY_SLUG: Record<string, string> = {
 };
 
 export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps) {
-  const anchor = getImage(imagery, "capabilities-anchor");
-
   return (
     <Section tone="paper" size="spacious">
       <Container>
-        {/* Header row — section intro + Browse CTA */}
-        <div className="mb-16 grid grid-cols-12 gap-x-6 gap-y-12 md:mb-20 lg:mb-24">
-          <Reveal className="col-span-12 lg:col-span-7">
-            <Eyebrow className="mb-8">{dict.home.capabilitiesEyebrow}</Eyebrow>
-            <h2 className="font-display text-h1 max-w-[22ch] text-ink">
-              {dict.home.capabilitiesTitle}
-            </h2>
-            <p className="text-lede mt-7 max-w-[56ch]">
-              {dict.home.capabilitiesLede}
-            </p>
-            <div className="mt-10">
-              <LinkArrow href={localizedPath("/capabilities", locale)}>
-                {dict.common.viewCapabilities}
-              </LinkArrow>
+        {/* Section header */}
+        <Reveal>
+          <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-end">
+            <div className="max-w-3xl">
+              <Eyebrow className="mb-8">{dict.home.capabilitiesEyebrow}</Eyebrow>
+              <h2 className="font-display text-h1 max-w-[22ch] text-ink">
+                {dict.home.capabilitiesTitle}
+              </h2>
+              <p className="text-lede mt-7 max-w-[56ch]">
+                {dict.home.capabilitiesLede}
+              </p>
             </div>
-          </Reveal>
+            <LinkArrow href={localizedPath("/capabilities", locale)}>
+              {dict.common.viewCapabilities}
+            </LinkArrow>
+          </div>
+        </Reveal>
 
-          {/* Atmospheric anchor image */}
-          {anchor && (
-            <Reveal
-              variant="soft"
-              delay={0.15}
-              className="relative col-span-12 lg:col-span-5"
-            >
-              <div className="relative aspect-[5/4] w-full overflow-hidden">
-                <Image
-                  src={anchor.src}
-                  alt={t(anchor.alt, locale)}
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover opacity-[0.94]"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-tr from-paper/20 via-transparent to-transparent"
-                />
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0 h-full w-px bg-gold/60"
-                />
-              </div>
-            </Reveal>
-          )}
-        </div>
+        {/* Alternating rows */}
+        <div className="mt-20 space-y-20 md:mt-28 md:space-y-28 lg:mt-32 lg:space-y-32">
+          {capabilities.map((cap, idx) => {
+            const img = getImage(imagery, IMAGE_BY_SLUG[cap.slug] ?? "");
+            const imageFirst = idx % 2 === 0;
+            return (
+              <Reveal key={cap.id}>
+                <Link
+                  href={localizedPath(`/capabilities/${cap.slug}`, locale)}
+                  className="group grid grid-cols-12 items-center gap-x-6 gap-y-10 lg:gap-x-12"
+                >
+                  {/* Image column */}
+                  {img && (
+                    <div
+                      className={cn(
+                        "relative col-span-12 lg:col-span-6",
+                        imageFirst ? "lg:order-1" : "lg:order-2",
+                      )}
+                    >
+                      <div className="relative aspect-[5/4] w-full overflow-hidden">
+                        <Image
+                          src={img.src}
+                          alt={t(img.alt, locale)}
+                          fill
+                          sizes="(min-width: 1024px) 48vw, 100vw"
+                          className={cn(
+                            "object-cover opacity-[0.96]",
+                            HOVER_IMAGE,
+                            "group-hover:opacity-100",
+                          )}
+                        />
+                        {/* Gold hairline on the inside edge */}
+                        <span
+                          aria-hidden
+                          className={cn(
+                            "absolute top-0 h-full w-px bg-gold/60",
+                            imageFirst ? "right-0" : "left-0",
+                          )}
+                        />
+                      </div>
+                    </div>
+                  )}
 
-        {/* Stacked capability rows */}
-        <Reveal variant="stagger">
-          <ul className="border-t border-rule">
-            {capabilities.map((cap) => {
-              const img = getImage(imagery, IMAGE_BY_SLUG[cap.slug] ?? "");
-              return (
-                <li key={cap.id} className="border-b border-rule">
-                  <Link
-                    href={localizedPath(`/capabilities/${cap.slug}`, locale)}
-                    className="group relative grid grid-cols-12 items-center gap-x-6 py-10 md:py-12 lg:py-14"
+                  {/* Text column */}
+                  <div
+                    className={cn(
+                      "col-span-12 lg:col-span-6",
+                      imageFirst ? "lg:order-2 lg:pl-8" : "lg:order-1 lg:pr-8",
+                    )}
                   >
-                    {/* Number */}
-                    <div className="col-span-12 md:col-span-1">
-                      <span className="eyebrow text-ink-muted tabular-nums">
-                        {cap.number}
+                    <div className="flex items-center gap-4 text-[0.6875rem] uppercase tracking-[0.16em] text-ink-muted">
+                      <span className="tabular-nums">{cap.number}</span>
+                      <span aria-hidden className="h-px w-6 bg-ink-muted/30" />
+                      <span>
+                        {locale === "es" ? "Servicio" : "Service"}
                       </span>
                     </div>
 
-                    {/* Text */}
-                    <div className="col-span-12 mt-4 md:col-span-6 md:col-start-2 md:mt-0 lg:col-span-7">
-                      <h3
-                        className={cn(
-                          "font-display text-h2 max-w-[22ch] text-ink",
-                          HOVER_LINK,
-                          "group-hover:text-navy-900",
-                        )}
-                      >
-                        {t(cap.title, locale)}
-                      </h3>
-                      <p className="mt-4 max-w-[56ch] text-[0.9375rem] leading-[1.7] text-ink-muted">
-                        {t(cap.lede, locale)}
-                      </p>
-                    </div>
+                    <h3
+                      className={cn(
+                        "font-display text-h1 mt-6 max-w-[16ch] text-ink",
+                        HOVER_LINK,
+                        "group-hover:text-navy-900",
+                      )}
+                    >
+                      {t(cap.title, locale)}
+                    </h3>
 
-                    {/* Thumbnail */}
-                    {img && (
-                      <div className="col-span-10 mt-6 md:col-span-4 md:col-start-9 md:mt-0 lg:col-span-3 lg:col-start-10">
-                        <div className="relative aspect-[4/3] w-full overflow-hidden">
-                          <Image
-                            src={img.src}
-                            alt={t(img.alt, locale)}
-                            fill
-                            sizes="(min-width: 1024px) 22vw, (min-width: 768px) 33vw, 100vw"
-                            className={cn(
-                              "object-cover opacity-[0.94]",
-                              HOVER_IMAGE,
-                              "group-hover:opacity-100",
-                            )}
-                          />
-                          <span
-                            aria-hidden
-                            className="absolute bottom-0 left-0 h-px w-6 origin-left bg-gold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"
-                          />
-                        </div>
-                      </div>
-                    )}
+                    <p className="mt-6 max-w-[56ch] text-[1rem] leading-[1.7] text-ink-muted">
+                      {t(cap.lede, locale)}
+                    </p>
 
-                    {/* Arrow */}
-                    <div className="col-span-2 mt-6 justify-self-end md:col-span-1 md:col-start-12 md:mt-0">
+                    <p className="mt-10 inline-flex items-baseline gap-2 text-[0.8125rem] font-medium uppercase tracking-[0.12em] text-navy-900">
+                      <span className="relative">
+                        {dict.common.learnMore}
+                        <span
+                          aria-hidden
+                          className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+                        />
+                      </span>
                       <span
                         aria-hidden
-                        className="text-[1.125rem] font-light text-ink transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[3px]"
+                        className="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-[3px]"
                       >
                         →
                       </span>
-                    </div>
-
-                    {/* Row progress hairline */}
-                    <span
-                      aria-hidden
-                      className="absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-navy-900 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
-                    />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </Reveal>
+                    </p>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
       </Container>
     </Section>
   );
