@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* ——— Color ———
+     Navy and gold are extracted directly from the official Mexus Advisory logo.
+     Navy background of logo: rgb(19,21,37) = #131525
+     Gold strokes of logo:    rgb(206,166,105) = #CEA669
+  */
+  --color-paper: #ffffff;
+  --color-bone: #faf9f6;
+  --color-rule: #e6e7eb;
+  --color-ink: #0b1220;
+  --color-ink-muted: #5b6576;
+
+  /* Navy scale — anchored to the exact logo background (#131525) */
+  --color-navy-950: #0a0c18; /* deepest — menu overlay, reserved depth */
+  --color-navy-900: #131525; /* EXACT logo navy — primary structural */
+  --color-navy-800: #1c1e33; /* lift — alt surfaces on navy */
+  --color-navy-700: #272a42; /* hover depth on navy surfaces */
+
+  /* Action blue — functional CTA only, not brand field */
+  --color-action: #1d4ed8;
+  --color-action-hover: #1e40af;
+
+  /* Gold scale — anchored to the exact logo gold (#CEA669) */
+  --color-gold: #cea669;       /* EXACT logo gold — micro-accents only */
+  --color-gold-soft: #d8ae6c;  /* highlight end of logo gold range */
+  --color-gold-deep: #a88250;  /* shadow end — hover, pressed, reserved */
+
+  /* ——— Typography ———
+     BCG-style: clean sans-serif throughout, no serif. Inter is used for
+     both display and UI, with display presence achieved through weight,
+     tight tracking, and optical sizing. If licensing allows later, swap
+     --font-display to Söhne / GT America / Suisse Int'l in one place.
+  */
+  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* ——— Radius (crisp, not bubbly) ——— */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+
+  /* ——— Easing ——— */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ——— Content widths ——— */
+  --max-w-shell: 1440px;
+  --max-w-read: 68ch;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "ss02", "cv11";
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background-color: var(--color-navy-900);
+    color: var(--color-paper);
+  }
+
+  /* Display sans tuning — BCG-adjacent presence via weight + tracking */
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 32;
+    font-feature-settings: "ss01", "cv11", "lnum";
+    letter-spacing: -0.028em;
+    font-weight: 600;
+  }
+
+  /* Eyebrow: disciplined label */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    color: var(--color-ink-muted);
+  }
+
+  /* Fluid display scale — sans-serif, editorial-weighted */
+  .text-display {
+    font-size: clamp(2.75rem, 5vw, 5.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+  .text-h1 {
+    font-size: clamp(2.125rem, 3.4vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+  .text-h2 {
+    font-size: clamp(1.625rem, 2.2vw, 2.375rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+  .text-h3 {
+    font-size: clamp(1.1875rem, 1.5vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.018em;
+  }
+  .text-lead {
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+  }
+
+  /* Focus rings — gold hairline, never default blue blob */
+  :where(a, button, [role="button"], input, textarea, select):focus {
+    outline: none;
+  }
+  :where(a, button, [role="button"], input, textarea, select):focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  /* Prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .shell-gutter {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .shell-gutter {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .shell-gutter {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+  @media (min-width: 1536px) {
+    .shell-gutter {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+  }
+
+  .hairline-top {
+    box-shadow: inset 0 1px 0 0 var(--color-rule);
+  }
+  .hairline-bottom {
+    box-shadow: inset 0 -1px 0 0 var(--color-rule);
+  }
+  .hairline-gold-top {
+    box-shadow: inset 0 1px 0 0 var(--color-gold);
+  }
+}
