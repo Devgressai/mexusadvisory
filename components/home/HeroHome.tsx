@@ -107,74 +107,74 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           </div>
         </div>
 
-        {/* Hero featured insights strip — BCG-style 3 compact teasers */}
+        {/* Hero featured insights — BCG-style compact teasers pinned to the
+            glass of the hero. No heavy border, no dividers: only a thin gold
+            marker and the natural grid gap separate the three cards. */}
         <Reveal variant="soft" delay={0.4}>
-          <div className="mt-20 border-t border-paper/15 pt-10 md:mt-24 md:pt-12">
-            <div className="mb-8 flex items-center justify-between gap-6">
-              <p className="eyebrow text-paper/50">
+          <div className="mt-16 md:mt-20">
+            <div className="mb-7 flex items-center gap-4">
+              <span aria-hidden className="h-px w-10 bg-gold/70" />
+              <p className="eyebrow text-paper/55">
                 {locale === "es"
                   ? "Perspectivas destacadas"
                   : "Featured perspectives"}
               </p>
+              <span
+                aria-hidden
+                className="hidden h-px flex-1 bg-paper/10 md:block"
+              />
               <LinkArrow
                 href={localizedPath("/focus/immigration-volatility", locale)}
                 tone="paper"
+                className="hidden md:inline-flex"
               >
                 {dict.common.exploreInsights}
               </LinkArrow>
             </div>
 
-            <ul className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
-              {insights.slice(0, 3).map((insight, idx) => {
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3 md:gap-y-0 lg:gap-x-10">
+              {insights.slice(0, 3).map((insight) => {
                 const thumb = getImage(imagery, insight.imageId);
                 return (
-                  <li
-                    key={insight.id}
-                    className={cn(
-                      "group",
-                      idx > 0 && "md:border-l md:border-paper/10 md:pl-6",
-                    )}
-                  >
+                  <li key={insight.id} className="group">
                     <Link
                       href={localizedPath(insight.href, locale)}
                       className="flex items-start gap-4"
                     >
                       {thumb && (
-                        <div className="relative aspect-square w-16 shrink-0 overflow-hidden sm:w-20">
+                        <div className="relative aspect-square w-[60px] shrink-0 overflow-hidden sm:w-[68px]">
                           <Image
                             src={thumb.src}
                             alt=""
                             fill
-                            sizes="80px"
+                            sizes="68px"
                             className={cn(
-                              "object-cover opacity-[0.88]",
+                              "object-cover opacity-[0.9]",
                               HOVER_IMAGE,
                               "group-hover:opacity-100",
                             )}
                           />
-                          <span
-                            aria-hidden
-                            className="absolute bottom-0 left-0 h-px w-6 origin-left bg-gold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"
-                          />
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-paper/50">
-                          {t(insight.category, locale)}
-                          <span aria-hidden className="mx-2 text-paper/20">
-                            ·
-                          </span>
+                        <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-paper/55">
+                          <span className="tabular-nums">{insight.category.en === "Briefing" ? "BR" : "PV"}</span>
+                          <span aria-hidden className="mx-2 text-paper/25">·</span>
                           {t(insight.date, locale)}
                         </p>
                         <h3
                           className={cn(
-                            "mt-2 text-[0.9375rem] leading-[1.35] tracking-[-0.005em] text-paper",
+                            "mt-2 line-clamp-2 text-[0.9375rem] leading-[1.35] tracking-[-0.005em] text-paper",
                             HOVER_LINK,
                             "group-hover:text-gold-soft",
                           )}
                         >
                           {t(insight.title, locale)}
                         </h3>
+                        <span
+                          aria-hidden
+                          className="mt-3 block h-px w-6 origin-left bg-gold/60 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-12"
+                        />
                       </div>
                     </Link>
                   </li>
