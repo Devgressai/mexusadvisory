@@ -10,6 +10,7 @@ import { localizedPath } from "@/lib/i18n";
 import { Logo } from "./Logo";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 import { MenuOverlay } from "./MenuOverlay";
 
 interface HeaderProps {
@@ -79,6 +80,11 @@ export function Header({ locale, dict }: HeaderProps) {
 
           {/* Right cluster */}
           <div className="flex items-center gap-4 md:gap-6">
+            <ThemeSwitcher />
+            <span
+              aria-hidden
+              className="hidden h-5 w-px bg-rule lg:inline-block"
+            />
             <WhatsAppButton label={dict.nav.whatsapp} />
             <span
               aria-hidden

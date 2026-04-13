@@ -1,39 +1,22 @@
 @import "tailwindcss";
 
+/* ============================================================================
+   Theme system
+   ----------------------------------------------------------------------------
+   Three themes share the same design architecture and differ only in color.
+   All brand tokens are CSS variables. Tailwind v4's @theme block binds each
+   utility class (bg-paper, text-ink, border-rule, etc.) to var(--color-*),
+   which means overriding those vars under [data-theme="..."] cascades
+   instantly to every component — no per-component churn.
+
+   Themes:
+     - Signature : brand-faithful, logo-exact navy + gold, cool whites
+     - Refined   : softer warm whites, muted bronze-gold, softened mid-navy
+     - Modern    : editorial blue-gray system, desaturated navy, matte gold
+============================================================================ */
+
 @theme {
-  /* ——— Color ———
-     Navy and gold are extracted directly from the official Mexus Advisory logo.
-     Navy background of logo: rgb(19,21,37) = #131525
-     Gold strokes of logo:    rgb(206,166,105) = #CEA669
-  */
-  --color-paper: #ffffff;
-  --color-mist: #fbfbfd;   /* near-imperceptible lift — hero, contact invitation */
-  --color-bone: #f7f8fa;   /* cooler architectural off-white — Focus Modules only */
-  --color-rule: #e6e7eb;
-  --color-ink: #0b1220;
-  --color-ink-muted: #5b6576;
-
-  /* Navy scale — anchored to the exact logo background (#131525) */
-  --color-navy-950: #0a0c18; /* deepest — menu overlay, reserved depth */
-  --color-navy-900: #131525; /* EXACT logo navy — primary structural */
-  --color-navy-800: #1c1e33; /* lift — alt surfaces on navy */
-  --color-navy-700: #272a42; /* hover depth on navy surfaces */
-
-  /* Action blue — functional CTA only, not brand field */
-  --color-action: #1d4ed8;
-  --color-action-hover: #1e40af;
-
-  /* Gold scale — anchored to the exact logo gold (#CEA669) */
-  --color-gold: #cea669;       /* EXACT logo gold — micro-accents only */
-  --color-gold-soft: #d8ae6c;  /* highlight end of logo gold range */
-  --color-gold-deep: #a88250;  /* shadow end — hover, pressed, reserved */
-
-  /* ——— Typography ———
-     BCG-style: clean sans-serif throughout, no serif. Inter is used for
-     both display and UI, with display presence achieved through weight,
-     tight tracking, and optical sizing. If licensing allows later, swap
-     --font-display to Söhne / GT America / Suisse Int'l in one place.
-  */
+  /* ——— Typography ——— */
   --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
@@ -48,6 +31,113 @@
   /* ——— Content widths ——— */
   --max-w-shell: 1440px;
   --max-w-read: 68ch;
+
+  /* ——— Color tokens — bound to theme-switched vars below ———
+     Tailwind generates utility classes (bg-paper, text-ink, etc.) against
+     these vars. Each value is a reference to a --t-* var that is redefined
+     per theme. */
+  --color-paper: var(--t-paper);
+  --color-mist: var(--t-mist);
+  --color-bone: var(--t-bone);
+  --color-rule: var(--t-rule);
+  --color-rule-strong: var(--t-rule-strong);
+  --color-ink: var(--t-ink);
+  --color-ink-muted: var(--t-ink-muted);
+
+  --color-navy-950: var(--t-navy-950);
+  --color-navy-900: var(--t-navy-900);
+  --color-navy-800: var(--t-navy-800);
+  --color-navy-700: var(--t-navy-700);
+
+  --color-action: var(--t-action);
+  --color-action-hover: var(--t-action-hover);
+
+  --color-gold: var(--t-gold);
+  --color-gold-soft: var(--t-gold-soft);
+  --color-gold-deep: var(--t-gold-deep);
+}
+
+/* ============================================================================
+   SIGNATURE — default
+   Brand-faithful. Logo-exact navy (#131525) and gold (#CEA669). Cool whites.
+   Closest to the original identity.
+============================================================================ */
+:root,
+:root[data-theme="signature"] {
+  --t-paper: #ffffff;
+  --t-mist: #fbfbfd;
+  --t-bone: #f7f8fa;
+  --t-rule: #e6e7eb;
+  --t-rule-strong: #cfd2d9;
+  --t-ink: #0b1220;
+  --t-ink-muted: #5b6576;
+
+  --t-navy-950: #0a0c18;
+  --t-navy-900: #131525;
+  --t-navy-800: #1c1e33;
+  --t-navy-700: #272a42;
+
+  --t-action: #1d4ed8;
+  --t-action-hover: #1e40af;
+
+  --t-gold: #cea669;
+  --t-gold-soft: #d8ae6c;
+  --t-gold-deep: #a88250;
+}
+
+/* ============================================================================
+   REFINED — warmer editorial
+   Softer warm off-whites. Muted bronze-gold. Softened mid-navy that reads
+   more premium and less black. The "old money" direction.
+============================================================================ */
+:root[data-theme="refined"] {
+  --t-paper: #faf8f3;
+  --t-mist: #f4f1e9;
+  --t-bone: #ebe7db;
+  --t-rule: #ddd8c9;
+  --t-rule-strong: #c6bfa8;
+  --t-ink: #1b2030;
+  --t-ink-muted: #60677e;
+
+  --t-navy-950: #101733;
+  --t-navy-900: #1a2442;
+  --t-navy-800: #263055;
+  --t-navy-700: #343f68;
+
+  --t-action: #2a4fb0;
+  --t-action-hover: #1f4296;
+
+  --t-gold: #b08858;
+  --t-gold-soft: #c9a67d;
+  --t-gold-deep: #836030;
+}
+
+/* ============================================================================
+   MODERN — editorial consulting
+   Pure white + cool blue-gray tinted surfaces. Desaturated navy that reads
+   like an editorial publication. Matte gold reserved strictly for accents.
+   Strongest BCG-inspired clarity.
+============================================================================ */
+:root[data-theme="modern"] {
+  --t-paper: #ffffff;
+  --t-mist: #f5f7fa;
+  --t-bone: #edf1f6;
+  --t-rule: #d8dee6;
+  --t-rule-strong: #bcc3cf;
+  --t-ink: #0f1722;
+  --t-ink-muted: #5b6776;
+
+  --t-navy-950: #071833;
+  --t-navy-900: #0e2545;
+  --t-navy-800: #183052;
+  --t-navy-700: #22406a;
+
+  --t-action: #1553c5;
+  --t-action-hover: #0e4098;
+
+  --t-gold: #b4924f;
+  --t-gold-soft: #cba96a;
+  --t-gold-deep: #8a6c30;
 }
 
 @layer base {
@@ -69,6 +159,9 @@
     font-size: 1.0625rem;
     line-height: 1.7;
     font-weight: 400;
+    transition:
+      background-color 240ms ease,
+      color 240ms ease;
   }
 
   ::selection {
@@ -76,9 +169,7 @@
     color: var(--color-paper);
   }
 
-  /* Display sans tuning — editorial authority via weight + tracking.
-     Inter 500 with tight tracking + optical size reads closer to BCG Sans
-     than the 600 weight, which drifts into "marketing header" territory. */
+  /* Display sans tuning — editorial authority via weight + tracking */
   .font-display {
     font-family: var(--font-display);
     font-variation-settings: "opsz" 32;
@@ -87,7 +178,7 @@
     font-weight: 500;
   }
 
-  /* Eyebrow: disciplined label */
+  /* Eyebrow — disciplined label */
   .eyebrow {
     font-family: var(--font-sans);
     font-size: 0.75rem;
@@ -98,8 +189,7 @@
     color: var(--color-ink-muted);
   }
 
-  /* Fluid scale — locked. Every home section consumes these utilities.
-     Do NOT hand-roll text-[clamp(...)] inside components. */
+  /* Fluid scale — locked tokens consumed across every home section */
   .text-display {
     font-size: clamp(2.625rem, 4.8vw, 5rem);
     line-height: 1.02;
@@ -137,7 +227,15 @@
     outline-offset: 3px;
   }
 
-  /* Prefers reduced motion */
+  /* Smooth, short transitions for theme-sensitive surfaces */
+  :where(section, header, footer, article, li, a, button) {
+    transition:
+      background-color 240ms ease,
+      border-color 240ms ease,
+      color 240ms ease;
+  }
+
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
