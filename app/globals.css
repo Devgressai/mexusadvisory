@@ -55,6 +55,57 @@
   --color-gold: var(--t-gold);
   --color-gold-soft: var(--t-gold-soft);
   --color-gold-deep: var(--t-gold-deep);
+
+  /* ——— Semantic token layer — bound to themed --t-* vars ———
+     New components should prefer these names (bg-background, text-foreground,
+     bg-card, border-card, bg-primary, etc.). Existing components using brand
+     tokens (bg-paper, text-ink, bg-navy-900) continue to work and theme
+     automatically, so there is zero migration cost. */
+  --color-background: var(--t-paper);
+  --color-background-secondary: var(--t-mist);
+  --color-section-alt: var(--t-bone);
+  --color-surface: var(--t-paper);
+  --color-surface-elevated: var(--t-mist);
+
+  --color-foreground: var(--t-ink);
+  --color-foreground-muted: var(--t-ink-muted);
+  --color-heading: var(--t-ink);
+
+  --color-border: var(--t-rule);
+  --color-border-strong: var(--t-rule-strong);
+
+  --color-primary: var(--t-action);
+  --color-primary-foreground: var(--t-paper);
+  --color-secondary: var(--t-navy-900);
+  --color-secondary-foreground: var(--t-paper);
+  --color-accent: var(--t-gold);
+  --color-accent-foreground: var(--t-navy-900);
+
+  --color-link: var(--t-action);
+  --color-link-hover: var(--t-action-hover);
+  --color-ring: var(--t-gold);
+
+  --color-nav-background: var(--t-paper);
+  --color-nav-foreground: var(--t-ink);
+  --color-nav-border: var(--t-rule);
+
+  --color-card: var(--t-paper);
+  --color-card-foreground: var(--t-ink);
+  --color-card-border: var(--t-rule);
+
+  --color-button-primary: var(--t-action);
+  --color-button-primary-hover: var(--t-action-hover);
+  --color-button-secondary: var(--t-navy-900);
+  --color-button-secondary-hover: var(--t-navy-800);
+
+  --color-input: var(--t-paper);
+  --color-input-border: var(--t-rule);
+
+  --color-hero: var(--t-navy-900);
+  --color-hero-foreground: var(--t-paper);
+
+  --color-badge: var(--t-gold);
+  --color-badge-foreground: var(--t-navy-900);
 }
 
 /* ============================================================================
