@@ -1,14 +1,16 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { Mail } from "lucide-react";
 import { people, getPerson } from "@/content/people";
 import { getCapability } from "@/content/capabilities";
+import { site } from "@/content/site";
 import { isLocale, getDictionary, localizedPath, t, tl } from "@/lib/i18n";
-import { PageHero } from "@/components/primitives/PageHero";
-import { Section } from "@/components/primitives/Section";
 import { Container } from "@/components/primitives/Container";
+import { Breadcrumb } from "@/components/primitives/Breadcrumb";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
+import { Reveal } from "@/components/motion/Reveal";
 import { buildMetadata } from "@/lib/seo";
 
 const PORTRAIT_BY_SLUG: Record<string, string> = {
@@ -24,7 +26,9 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return people.flatMap((p) => ["en", "es"].map((locale) => ({ locale, slug: p.slug })));
+  return people.flatMap((p) =>
+    ["en", "es"].map((locale) => ({ locale, slug: p.slug })),
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -46,68 +50,96 @@ export default async function PersonPage({ params }: Props) {
   const person = getPerson(slug);
   if (!person) notFound();
   const dict = getDictionary(locale);
+  const src = PORTRAIT_BY_SLUG[person.slug];
 
   return (
-    <>
-      <PageHero
-        eyebrow={t(person.role, locale)}
-        title={person.name}
-        lede={t(person.location, locale)}
-        breadcrumb={[
-          { label: "Mexus Advisory", href: localizedPath("/", locale) },
-          { label: dict.nav.about, href: localizedPath("/about", locale) },
-          { label: dict.nav.people, href: localizedPath("/about/people", locale) },
-          { label: person.name },
-        ]}
-      />
+    <section className="bg-paper pt-32 pb-24 md:pt-36 md:pb-28 lg:pt-40 lg:pb-32">
+      <Container>
+        <Breadcrumb
+          items={[
+            { label: "Mexus Advisory", href: localizedPath("/", locale) },
+            { label: dict.nav.about, href: localizedPath("/about", locale) },
+            {
+              label: dict.nav.people,
+              href: localizedPath("/about/people", locale),
+            },
+            { label: person.name },
+          ]}
+          className="mb-10"
+        />
 
-      <Section tone="paper" size="standard">
-        <Container>
-          <div className="grid grid-cols-1 gap-16 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <div className="relative aspect-[4/5] w-full overflow-hidden">
-                {PORTRAIT_BY_SLUG[person.slug] ? (
-                  <Image
-                    src={PORTRAIT_BY_SLUG[person.slug]!}
-                    alt={`${person.name} — ${t(person.role, locale)}`}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-end bg-bone p-8 ring-1 ring-rule">
-                    <span className="font-display text-[4rem] leading-none text-ink-muted/30">
-                      {person.name
-                        .split(" ")
-                        .map((p) => p[0])
-                        .join("")}
-                    </span>
-                  </div>
-                )}
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0 h-full w-px bg-gold/60"
+        {/* Compact header — portrait + name/title/location/email in one row */}
+        <Reveal>
+          <header className="flex flex-col items-start gap-8 border-b border-rule pb-12 sm:flex-row sm:items-start sm:gap-10">
+            {/* Portrait */}
+            <div className="relative aspect-square w-[140px] shrink-0 overflow-hidden md:w-[180px]">
+              {src ? (
+                <Image
+                  src={src}
+                  alt={`${person.name} — ${t(person.role, locale)}`}
+                  fill
+                  priority
+                  sizes="180px"
+                  className="object-cover"
                 />
-              </div>
+              ) : (
+                <div className="flex h-full w-full items-end bg-bone p-4 ring-1 ring-rule">
+                  <span className="font-display text-[2.5rem] leading-none text-ink-muted/40">
+                    {person.name
+                      .split(" ")
+                      .map((p) => p[0])
+                      .join("")}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="md:col-span-7">
+            {/* Name + title + location + email icon */}
+            <div className="flex min-w-0 flex-1 flex-col pt-1 md:pt-3">
+              <h1 className="font-display type-h1 text-ink">{person.name}</h1>
+              <p className="mt-3 max-w-[52ch] text-[0.9375rem] leading-[1.55] text-ink-muted md:mt-4">
+                {t(person.role, locale)}
+              </p>
+              <p className="mt-1 text-[0.8125rem] italic text-ink-muted/70">
+                {t(person.location, locale)}
+              </p>
+              <a
+                href={`mailto:${site.email}`}
+                aria-label={`Email ${person.name}`}
+                className="mt-4 inline-flex h-7 w-7 items-center justify-center text-ink-muted/60 transition-colors duration-300 hover:text-navy-900"
+              >
+                <Mail size={15} strokeWidth={1.5} />
+              </a>
+            </div>
+          </header>
+        </Reveal>
+
+        {/* Bio + practice + languages in a single 2-col layout */}
+        <Reveal delay={0.08}>
+          <div className="mt-14 grid grid-cols-1 gap-16 md:mt-16 md:grid-cols-12">
+            <div className="md:col-span-8">
               <Eyebrow>{locale === "es" ? "Biografía" : "Biography"}</Eyebrow>
-              <div className="mt-8 space-y-6 text-[1.0625rem] leading-[1.8] text-ink-muted">
+              <div className="mt-6 space-y-5 text-[1.0625rem] leading-[1.8] text-ink-muted">
                 {tl(person.bio, locale).map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}
               </div>
+            </div>
 
-              <Eyebrow className="mt-14">{locale === "es" ? "Práctica" : "Practice"}</Eyebrow>
+            <aside className="md:col-span-4">
+              <Eyebrow>{locale === "es" ? "Práctica" : "Practice"}</Eyebrow>
               <ul className="mt-6 space-y-3">
                 {person.practices.map((id) => {
                   const cap = getCapability(id);
                   if (!cap) return null;
                   return (
                     <li key={id}>
-                      <LinkArrow href={localizedPath(`/capabilities/${cap.slug}`, locale)}>
+                      <LinkArrow
+                        href={localizedPath(
+                          `/capabilities/${cap.slug}`,
+                          locale,
+                        )}
+                      >
                         {t(cap.title, locale)}
                       </LinkArrow>
                     </li>
@@ -115,12 +147,16 @@ export default async function PersonPage({ params }: Props) {
                 })}
               </ul>
 
-              <Eyebrow className="mt-14">{locale === "es" ? "Idiomas" : "Languages"}</Eyebrow>
-              <p className="mt-4 text-[1rem] text-ink">{person.languages.join(" · ")}</p>
-            </div>
+              <Eyebrow className="mt-12">
+                {locale === "es" ? "Idiomas" : "Languages"}
+              </Eyebrow>
+              <p className="mt-4 text-[0.9375rem] text-ink">
+                {person.languages.join(" · ")}
+              </p>
+            </aside>
           </div>
-        </Container>
-      </Section>
-    </>
+        </Reveal>
+      </Container>
+    </section>
   );
 }
