@@ -45,9 +45,9 @@ export default async function FocusTopicPage({ params }: Props) {
   return (
     <>
       <PageHero
-        eyebrow={`${topic.number} · ${dict.home.focusEyebrow}`}
-        title={t(topic.title, locale)}
-        lede={t(topic.dek, locale)}
+        eyebrow={`${topic.number} · ${t(topic.title, locale)}`}
+        title={t(topic.dek, locale)}
+        lede={t(topic.lede, locale)}
         meta={`${dict.common.asOf} ${t(topic.dateStamp, locale)}`}
         breadcrumb={[
           { label: "Mexus Advisory", href: localizedPath("/", locale) },
