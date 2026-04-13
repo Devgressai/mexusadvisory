@@ -37,17 +37,22 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
             sizes="100vw"
             className="object-cover"
           />
-          {/* Legibility scrim — stronger on the left where the text lives */}
+          {/* Legibility scrim — stronger on the left where the text lives,
+              lighter on the right so the image reads through clearly */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-r from-navy-900/90 via-navy-900/65 to-navy-900/40"
+            className="absolute inset-0 bg-gradient-to-r from-navy-900/85 via-navy-900/45 to-navy-900/10"
           />
-          {/* Vertical gradient — fully opaque navy at the top and bottom so
-              the hero seams cleanly into the header above and the Services
-              section below */}
+          {/* Edge seam — full navy only in thin bands at the top and bottom
+              so the hero meets the header and the next section cleanly,
+              while leaving the middle of the image fully visible */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-900/50 to-navy-900"
+            className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-navy-900 to-transparent"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy-900 to-transparent"
           />
         </div>
       )}
