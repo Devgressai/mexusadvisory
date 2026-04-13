@@ -36,7 +36,7 @@ export function SectionHeader({
           {eyebrow}
         </Eyebrow>
       )}
-      <h2 className={cn("font-display text-h2 max-w-[22ch]", titleColor)}>
+      <h2 className={cn("font-display text-h1 max-w-[22ch]", titleColor)}>
         {title}
       </h2>
       {lede && (

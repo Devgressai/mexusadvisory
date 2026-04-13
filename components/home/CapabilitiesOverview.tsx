@@ -41,7 +41,7 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
           <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
             <div className="max-w-3xl">
               <Eyebrow className="mb-6">{dict.home.capabilitiesEyebrow}</Eyebrow>
-              <h2 className="font-display text-h2 max-w-[22ch] text-ink">
+              <h2 className="font-display text-h1 max-w-[22ch] text-ink">
                 {dict.home.capabilitiesTitle}
               </h2>
               <p className="text-lede mt-5 max-w-[56ch]">
