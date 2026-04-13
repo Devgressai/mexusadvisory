@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { AnimatePresence, m } from "framer-motion";
+import { useMemo, useRef, useState } from "react";
+import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Locale } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
@@ -21,21 +21,23 @@ interface HeroHomeProps {
 }
 
 /**
- * BCG-style centered hero carousel that rotates like a roundabout.
+ * BCG-style centered hero carousel with cursor-driven scrubbing.
  *
- * Mechanics:
- *   - activeIndex grows/shrinks freely; we wrap it by the content length
- *     when accessing items. Five slots are always visible: center plus
- *     two neighbors on each side.
- *   - For each insight, we compute a "circular delta" d in [-2, 2]. Items
- *     outside that window are unmounted. On rotation, one item unmounts
- *     from the leaving side and one mounts from the incoming side.
- *   - AnimatePresence with a direction custom prop makes entering cards
- *     slide in from the correct side and exiting cards slide out the
- *     opposite side — giving the proper roundabout feel without any
- *     cross-screen jump artifacts.
- *   - Cards that stay visible smoothly transition between their target
- *     x / scale / opacity / y for their new slot.
+ * Interaction model:
+ *   - The active "index" is a float, not an integer, so cards interpolate
+ *     smoothly between slots.
+ *   - Moving the cursor across the carousel area maps cursor X directly to
+ *     the float active index (scrubbing). No clicks required.
+ *   - When the cursor leaves the area, the active index snaps to the
+ *     nearest integer so the display settles on a clear featured card.
+ *   - Arrow buttons step through integer indices as a keyboard-accessible
+ *     alternative.
+ *   - Clicking a card snaps directly to that card.
+ *
+ * Visual:
+ *   - Each card's x / scale / opacity / y derive from its distance to the
+ *     float active index, so the whole row flows continuously as the
+ *     cursor moves. A small inter-card gap keeps the slots from touching.
  */
 
 const CATEGORY_GROUPS = [
@@ -73,50 +75,47 @@ function pickGroup(id: GroupId): InsightEntry[] {
   return padded.slice(0, 6);
 }
 
-// Horizontal offset per slot (px). Hidden slots sit beyond the rendered
-// viewport so entering/exiting animations have somewhere to come from.
-const SLOT_X: Record<number, number> = {
-  0: 0,
-  1: 280,
-  "-1": -280,
-  2: 500,
-  "-2": -500,
-};
-const ENTER_X = 720;
-
-// Scale / opacity / y per absolute distance from center
-const SLOT_SCALE: Record<number, number> = { 0: 1, 1: 0.88, 2: 0.76 };
-const SLOT_OPACITY: Record<number, number> = { 0: 1, 1: 0.9, 2: 0.55 };
-const SLOT_Y: Record<number, number> = { 0: 0, 1: 20, 2: 44 };
+/** Pixel offset per slot unit. A small constant is added so adjacent cards
+ * never touch — "tiny bit" gap between cards even at peak density. */
+const SLOT_BASE_OFFSET = 260;
+const SLOT_GAP = 14;
 
 export function HeroHome({ locale, dict }: HeroHomeProps) {
   const [groupId, setGroupId] = useState<GroupId>("spotlight");
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState<1 | -1>(1);
-
   const items = useMemo(() => pickGroup(groupId), [groupId]);
   const len = items.length;
 
-  const prev = () => {
-    setDirection(-1);
-    setActiveIndex((i) => (i - 1 + len) % len);
-  };
-  const next = () => {
-    setDirection(1);
-    setActiveIndex((i) => (i + 1) % len);
+  // Active index is a float so cards can interpolate between slots.
+  const [active, setActive] = useState<number>((len - 1) / 2);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = carouselRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const relativeX = (e.clientX - rect.left) / rect.width;
+    const clamped = Math.max(0, Math.min(1, relativeX));
+    setActive(clamped * (len - 1));
   };
 
-  // Build the visible window of items with their per-item delta and target
-  // motion values. Items outside |d| ≤ 2 are filtered out.
-  const visible = items
-    .map((insight, i) => {
-      let d = i - activeIndex;
-      if (d > len / 2) d -= len;
-      if (d < -len / 2) d += len;
-      return { insight, d, originalIndex: i };
-    })
-    .filter(({ d }) => Math.abs(d) <= 2)
-    .sort((a, b) => a.d - b.d);
+  const handleLeave = () => {
+    setActive((a) => Math.round(a));
+  };
+
+  const handleTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    const rect = carouselRef.current?.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!rect || !touch) return;
+    const relativeX = (touch.clientX - rect.left) / rect.width;
+    const clamped = Math.max(0, Math.min(1, relativeX));
+    setActive(clamped * (len - 1));
+  };
+
+  const prev = () => setActive((a) => Math.max(0, Math.round(a) - 1));
+  const next = () => setActive((a) => Math.min(len - 1, Math.round(a) + 1));
+
+  // Featured is the card nearest the float active index
+  const featuredIndex = Math.round(active);
+  const featured = items[featuredIndex];
 
   return (
     <section className="relative overflow-hidden bg-paper text-ink">
@@ -147,135 +146,121 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           </p>
         </Reveal>
 
-        {/* Carousel row */}
-        <Reveal variant="soft" delay={0.22}>
-          <div className="relative mt-16 h-[460px] md:mt-20 lg:mt-24 lg:h-[520px]">
-            <AnimatePresence initial={false} custom={direction} mode="popLayout">
-              {visible.map(({ insight, d }) => {
-                const img = getImage(imagery, insight.imageId);
-                const absD = Math.abs(d);
-                const isActive = d === 0;
-                const targetX = SLOT_X[d] ?? 0;
-                const targetScale = SLOT_SCALE[absD] ?? 0.6;
-                const targetOpacity = SLOT_OPACITY[absD] ?? 0;
-                const targetY = SLOT_Y[absD] ?? 0;
-                const widthClass = isActive
-                  ? "w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px]"
-                  : absD === 1
-                    ? "w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px]"
-                    : "w-[130px] sm:w-[170px] md:w-[200px] lg:w-[240px]";
+        {/* Scrub hint */}
+        <Reveal variant="soft" delay={0.2}>
+          <p className="eyebrow mx-auto mt-10 w-fit text-ink-muted/70">
+            {locale === "es"
+              ? "Mueva el cursor para explorar"
+              : "Move the cursor to browse"}
+          </p>
+        </Reveal>
 
-                const itemVariants = {
-                  enter: (dir: 1 | -1) => ({
-                    x: dir > 0 ? ENTER_X : -ENTER_X,
-                    opacity: 0,
-                    scale: 0.68,
-                    y: 80,
-                  }),
-                  center: {
-                    x: targetX,
-                    opacity: targetOpacity,
-                    scale: targetScale,
-                    y: targetY,
-                  },
-                  exit: (dir: 1 | -1) => ({
-                    x: dir > 0 ? -ENTER_X : ENTER_X,
-                    opacity: 0,
-                    scale: 0.62,
-                    y: 80,
-                  }),
-                };
-                return (
-                  <m.div
-                    key={`${groupId}-${insight.id}`}
-                    custom={direction}
-                    variants={itemVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className={cn(
-                      "absolute left-1/2 top-0 -translate-x-1/2",
-                      widthClass,
-                    )}
-                    style={{ zIndex: 10 - absD }}
+        {/* Carousel area */}
+        <Reveal variant="soft" delay={0.24}>
+          <div
+            ref={carouselRef}
+            onMouseMove={handleMove}
+            onMouseLeave={handleLeave}
+            onTouchMove={handleTouch}
+            className="relative mt-8 h-[460px] cursor-ew-resize select-none md:mt-10 lg:h-[520px]"
+            role="region"
+            aria-label={locale === "es" ? "Perspectivas destacadas" : "Featured perspectives"}
+          >
+            {items.map((insight, i) => {
+              const img = getImage(imagery, insight.imageId);
+              const d = i - active; // signed float distance from active
+              const absD = Math.abs(d);
+              const isFeatured = i === featuredIndex;
+
+              // Motion targets — smooth continuous interpolation
+              const x = d * SLOT_BASE_OFFSET + Math.sign(d) * absD * SLOT_GAP;
+              const scale = Math.max(0.5, 1 - absD * 0.12);
+              const opacity = absD > 2.6 ? 0 : Math.max(0, 1 - absD * 0.24);
+              const y = absD * 18;
+              const zIndex = Math.round(20 - absD * 5);
+
+              const widthClass = isFeatured
+                ? "w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px]"
+                : "w-[170px] sm:w-[210px] md:w-[240px] lg:w-[280px]";
+
+              return (
+                <m.div
+                  key={`${groupId}-${insight.id}`}
+                  initial={false}
+                  animate={{ x, scale, opacity, y }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className={cn(
+                    "absolute left-1/2 top-0 -translate-x-1/2 will-change-transform",
+                    widthClass,
+                  )}
+                  style={{ zIndex }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={t(insight.title, locale)}
+                    className="relative block w-full text-left"
                   >
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (d === 0) return;
-                        setDirection(d > 0 ? 1 : -1);
-                        setActiveIndex(
-                          (prev) => (prev + d + len) % len,
-                        );
-                      }}
-                      aria-label={t(insight.title, locale)}
-                      className="relative block w-full"
-                    >
-                      {img && (
-                        <div className="relative aspect-[3/4] w-full overflow-hidden">
-                          <Image
-                            src={img.src}
-                            alt={t(img.alt, locale)}
-                            fill
-                            priority={isActive}
-                            sizes="(min-width: 1024px) 340px, (min-width: 768px) 300px, 60vw"
-                            className="object-cover"
-                          />
-                          {isActive ? (
-                            <>
-                              <div
-                                aria-hidden
-                                className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/25 to-transparent"
-                              />
-                              <div className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7">
-                                <p className="eyebrow text-paper/65">
-                                  {t(insight.category, locale)}
-                                  <span
-                                    aria-hidden
-                                    className="mx-2 text-paper/25"
-                                  >
-                                    ·
-                                  </span>
-                                  {t(insight.date, locale)}
-                                </p>
-                                <h3 className="font-display mt-3 text-[1.0625rem] leading-[1.18] tracking-[-0.015em] text-paper sm:text-[1.1875rem] lg:text-[1.375rem]">
-                                  {t(insight.title, locale)}
-                                </h3>
-                                <span
-                                  aria-hidden
-                                  className="mt-5 block h-px w-8 bg-gold"
-                                />
-                              </div>
-                            </>
-                          ) : (
+                    {img && (
+                      <div className="relative aspect-[3/4] w-full overflow-hidden">
+                        <Image
+                          src={img.src}
+                          alt={t(img.alt, locale)}
+                          fill
+                          priority={isFeatured}
+                          sizes="(min-width: 1024px) 340px, (min-width: 768px) 300px, 60vw"
+                          className="object-cover"
+                        />
+                        {isFeatured ? (
+                          <>
                             <div
                               aria-hidden
-                              className="absolute inset-0 bg-paper/35 transition-opacity duration-300 hover:bg-paper/15"
+                              className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/25 to-transparent"
                             />
-                          )}
-                        </div>
-                      )}
-                    </button>
-                  </m.div>
-                );
-              })}
-            </AnimatePresence>
-
-            {/* Sr-only jump to featured */}
-            {visible.find((v) => v.d === 0) && (
-              <Link
-                href={localizedPath(
-                  visible.find((v) => v.d === 0)!.insight.href,
-                  locale,
-                )}
-                className="sr-only"
-              >
-                {t(visible.find((v) => v.d === 0)!.insight.title, locale)}
-              </Link>
-            )}
+                            <div className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7">
+                              <p className="eyebrow text-paper/65">
+                                {t(insight.category, locale)}
+                                <span
+                                  aria-hidden
+                                  className="mx-2 text-paper/25"
+                                >
+                                  ·
+                                </span>
+                                {t(insight.date, locale)}
+                              </p>
+                              <h3 className="font-display mt-3 text-[1.0625rem] leading-[1.18] tracking-[-0.015em] text-paper sm:text-[1.1875rem] lg:text-[1.375rem]">
+                                {t(insight.title, locale)}
+                              </h3>
+                              <span
+                                aria-hidden
+                                className="mt-5 block h-px w-8 bg-gold"
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <div
+                            aria-hidden
+                            className="absolute inset-0 bg-paper/30 transition-opacity duration-300 hover:bg-paper/10"
+                          />
+                        )}
+                      </div>
+                    )}
+                  </button>
+                </m.div>
+              );
+            })}
           </div>
         </Reveal>
+
+        {/* Featured link for accessibility */}
+        {featured && (
+          <Link
+            href={localizedPath(featured.href, locale)}
+            className="sr-only"
+          >
+            {t(featured.title, locale)}
+          </Link>
+        )}
 
         {/* Controls row */}
         <Reveal variant="soft" delay={0.3}>
@@ -314,8 +299,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                     aria-selected={isActive}
                     onClick={() => {
                       setGroupId(g.id);
-                      setDirection(1);
-                      setActiveIndex(0);
+                      setActive(((pickGroup(g.id).length - 1) / 2));
                     }}
                     className={cn(
                       "relative text-[0.75rem] uppercase tracking-[0.18em] transition-colors duration-300",
