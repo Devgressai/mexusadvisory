@@ -85,8 +85,10 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   const items = useMemo(() => pickGroup(groupId), [groupId]);
   const len = items.length;
 
-  // Active index is a float so cards can interpolate between slots.
-  const [active, setActive] = useState<number>((len - 1) / 2);
+  // Active index is a float so cards can interpolate between slots,
+  // but initial state must be an integer so one card is exactly centered
+  // and featured on first paint (symmetrical fan-out).
+  const [active, setActive] = useState<number>(Math.floor(len / 2));
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -299,7 +301,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                     aria-selected={isActive}
                     onClick={() => {
                       setGroupId(g.id);
-                      setActive(((pickGroup(g.id).length - 1) / 2));
+                      setActive(Math.floor(pickGroup(g.id).length / 2));
                     }}
                     className={cn(
                       "relative text-[0.75rem] uppercase tracking-[0.18em] transition-colors duration-300",
