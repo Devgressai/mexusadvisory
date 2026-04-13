@@ -13,11 +13,6 @@ interface ContactCTAProps {
   dict: Dictionary;
 }
 
-/**
- * Editorial invitation. No box. No widget. A single gold hairline draws
- * at the top of the section, headline spans with generous max-w, CTAs are
- * tertiary LinkArrows — not filled buttons, which would read as widget.
- */
 export function ContactCTA({ locale, dict }: ContactCTAProps) {
   return (
     <Section tone="mist" size="hero">
@@ -51,9 +46,12 @@ export function ContactCTA({ locale, dict }: ContactCTAProps) {
             </FadeRise>
 
             <FadeRise delay={0.24}>
-              <div className="mt-14 flex flex-wrap items-center gap-x-12 gap-y-6 md:mt-16">
+              <div className="mt-14 flex flex-wrap items-center gap-x-10 gap-y-6 md:mt-16">
                 <LinkArrow href={localizedPath("/contact", locale)}>
-                  {dict.common.contactFirm}
+                  {dict.common.discussOpportunity}
+                </LinkArrow>
+                <LinkArrow href={localizedPath("/about/offices", locale)}>
+                  {dict.common.viewAllOffices}
                 </LinkArrow>
                 <WhatsAppButton label={dict.nav.whatsapp} variant="cta" />
               </div>

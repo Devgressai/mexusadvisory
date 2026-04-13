@@ -18,6 +18,9 @@ export interface Dictionary {
     learnMore: string;
     viewAll: string;
     viewAllOffices: string;
+    viewCapabilities: string;
+    exploreInsights: string;
+    discussOpportunity: string;
     requestConsultation: string;
     contactFirm: string;
     howCanWeHelp: string;
@@ -82,8 +85,11 @@ export const en: Dictionary = {
     learnMore: "Learn more",
     viewAll: "View all",
     viewAllOffices: "View all offices",
-    requestConsultation: "Request a consultation",
-    contactFirm: "Contact the firm",
+    viewCapabilities: "View capabilities",
+    exploreInsights: "Explore insights",
+    discussOpportunity: "Discuss an opportunity",
+    requestConsultation: "Discuss an opportunity",
+    contactFirm: "Contact us",
     howCanWeHelp: "How can we help?",
     skipToContent: "Skip to content",
     currentlyViewing: "Currently viewing",
