@@ -4,27 +4,26 @@ import type { Dictionary } from "@/content/i18n/en";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
-import { FadeRise } from "@/components/motion/FadeRise";
+import { Reveal } from "@/components/motion/Reveal";
 import { HairlineDraw } from "@/components/motion/HairlineDraw";
-import { localizedPath } from "@/lib/i18n";
+import { imagery } from "@/content/imagery";
+import { getImage } from "@/lib/imagery";
+import { localizedPath, t } from "@/lib/i18n";
 
 interface CredibilitySectionProps {
   locale: Locale;
   dict: Dictionary;
 }
 
-const CREDIBILITY_IMG_ALT = {
-  en: "Private advisory library with tall walnut shelves and warm indirect lighting",
-  es: "Biblioteca de asesoría privada con altas estanterías de nogal e iluminación indirecta cálida",
-};
-
 /**
- * The single navy moment on the homepage. Architectural composition with
- * a narrow atmospheric image on the right, treated with heavy navy wash so
- * it reads as depth rather than photography. Body + meta list stack on the
- * left. All CTAs are text-led.
+ * About / Credibility — the single navy moment on the homepage, now with
+ * an atmospheric architectural image on the right column. Body + metadata
+ * list + CTAs stack on the left 7/12. Heavy navy gradient overlay keeps
+ * the image as depth rather than photography.
  */
 export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
+  const img = getImage(imagery, "about-practice");
+
   const meta = [
     { label: dict.home.credibilityMeta.founded, value: "2019" },
     { label: dict.home.credibilityMeta.practices, value: "5" },
@@ -33,7 +32,7 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
   ];
 
   return (
-    <section className="relative bg-navy-900 text-paper">
+    <section className="relative overflow-hidden bg-navy-900 text-paper">
       <div className="absolute inset-x-0 top-0 h-px">
         <HairlineDraw tone="gold" />
       </div>
@@ -42,31 +41,30 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
         <div className="grid grid-cols-12 gap-x-6 gap-y-16">
           {/* Header */}
           <div className="col-span-12">
-            <FadeRise>
+            <Reveal>
               <div className="flex items-center gap-5">
                 <span aria-hidden className="h-px w-10 bg-gold" />
                 <Eyebrow tone="gold" withMarker={false} className="text-gold">
                   {dict.home.credibilityEyebrow}
                 </Eyebrow>
               </div>
-            </FadeRise>
-            <FadeRise delay={0.08}>
+            </Reveal>
+            <Reveal delay={0.08}>
               <h2 className="font-display text-h1 mt-10 max-w-[24ch] text-paper">
                 {dict.home.credibilityTitle}
               </h2>
-            </FadeRise>
+            </Reveal>
           </div>
 
           {/* Body + meta stacked */}
-          <FadeRise delay={0.15} className="col-span-12 lg:col-span-7">
+          <Reveal delay={0.15} className="col-span-12 lg:col-span-7">
             <div className="space-y-6 text-[1.0625rem] leading-[1.8] text-paper/75">
               {dict.home.credibilityBody.map((para, idx) => (
                 <p key={idx}>{para}</p>
               ))}
             </div>
 
-            {/* Meta list */}
-            <dl className="mt-12 grid grid-cols-2 gap-x-12 gap-y-0 border-t border-paper/15 md:grid-cols-4">
+            <dl className="mt-12 grid grid-cols-2 gap-x-12 border-t border-paper/15 md:grid-cols-4">
               {meta.map((item, idx) => (
                 <div key={idx} className="border-b border-paper/15 py-5">
                   <dt className="eyebrow text-paper/45">{item.label}</dt>
@@ -77,7 +75,6 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
               ))}
             </dl>
 
-            {/* CTAs */}
             <div className="mt-12 flex flex-wrap gap-x-10 gap-y-6">
               <LinkArrow href={localizedPath("/about", locale)} tone="paper">
                 {dict.nav.about}
@@ -89,36 +86,40 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
                 {dict.nav.offices}
               </LinkArrow>
             </div>
-          </FadeRise>
+          </Reveal>
 
-          {/* Narrow atmospheric image column */}
-          <FadeRise
-            delay={0.22}
-            className="relative col-span-12 lg:col-span-4 lg:col-start-9"
-          >
-            <div className="relative aspect-[3/4] w-full overflow-hidden">
-              <Image
-                src="/imagery/credibility.webp"
-                alt={CREDIBILITY_IMG_ALT[locale]}
-                fill
-                sizes="(min-width: 1024px) 28vw, 100vw"
-                className="object-cover opacity-80"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-b from-navy-900/40 via-navy-900/20 to-navy-900/60"
-              />
-              <div aria-hidden className="absolute left-0 top-0 h-full w-px bg-gold/60" />
-            </div>
-            <div className="mt-5 flex items-center gap-3">
-              <span aria-hidden className="h-px w-6 bg-gold" />
-              <p className="eyebrow text-paper/60">
-                {locale === "es"
-                  ? "Un gabinete privado"
-                  : "A private practice"}
-              </p>
-            </div>
-          </FadeRise>
+          {/* Atmospheric image column */}
+          {img && (
+            <Reveal
+              variant="soft"
+              delay={0.22}
+              className="relative col-span-12 lg:col-span-4 lg:col-start-9"
+            >
+              <div className="relative aspect-[3/4] w-full overflow-hidden">
+                <Image
+                  src={img.src}
+                  alt={t(img.alt, locale)}
+                  fill
+                  sizes="(min-width: 1024px) 28vw, 100vw"
+                  className="object-cover opacity-80"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-b from-navy-900/40 via-navy-900/20 to-navy-900/60"
+                />
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-0 h-full w-px bg-gold/60"
+                />
+              </div>
+              <div className="mt-5 flex items-center gap-3">
+                <span aria-hidden className="h-px w-6 bg-gold" />
+                <p className="eyebrow text-paper/60">
+                  {locale === "es" ? "Un gabinete privado" : "A private practice"}
+                </p>
+              </div>
+            </Reveal>
+          )}
         </div>
       </Container>
     </section>
