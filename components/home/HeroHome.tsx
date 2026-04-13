@@ -21,73 +21,114 @@ interface HeroHomeProps {
 }
 
 /**
- * BCG-style centered hero carousel.
+ * BCG-style centered hero carousel that rotates like a roundabout.
  *
- * Composition (desktop):
- *   - centered "WELCOME TO MEXUS ADVISORY" eyebrow
- *   - centered Fraunces headline
- *   - 5 portrait cards arranged horizontally, the middle one is featured
- *     at full size and carries an article title overlay, outer cards
- *     scale down progressively
- *   - category tabs beneath the cards cycle which group is featured
- *   - left/right arrows at the bottom-left rotate the active index
- *
- * Interaction:
- *   - clicking a tab resets the active index to 2 (the middle slot)
- *     and swaps the displayed insight set
- *   - clicking arrows rotates the active index through the set
- *   - the active (center) card gets 100% scale, a gold hairline indicator,
- *     and a bottom overlay with the article title
- *   - neighbors scale to 0.88 then 0.76 with graduated opacity
+ * Mechanics:
+ *   - activeIndex grows/shrinks freely; we wrap it by the content length
+ *     when accessing items. Five slots are always visible: center plus
+ *     two neighbors on each side.
+ *   - For each insight, we compute a "circular delta" d in [-2, 2]. Items
+ *     outside that window are unmounted. On rotation, one item unmounts
+ *     from the leaving side and one mounts from the incoming side.
+ *   - AnimatePresence with a direction custom prop makes entering cards
+ *     slide in from the correct side and exiting cards slide out the
+ *     opposite side — giving the proper roundabout feel without any
+ *     cross-screen jump artifacts.
+ *   - Cards that stay visible smoothly transition between their target
+ *     x / scale / opacity / y for their new slot.
  */
 
 const CATEGORY_GROUPS = [
   { id: "spotlight", label: { en: "Mexus Spotlight", es: "Destacado" } },
-  { id: "immigration", label: { en: "Immigration", es: "Migración" }, practice: "global-immigration-consulting" },
-  { id: "capital", label: { en: "Capital", es: "Capital" }, practice: "alternative-capital-sourcing" },
-  { id: "jurisdiction", label: { en: "Jurisdiction", es: "Jurisdicción" }, practice: "jurisdictional-optimization" },
+  {
+    id: "immigration",
+    label: { en: "Immigration", es: "Migración" },
+    practice: "global-immigration-consulting",
+  },
+  {
+    id: "capital",
+    label: { en: "Capital", es: "Capital" },
+    practice: "alternative-capital-sourcing",
+  },
+  {
+    id: "jurisdiction",
+    label: { en: "Jurisdiction", es: "Jurisdicción" },
+    practice: "jurisdictional-optimization",
+  },
 ] as const;
 
 type GroupId = (typeof CATEGORY_GROUPS)[number]["id"];
 
 function pickGroup(id: GroupId): InsightEntry[] {
-  // All groups draw from the same canonical insights list; spotlight shows
-  // the full curated set. Other groups filter by the target href's practice.
-  if (id === "spotlight") return insights.slice(0, 5);
+  if (id === "spotlight") return insights;
   const group = CATEGORY_GROUPS.find((g) => g.id === id);
-  if (!group || !("practice" in group)) return insights.slice(0, 5);
+  if (!group || !("practice" in group)) return insights;
   const filtered = insights.filter((i) => i.href.includes(group.practice));
-  // Pad to 5 items by repeating from the global list so the carousel always
-  // has a full fan-out — visually stable regardless of how many insights
-  // happen to match a given practice.
   const padded = [...filtered];
   let idx = 0;
-  while (padded.length < 5 && idx < insights.length) {
+  while (padded.length < 6 && idx < insights.length) {
     const next = insights[idx++];
     if (next && !padded.some((p) => p.id === next.id)) padded.push(next);
   }
-  return padded.slice(0, 5);
+  return padded.slice(0, 6);
 }
+
+// Horizontal offset per slot (px). Hidden slots sit beyond the rendered
+// viewport so entering/exiting animations have somewhere to come from.
+const SLOT_X: Record<number, number> = {
+  0: 0,
+  1: 280,
+  "-1": -280,
+  2: 500,
+  "-2": -500,
+};
+const ENTER_X = 720;
+
+// Scale / opacity / y per absolute distance from center
+const SLOT_SCALE: Record<number, number> = { 0: 1, 1: 0.88, 2: 0.76 };
+const SLOT_OPACITY: Record<number, number> = { 0: 1, 1: 0.9, 2: 0.55 };
+const SLOT_Y: Record<number, number> = { 0: 0, 1: 20, 2: 44 };
 
 export function HeroHome({ locale, dict }: HeroHomeProps) {
   const [groupId, setGroupId] = useState<GroupId>("spotlight");
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
 
   const items = useMemo(() => pickGroup(groupId), [groupId]);
-  const featured = items[activeIndex] ?? items[2] ?? items[0];
+  const len = items.length;
 
-  const prev = () => setActiveIndex((i) => (i - 1 + items.length) % items.length);
-  const next = () => setActiveIndex((i) => (i + 1) % items.length);
+  const prev = () => {
+    setDirection(-1);
+    setActiveIndex((i) => (i - 1 + len) % len);
+  };
+  const next = () => {
+    setDirection(1);
+    setActiveIndex((i) => (i + 1) % len);
+  };
+
+  // Build the visible window of items with their per-item delta and target
+  // motion values. Items outside |d| ≤ 2 are filtered out.
+  const visible = items
+    .map((insight, i) => {
+      let d = i - activeIndex;
+      if (d > len / 2) d -= len;
+      if (d < -len / 2) d += len;
+      return { insight, d, originalIndex: i };
+    })
+    .filter(({ d }) => Math.abs(d) <= 2)
+    .sort((a, b) => a.d - b.d);
 
   return (
     <section className="relative overflow-hidden bg-paper text-ink">
-      <Container className="relative pt-36 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24">
+      <Container className="relative pt-36 pb-20 md:pt-44 md:pb-24 lg:pt-48 lg:pb-28">
         {/* Eyebrow */}
         <Reveal>
           <div className="flex items-center justify-center gap-4">
             <span aria-hidden className="h-px w-10 bg-gold" />
             <p className="eyebrow text-ink-muted">
-              {locale === "es" ? "Bienvenido a Mexus Advisory" : "Welcome to Mexus Advisory"}
+              {locale === "es"
+                ? "Bienvenido a Mexus Advisory"
+                : "Welcome to Mexus Advisory"}
             </p>
             <span aria-hidden className="h-px w-10 bg-gold" />
           </div>
@@ -108,113 +149,131 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
 
         {/* Carousel row */}
         <Reveal variant="soft" delay={0.22}>
-          <div className="relative mt-16 md:mt-20 lg:mt-24">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <m.ul
-                key={groupId}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-end justify-center gap-3 sm:gap-4 md:gap-5"
-              >
-                {items.map((insight, i) => {
-                  const img = getImage(imagery, insight.imageId);
-                  const distance = Math.abs(i - activeIndex);
-                  const isActive = distance === 0;
-                  const isNeighbor = distance === 1;
-                  return (
-                    <m.li
-                      key={`${groupId}-${insight.id}`}
-                      initial={false}
-                      animate={{
-                        scale: isActive ? 1 : isNeighbor ? 0.88 : 0.76,
-                        opacity: isActive ? 1 : isNeighbor ? 0.85 : 0.6,
-                        y: isActive ? 0 : isNeighbor ? 18 : 36,
+          <div className="relative mt-16 h-[460px] md:mt-20 lg:mt-24 lg:h-[520px]">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              {visible.map(({ insight, d }) => {
+                const img = getImage(imagery, insight.imageId);
+                const absD = Math.abs(d);
+                const isActive = d === 0;
+                const targetX = SLOT_X[d] ?? 0;
+                const targetScale = SLOT_SCALE[absD] ?? 0.6;
+                const targetOpacity = SLOT_OPACITY[absD] ?? 0;
+                const targetY = SLOT_Y[absD] ?? 0;
+                const widthClass = isActive
+                  ? "w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px]"
+                  : absD === 1
+                    ? "w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px]"
+                    : "w-[130px] sm:w-[170px] md:w-[200px] lg:w-[240px]";
+
+                return (
+                  <m.div
+                    key={`${groupId}-${insight.id}`}
+                    custom={direction}
+                    initial={(dir: 1 | -1) => ({
+                      x: dir > 0 ? ENTER_X : -ENTER_X,
+                      opacity: 0,
+                      scale: 0.68,
+                      y: 80,
+                    })}
+                    animate={{
+                      x: targetX,
+                      opacity: targetOpacity,
+                      scale: targetScale,
+                      y: targetY,
+                    }}
+                    exit={(dir: 1 | -1) => ({
+                      x: dir > 0 ? -ENTER_X : ENTER_X,
+                      opacity: 0,
+                      scale: 0.62,
+                      y: 80,
+                    })}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className={cn(
+                      "absolute left-1/2 top-0 -translate-x-1/2",
+                      widthClass,
+                    )}
+                    style={{ zIndex: 10 - absD }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (d === 0) return;
+                        setDirection(d > 0 ? 1 : -1);
+                        setActiveIndex(
+                          (prev) => (prev + d + len) % len,
+                        );
                       }}
-                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                      className={cn(
-                        "group relative shrink-0",
-                        isActive
-                          ? "w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px]"
-                          : "w-[120px] sm:w-[150px] md:w-[180px] lg:w-[210px]",
-                      )}
+                      aria-label={t(insight.title, locale)}
+                      className="relative block w-full"
                     >
-                      <button
-                        type="button"
-                        onClick={() => setActiveIndex(i)}
-                        aria-label={t(insight.title, locale)}
-                        className="relative block w-full"
-                      >
-                        {img && (
-                          <div className="relative aspect-[3/4] w-full overflow-hidden">
-                            <Image
-                              src={img.src}
-                              alt={t(img.alt, locale)}
-                              fill
-                              priority={isActive}
-                              sizes="(min-width: 1024px) 300px, (min-width: 768px) 260px, 50vw"
-                              className="object-cover"
-                            />
-                            {/* Active card overlay */}
-                            {isActive && (
-                              <>
-                                <div
-                                  aria-hidden
-                                  className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/25 to-transparent"
-                                />
-                                <div className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7">
-                                  <p className="eyebrow text-paper/65">
-                                    {t(insight.category, locale)}
-                                    <span aria-hidden className="mx-2 text-paper/25">
-                                      ·
-                                    </span>
-                                    {t(insight.date, locale)}
-                                  </p>
-                                  <h3 className="font-display mt-3 text-[1.0625rem] leading-[1.18] tracking-[-0.015em] text-paper sm:text-[1.1875rem] lg:text-[1.375rem]">
-                                    {t(insight.title, locale)}
-                                  </h3>
-                                  <span
-                                    aria-hidden
-                                    className="mt-5 block h-px w-8 bg-gold"
-                                  />
-                                </div>
-                              </>
-                            )}
-                            {/* Inactive card subtle wash */}
-                            {!isActive && (
+                      {img && (
+                        <div className="relative aspect-[3/4] w-full overflow-hidden">
+                          <Image
+                            src={img.src}
+                            alt={t(img.alt, locale)}
+                            fill
+                            priority={isActive}
+                            sizes="(min-width: 1024px) 340px, (min-width: 768px) 300px, 60vw"
+                            className="object-cover"
+                          />
+                          {isActive ? (
+                            <>
                               <div
                                 aria-hidden
-                                className="absolute inset-0 bg-paper/40 transition-opacity duration-300 hover:bg-paper/20"
+                                className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/25 to-transparent"
                               />
-                            )}
-                          </div>
-                        )}
-                      </button>
-                    </m.li>
-                  );
-                })}
-              </m.ul>
+                              <div className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7">
+                                <p className="eyebrow text-paper/65">
+                                  {t(insight.category, locale)}
+                                  <span
+                                    aria-hidden
+                                    className="mx-2 text-paper/25"
+                                  >
+                                    ·
+                                  </span>
+                                  {t(insight.date, locale)}
+                                </p>
+                                <h3 className="font-display mt-3 text-[1.0625rem] leading-[1.18] tracking-[-0.015em] text-paper sm:text-[1.1875rem] lg:text-[1.375rem]">
+                                  {t(insight.title, locale)}
+                                </h3>
+                                <span
+                                  aria-hidden
+                                  className="mt-5 block h-px w-8 bg-gold"
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <div
+                              aria-hidden
+                              className="absolute inset-0 bg-paper/35 transition-opacity duration-300 hover:bg-paper/15"
+                            />
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  </m.div>
+                );
+              })}
             </AnimatePresence>
 
-            {/* Featured card link overlay — clicking the whole center card
-                also navigates to the target insight */}
-            {featured && (
+            {/* Sr-only jump to featured */}
+            {visible.find((v) => v.d === 0) && (
               <Link
-                href={localizedPath(featured.href, locale)}
-                aria-label={t(featured.title, locale)}
+                href={localizedPath(
+                  visible.find((v) => v.d === 0)!.insight.href,
+                  locale,
+                )}
                 className="sr-only"
               >
-                {t(featured.title, locale)}
+                {t(visible.find((v) => v.d === 0)!.insight.title, locale)}
               </Link>
             )}
           </div>
         </Reveal>
 
-        {/* Controls row: arrows + category tabs */}
+        {/* Controls row */}
         <Reveal variant="soft" delay={0.3}>
-          <div className="mt-12 grid grid-cols-12 items-center gap-6 md:mt-16">
-            {/* Arrow controls */}
+          <div className="mt-10 grid grid-cols-12 items-center gap-6 md:mt-14">
             <div className="col-span-4 flex items-center gap-2 md:col-span-3">
               <button
                 type="button"
@@ -234,11 +293,10 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               </button>
             </div>
 
-            {/* Category tabs */}
             <div
               role="tablist"
               aria-label={locale === "es" ? "Categorías" : "Categories"}
-              className="col-span-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:col-span-9 md:justify-center lg:gap-x-10"
+              className="col-span-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:col-span-9 lg:gap-x-10"
             >
               {CATEGORY_GROUPS.map((g) => {
                 const isActive = g.id === groupId;
@@ -250,11 +308,14 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                     aria-selected={isActive}
                     onClick={() => {
                       setGroupId(g.id);
-                      setActiveIndex(2);
+                      setDirection(1);
+                      setActiveIndex(0);
                     }}
                     className={cn(
                       "relative text-[0.75rem] uppercase tracking-[0.18em] transition-colors duration-300",
-                      isActive ? "text-ink" : "text-ink-muted hover:text-ink",
+                      isActive
+                        ? "text-ink"
+                        : "text-ink-muted hover:text-ink",
                     )}
                   >
                     <span className="relative">
@@ -275,7 +336,6 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
         </Reveal>
       </Container>
 
-      {/* Bottom hairline to seam into the next section */}
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-rule" />
     </section>
   );
