@@ -3,18 +3,14 @@ import { cn } from "@/lib/cn";
 
 interface LogoProps {
   /**
-   * Square side in pixels. Renders the owl mark inside its native navy
-   * container exactly as the brand mandates — colors are never altered.
+   * Rendered height in pixels. The owl mark is gold-on-transparent, so it
+   * sits directly on any background without a navy container. Colors are
+   * never altered — the source asset preserves the brand gold.
    */
   size?: number;
   className?: string;
 }
 
-/**
- * Mexus mark — the owl, tightly cropped from the official logo via
- * ImageMagick into a clean square. The navy background is part of the
- * brand and is preserved at every size.
- */
 export function Logo({ size = 44, className }: LogoProps) {
   return (
     <span
@@ -23,7 +19,7 @@ export function Logo({ size = 44, className }: LogoProps) {
       style={{ width: size, height: size }}
     >
       <Image
-        src="/brand/mexus-mark-square.png"
+        src="/brand/mexus-mark-owl.png"
         alt=""
         width={size}
         height={size}
