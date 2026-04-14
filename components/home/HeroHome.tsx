@@ -122,19 +122,6 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   return (
     <section className="relative overflow-hidden bg-paper text-ink">
       <Container className="relative pt-36 pb-20 md:pt-44 md:pb-24 lg:pt-48 lg:pb-28">
-        {/* Eyebrow */}
-        <Reveal>
-          <div className="flex items-center justify-center gap-4">
-            <span aria-hidden className="h-px w-10 bg-gold" />
-            <p className="eyebrow text-ink-muted">
-              {locale === "es"
-                ? "Bienvenido a Mexus Advisory"
-                : "Welcome to Mexus Advisory"}
-            </p>
-            <span aria-hidden className="h-px w-10 bg-gold" />
-          </div>
-        </Reveal>
-
         {/* Centered headline */}
         <Reveal delay={0.08}>
           <h1 className="font-display type-display mx-auto mt-10 max-w-[22ch] text-center text-ink md:mt-12 lg:mt-14">
