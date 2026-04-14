@@ -12,16 +12,19 @@ interface LogoProps {
 }
 
 export function Logo({ size = 44, className }: LogoProps) {
+  // Source asset aspect ratio (owl mark, transparent)
+  const ratio = 1679 / 1099;
+  const width = Math.round(size * ratio);
   return (
     <span
       aria-label="Mexus Advisory"
       className={cn("inline-flex shrink-0 items-center justify-center", className)}
-      style={{ width: size, height: size }}
+      style={{ width, height: size }}
     >
       <Image
-        src="/brand/mexus-mark-owl.png"
+        src="/brand/dorado-mark.png"
         alt=""
-        width={size}
+        width={width}
         height={size}
         priority
         className="h-full w-full object-contain"
