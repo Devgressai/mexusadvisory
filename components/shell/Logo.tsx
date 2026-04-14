@@ -13,7 +13,7 @@ interface LogoProps {
 
 export function Logo({ size = 44, className }: LogoProps) {
   // Source asset aspect ratio (owl mark, transparent)
-  const ratio = 1679 / 1099;
+  const ratio = 1736 / 1948;
   const width = Math.round(size * ratio);
   return (
     <span
@@ -22,7 +22,7 @@ export function Logo({ size = 44, className }: LogoProps) {
       style={{ width, height: size }}
     >
       <Image
-        src="/brand/dorado-mark.png"
+        src="/brand/dorado-full.png"
         alt=""
         width={width}
         height={size}

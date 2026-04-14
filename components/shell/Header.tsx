@@ -70,10 +70,7 @@ export function Header({ locale, dict }: HeaderProps) {
               className="flex items-center gap-3.5"
               aria-label="Mexus Advisory — Home"
             >
-              <Logo size={scrolled ? 40 : 44} className="transition-[width,height] duration-300" />
-              <span className="font-display hidden text-[1.0625rem] font-medium tracking-[-0.005em] text-ink md:inline">
-                Mexus Advisory
-              </span>
+              <Logo size={scrolled ? 48 : 56} className="transition-[width,height] duration-300" />
             </Link>
           </div>
 
