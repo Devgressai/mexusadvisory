@@ -184,9 +184,8 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                   )}
                   style={{ zIndex }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setActive(i)}
+                  <Link
+                    href={localizedPath(insight.href, locale)}
                     aria-label={t(insight.title, locale)}
                     className="relative block w-full text-left"
                   >
@@ -234,7 +233,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                         )}
                       </div>
                     )}
-                  </button>
+                  </Link>
                 </m.div>
               );
             })}
