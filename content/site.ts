@@ -7,7 +7,7 @@ export const site: SiteSettings = {
     es: "Consejo privado transfronterizo",
   },
   description: {
-    en: "Private counsel for principals Moving capital, people, and risk across borders.",
+    en: "Moving capital, people, and risk across borders.",
     es: "Consejo privado para principales que mueven capital, personas y riesgo a través de fronteras.",
   },
   email: "advisory@mexus.example",
