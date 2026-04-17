@@ -101,7 +101,7 @@ export const en: Dictionary = {
     heroEyebrow: "Cross-border advisory",
     heroTitle: "Expertly managing assets, people, and risks across borders.",
     heroLede:
-      "Mexus Advisory guides founders, investors, and families through immigration volatility, jurisdictional complexity, and international capital decisions — with precision, discretion, and a global network.",
+      "Mexus Advisory guides founders, investors, and families through ever-changing immigration pathways, fiscal and jurisdictional complexity, and optimized international asset deployment — with discretion, precision, and a vast global network.",
     focusEyebrow: "Mexus Focus",
     focusTitle: "Where the terrain is shifting.",
     focusLede:

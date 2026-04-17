@@ -37,7 +37,7 @@ export const es: Dictionary = {
     heroTitle:
       "Gestionando expertamente activos, personas y riesgos a través de fronteras.",
     heroLede:
-      "Mexus Advisory guía a fundadores, inversionistas y familias a través de la volatilidad migratoria, la complejidad jurisdiccional y las decisiones de capital internacional — con precisión, discreción y una red global.",
+      "Mexus Advisory guía a fundadores, inversionistas y familias a través de rutas migratorias en constante cambio, complejidad fiscal y jurisdiccional, y el despliegue óptimo de activos internacionales — con discreción, precisión y una vasta red global.",
     focusEyebrow: "Mexus Focus",
     focusTitle: "Donde el terreno está cambiando.",
     focusLede:
