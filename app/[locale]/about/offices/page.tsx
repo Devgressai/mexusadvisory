@@ -18,10 +18,15 @@ interface Props {
 
 const IMAGE_BY_OFFICE: Record<string, string> = {
   "mexico-city": "office-mexico-city",
-  "new-york": "office-new-york",
-  miami: "office-miami",
-  monterrey: "office-monterrey",
+  "el-paso": "office-el-paso",
+  "san-antonio": "office-san-antonio",
+  "ciudad-juarez": "office-juarez",
+  chihuahua: "office-chihuahua",
 };
+
+// Editorial grade — gently desaturates + lifts contrast so real-world
+// photography reads closer to the site's cinematic architectural palette.
+const EDITORIAL_FILTER = "saturate(0.78) contrast(1.04) brightness(0.97)";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -66,7 +71,7 @@ export default async function OfficesPage({ params }: Props) {
 
         {/* 4-col image grid (same pattern as homepage OfficesPreview) */}
         <Reveal variant="stagger" className="mt-14 md:mt-16">
-          <ul className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {offices.map((office) => {
               const img = getImage(imagery, IMAGE_BY_OFFICE[office.id] ?? "");
               return (
@@ -77,12 +82,13 @@ export default async function OfficesPage({ params }: Props) {
                         src={img.src}
                         alt={t(img.alt, locale)}
                         fill
-                        sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
                         className={cn(
                           "object-cover opacity-[0.96]",
                           HOVER_IMAGE,
                           "group-hover:opacity-100",
                         )}
+                        style={{ filter: EDITORIAL_FILTER }}
                       />
                       <span
                         aria-hidden

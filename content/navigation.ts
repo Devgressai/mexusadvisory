@@ -50,9 +50,10 @@ export const primaryNav: NavItem[] = [
 
 export const footerOffices: NavItem[] = [
   { label: { en: "Mexico City", es: "Ciudad de México" }, href: "/about/offices#mexico-city" },
-  { label: { en: "New York", es: "Nueva York" }, href: "/about/offices#new-york" },
-  { label: { en: "Miami", es: "Miami" }, href: "/about/offices#miami" },
-  { label: { en: "Monterrey", es: "Monterrey" }, href: "/about/offices#monterrey" },
+  { label: { en: "El Paso", es: "El Paso" }, href: "/about/offices#el-paso" },
+  { label: { en: "San Antonio", es: "San Antonio" }, href: "/about/offices#san-antonio" },
+  { label: { en: "Ciudad Juárez", es: "Ciudad Juárez" }, href: "/about/offices#ciudad-juarez" },
+  { label: { en: "Chihuahua", es: "Chihuahua" }, href: "/about/offices#chihuahua" },
 ];
 
 export const footerAbout: NavItem[] = [

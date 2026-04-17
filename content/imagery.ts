@@ -221,53 +221,62 @@ export const imagery: ImageRegistry = {
     },
   },
 
-  // ———————————————————————————————————————————— Offices (4 cities)
+  // ———————————————————————————————————————————— Offices (5 cities — client-supplied photography)
   "office-mexico-city": {
     id: "office-mexico-city",
-    src: "/imagery/office-mexico-city.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
-    prompt:
-      "Editorial architectural photograph of a Mexico City Polanco boulevard with modernist stone facades and bougainvillea trees at golden hour, long shadows, no people, no text, no legible signage, muted warm palette, cinematic composition, medium format, photorealistic",
+    src: "/imagery/office-mexico-city.jpg",
+    aspect: "portrait",
+    source: "custom",
+    prompt: "Client-supplied photograph of the Mexico City office building in Polanco (Rubén Darío 281).",
     alt: {
-      en: "Polanco boulevard with modernist stone facades at golden hour",
-      es: "Avenida en Polanco con fachadas de piedra modernistas en la hora dorada",
+      en: "Mexus Advisory Mexico City office on Rubén Darío in Polanco",
+      es: "Oficina de Mexus Advisory en Ciudad de México sobre Rubén Darío, Polanco",
     },
   },
-  "office-new-york": {
-    id: "office-new-york",
-    src: "/imagery/office-new-york.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
-    prompt:
-      "Editorial architectural photograph of a Midtown Manhattan pre-war stone office building facade in soft morning light, looking up, no people, no text, no legible signage, muted cool palette, cinematic composition, medium format, photorealistic",
+  "office-el-paso": {
+    id: "office-el-paso",
+    src: "/imagery/office-el-paso.jpg",
+    aspect: "portrait",
+    source: "custom",
+    prompt: "Client-supplied photograph of the El Paso downtown district at 213 S. El Paso Street.",
     alt: {
-      en: "Midtown Manhattan pre-war stone office facade in morning light",
-      es: "Fachada de un edificio de piedra pre-guerra en Midtown Manhattan bajo la luz de la mañana",
+      en: "Mexus Advisory El Paso office on S. El Paso Street, downtown El Paso",
+      es: "Oficina de Mexus Advisory en El Paso, S. El Paso Street, centro de El Paso",
     },
   },
-  "office-miami": {
-    id: "office-miami",
-    src: "/imagery/office-miami.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
-    prompt:
-      "Editorial architectural photograph of a Brickell Miami modernist tower detail with palm shadows cast on a white stone wall at golden hour, no people, no text, no signage, muted warm palette, cinematic composition, medium format, photorealistic",
+  "office-san-antonio": {
+    id: "office-san-antonio",
+    src: "/imagery/office-san-antonio.jpg",
+    aspect: "portrait",
+    source: "custom",
+    prompt: "Client-supplied photograph of the San Antonio office tower at 112 E Pecan Street.",
     alt: {
-      en: "Brickell Miami modernist tower detail with palm shadows at golden hour",
-      es: "Detalle de torre modernista en Brickell Miami con sombras de palmeras en la hora dorada",
+      en: "Mexus Advisory San Antonio office tower on E Pecan Street",
+      es: "Torre de oficinas de Mexus Advisory en San Antonio, E Pecan Street",
     },
   },
-  "office-monterrey": {
-    id: "office-monterrey",
-    src: "/imagery/office-monterrey.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
+  "office-juarez": {
+    id: "office-juarez",
+    src: "/imagery/office-juarez.jpg",
+    aspect: "portrait",
+    source: "custom",
     prompt:
-      "Editorial architectural photograph of a Valle Oriente Monterrey modernist stone and glass low-rise at golden hour with the Cerro de la Silla mountain visible in the hazy distance, no people, no text, no signage, muted warm palette, cinematic composition, medium format, photorealistic",
+      "Client-supplied photograph of the Ciudad Juárez office in Parque Industrial Antonio J. Bermúdez.",
     alt: {
-      en: "Valle Oriente Monterrey modernist stone and glass low-rise at golden hour",
-      es: "Edificio moderno de piedra y vidrio en Valle Oriente Monterrey en la hora dorada",
+      en: "Mexus Advisory Ciudad Juárez office in Parque Industrial Antonio J. Bermúdez",
+      es: "Oficina de Mexus Advisory en Ciudad Juárez, Parque Industrial Antonio J. Bermúdez",
+    },
+  },
+  "office-chihuahua": {
+    id: "office-chihuahua",
+    src: "/imagery/office-chihuahua.jpg",
+    aspect: "portrait",
+    source: "custom",
+    prompt:
+      "Client-supplied photograph of the Chihuahua office on Monte Albán, Col. Real de Potreros.",
+    alt: {
+      en: "Mexus Advisory Chihuahua office on Monte Albán, Real de Potreros",
+      es: "Oficina de Mexus Advisory en Chihuahua, Monte Albán, Real de Potreros",
     },
   },
 };
