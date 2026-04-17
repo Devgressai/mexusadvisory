@@ -71,7 +71,7 @@ export default async function OfficesPage({ params }: Props) {
 
         {/* 4-col image grid (same pattern as homepage OfficesPreview) */}
         <Reveal variant="stagger" className="mt-14 md:mt-16">
-          <ul className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {offices.map((office) => {
               const img = getImage(imagery, IMAGE_BY_OFFICE[office.id] ?? "");
               return (
@@ -82,7 +82,7 @@ export default async function OfficesPage({ params }: Props) {
                         src={img.src}
                         alt={t(img.alt, locale)}
                         fill
-                        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                        sizes="(min-width: 1024px) 18vw, (min-width: 768px) 33vw, (min-width: 640px) 45vw, 100vw"
                         className={cn(
                           "object-cover opacity-[0.96]",
                           HOVER_IMAGE,
