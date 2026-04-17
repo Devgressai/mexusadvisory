@@ -79,7 +79,7 @@ export function Footer({ locale, dict }: FooterProps) {
         {/* Bottom row */}
         <div className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-paper/15 pt-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
-            <Logo size={48} />
+            <Logo size={48} tone="paper" />
             <span className="font-display text-[1rem] tracking-[-0.01em] text-paper">
               Mexus Advisory
             </span>
