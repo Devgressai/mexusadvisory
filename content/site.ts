@@ -11,8 +11,8 @@ export const site: SiteSettings = {
     es: "Gestionando expertamente activos, personas y riesgos a través de fronteras.",
   },
   email: "advisory@mexus.example",
-  whatsappNumber: "15555550123",
-  whatsappDisplay: "+1 (555) 555-0123",
+  whatsappNumber: "19152211225",
+  whatsappDisplay: "+1 (915) 221-1225",
   legal: {
     en: "© 2026 Mexus Advisory. All rights reserved.",
     es: "© 2026 Mexus Advisory. Todos los derechos reservados.",
