@@ -7,8 +7,8 @@ export const site: SiteSettings = {
     es: "Consejo privado transfronterizo",
   },
   description: {
-    en: "Moving capital, people, and risk across borders.",
-    es: "Consejo privado para principales que mueven capital, personas y riesgo a través de fronteras.",
+    en: "Expertly managing assets, people, and risks across borders.",
+    es: "Gestionando expertamente activos, personas y riesgos a través de fronteras.",
   },
   email: "advisory@mexus.example",
   whatsappNumber: "15555550123",

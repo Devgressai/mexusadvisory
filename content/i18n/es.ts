@@ -35,7 +35,7 @@ export const es: Dictionary = {
   home: {
     heroEyebrow: "Asesoría transfronteriza",
     heroTitle:
-      "Moviendo capital, personas y riesgo a través de fronteras.",
+      "Gestionando expertamente activos, personas y riesgos a través de fronteras.",
     heroLede:
       "Mexus Advisory guía a fundadores, inversionistas y familias a través de la volatilidad migratoria, la complejidad jurisdiccional y las decisiones de capital internacional — con precisión, discreción y una red global.",
     focusEyebrow: "Mexus Focus",
