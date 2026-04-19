@@ -46,7 +46,6 @@ const esUrl = (path: string) =>
   `${site.baseUrl}/es${path === "/" ? "" : path}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const allRoutes = [...staticRoutes, ...dynamicRoutes];
 
   return allRoutes.flatMap((route) => {
@@ -57,14 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [
       {
         url: en,
-        lastModified,
         changeFrequency: route.changeFrequency,
         priority: route.priority,
         alternates,
       },
       {
         url: es,
-        lastModified,
         changeFrequency: route.changeFrequency,
         priority: route.priority,
         alternates,
