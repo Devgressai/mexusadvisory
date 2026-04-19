@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { Resend } from "resend";
 
 export interface ContactFormState {
@@ -42,8 +43,11 @@ export async function submitContactForm(
   const errorMsg = (en: string, es: string) =>
     input.locale === "es" ? es : en;
 
+  const thankYouPath =
+    input.locale === "es" ? "/es/contact/thank-you" : "/contact/thank-you";
+
   if (input.honeypot) {
-    return { status: "success" };
+    redirect(thankYouPath);
   }
 
   if (!input.name || !input.email) {
@@ -132,15 +136,9 @@ export async function submitContactForm(
         ),
       };
     }
-
-    return {
-      status: "success",
-      message: errorMsg(
-        "Thank you — your message has been sent. We will be in touch shortly.",
-        "Gracias — su mensaje ha sido enviado. Nos pondremos en contacto pronto.",
-      ),
-    };
   } catch (err) {
+    // Next.js uses a thrown sentinel to perform redirects; don't swallow it.
+    if (err && typeof err === "object" && "digest" in err) throw err;
     console.error("[contact] Unexpected error", err);
     return {
       status: "error",
@@ -150,4 +148,6 @@ export async function submitContactForm(
       ),
     };
   }
+
+  redirect(thankYouPath);
 }

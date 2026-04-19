@@ -73,15 +73,11 @@ export function ContactForm({ locale, whatsappLabel }: Props) {
         </label>
       </div>
 
-      {state.status !== "idle" && state.message && (
+      {state.status === "error" && state.message && (
         <p
-          role="status"
+          role="alert"
           aria-live="polite"
-          className={
-            state.status === "success"
-              ? "text-[0.9375rem] text-navy-900"
-              : "text-[0.9375rem] text-red-700"
-          }
+          className="text-[0.9375rem] text-red-700"
         >
           {state.message}
         </p>
