@@ -1,0 +1,39 @@
+# Mexus Advisory
+
+> Private cross-border counsel — expertly managing assets, people, and risks across the US–Mexico corridor and worldwide jurisdictions.
+
+Mexus Advisory is a discreet advisory firm serving principals, founders, and family offices on cross-border matters between the United States, Mexico, and global jurisdictions. The firm advises on global immigration, risk management, wealth advisory, alternative capital sourcing, and jurisdictional optimization. Offices in Mexico City, El Paso, San Antonio, Ciudad Juárez, and Chihuahua.
+
+Contact: info@mexusadvisory.com · WhatsApp +1 (915) 221-1225
+
+## Capabilities
+
+- [Global Immigration Consulting](https://mexusadvisory.com/capabilities/global-immigration-consulting): Investor/founder visa pathways, family relocation, executive mobility, naturalization, and entry/exit sequencing across the US, Mexico, Canada, EU, UK, UAE, and Caribbean jurisdictions.
+- [Risk Management](https://mexusadvisory.com/capabilities/risk-management): Strategic risk assessment for principals operating across borders — physical, reputational, regulatory, and continuity risks.
+- [Wealth Advisory](https://mexusadvisory.com/capabilities/wealth-advisory): Multi-jurisdictional wealth structuring, family office advisory, and cross-border estate considerations.
+- [Alternative Capital Sourcing](https://mexusadvisory.com/capabilities/alternative-capital-sourcing): Access to non-traditional capital structures and private placements across the US–Mexico corridor.
+- [Jurisdictional Optimization](https://mexusadvisory.com/capabilities/jurisdictional-optimization): Designing corporate, holding, and operating structures across favorable jurisdictions.
+
+## Focus
+
+- [Immigration Volatility](https://mexusadvisory.com/focus/immigration-volatility): Current dynamics in cross-border mobility for principals and families.
+- [International Investments](https://mexusadvisory.com/focus/international-investments): Cross-border investment thesis and risk considerations.
+- [US–Mexico Trade](https://mexusadvisory.com/focus/us-mexico-trade): Trade, supply chain, and operational considerations across the corridor.
+
+## About
+
+- [About Mexus Advisory](https://mexusadvisory.com/about): Practice overview and approach.
+- [Our People](https://mexusadvisory.com/about/people): Senior counselors and advisors.
+- [Our Offices](https://mexusadvisory.com/about/offices): Mexico City, El Paso, San Antonio, Ciudad Juárez, Chihuahua.
+
+## Programs
+
+- [Mexus Professional Partners Program](https://mexusadvisory.com/partners-program): Referral and collaboration framework for allied professional advisors.
+
+## Contact
+
+- [Contact](https://mexusadvisory.com/contact): Inquiry form and direct channels.
+
+## Languages
+
+The site is published in English and Spanish. Spanish versions are at /es/* (e.g., https://mexusadvisory.com/es/capabilities).
