@@ -7,8 +7,7 @@ import { PageHero } from "@/components/primitives/PageHero";
 import { Section } from "@/components/primitives/Section";
 import { Container } from "@/components/primitives/Container";
 import { Eyebrow } from "@/components/primitives/Eyebrow";
-import { Button } from "@/components/primitives/Button";
-import { WhatsAppButton } from "@/components/shell/WhatsAppButton";
+import { ContactForm } from "@/components/contact/ContactForm";
 import { buildMetadata } from "@/lib/seo";
 
 interface Props {
@@ -32,10 +31,6 @@ export default async function ContactPage({ params }: Props) {
   if (!isLocale(locale)) notFound();
   const dict = getDictionary(locale);
 
-  const fieldClass =
-    "w-full border-b border-ink/20 bg-transparent py-3 text-[1rem] text-ink placeholder:text-ink-muted/60 focus:border-navy-900";
-  const labelClass = "eyebrow text-ink-muted";
-
   return (
     <>
       <PageHero
@@ -52,55 +47,7 @@ export default async function ContactPage({ params }: Props) {
         <Container>
           <div className="grid grid-cols-1 gap-16 md:grid-cols-12">
             {/* Form */}
-            <form
-              className="space-y-10 md:col-span-7"
-              action="mailto:advisory@mexus.example"
-              method="post"
-              encType="text/plain"
-            >
-              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-                <label className="block">
-                  <span className={labelClass}>
-                    {locale === "es" ? "Nombre" : "Name"}
-                  </span>
-                  <input type="text" name="name" required className={`${fieldClass} mt-3`} />
-                </label>
-                <label className="block">
-                  <span className={labelClass}>
-                    {locale === "es" ? "Firma / Organización" : "Firm / Organization"}
-                  </span>
-                  <input type="text" name="firm" className={`${fieldClass} mt-3`} />
-                </label>
-                <label className="block sm:col-span-2">
-                  <span className={labelClass}>
-                    {locale === "es" ? "Correo" : "Email"}
-                  </span>
-                  <input type="email" name="email" required className={`${fieldClass} mt-3`} />
-                </label>
-                <label className="block sm:col-span-2">
-                  <span className={labelClass}>
-                    {locale === "es" ? "Naturaleza de la consulta" : "Nature of inquiry"}
-                  </span>
-                  <input type="text" name="inquiry" className={`${fieldClass} mt-3`} />
-                </label>
-                <label className="block sm:col-span-2">
-                  <span className={labelClass}>
-                    {locale === "es" ? "Mensaje" : "Message"}
-                  </span>
-                  <textarea
-                    name="message"
-                    rows={5}
-                    className={`${fieldClass} mt-3 resize-none`}
-                  />
-                </label>
-              </div>
-              <div className="flex flex-wrap items-center gap-4">
-                <Button type="submit" variant="primary">
-                  {locale === "es" ? "Enviar mensaje" : "Send message"}
-                </Button>
-                <WhatsAppButton label={dict.nav.whatsapp} variant="cta" />
-              </div>
-            </form>
+            <ContactForm locale={locale} whatsappLabel={dict.nav.whatsapp} />
 
             {/* Direct */}
             <aside className="md:col-span-4 md:col-start-9">
