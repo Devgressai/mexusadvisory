@@ -56,10 +56,10 @@ export default async function ContactPage({ params }: Props) {
                 <div>
                   <p className="eyebrow text-ink-muted">Email</p>
                   <a
-                    href="mailto:info@mexusadvisory.com"
+                    href={`mailto:${site.email}`}
                     className="font-display mt-3 block text-[1.125rem] tracking-[-0.01em] text-ink hover:text-navy-900"
                   >
-                    info@mexusadvisory.com
+                    {site.email}
                   </a>
                 </div>
                 <div>

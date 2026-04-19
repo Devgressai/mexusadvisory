@@ -10,7 +10,7 @@ export const site: SiteSettings = {
     en: "Expertly managing assets, people, and risks across borders.",
     es: "Gestionando expertamente activos, personas y riesgos a través de fronteras.",
   },
-  email: "advisory@mexus.example",
+  email: "info@mexusadvisory.com",
   whatsappNumber: "19152211225",
   whatsappDisplay: "+1 (915) 221-1225",
   legal: {
