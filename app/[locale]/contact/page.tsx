@@ -55,9 +55,12 @@ export default async function ContactPage({ params }: Props) {
               <div className="mt-8 space-y-10">
                 <div>
                   <p className="eyebrow text-ink-muted">Email</p>
-                  <p className="font-display mt-3 text-[1.125rem] tracking-[-0.01em] text-ink">
-                    {site.email}
-                  </p>
+                  <a
+                    href="mailto:info@mexusadvisory.com"
+                    className="font-display mt-3 block text-[1.125rem] tracking-[-0.01em] text-ink hover:text-navy-900"
+                  >
+                    info@mexusadvisory.com
+                  </a>
                 </div>
                 <div>
                   <p className="eyebrow text-ink-muted">WhatsApp</p>
