@@ -50,13 +50,7 @@ const ABOUT_COPY = {
   },
 };
 
-const PORTRAIT_BY_SLUG: Record<string, string> = {
-  "mace-miller": "/people/mace-miller.webp",
-  "darilu-cartagena": "/people/darilu-cartagena.webp",
-  "jeremy-anderson": "/people/jeremy-anderson.webp",
-  "roberto-ortigoza": "/people/roberto-ortigoza.webp",
-  "federico-vielledent": "/people/federico-vielledent.webp",
-};
+import { getPortrait } from "@/components/primitives/AuthorAvatar";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -111,57 +105,68 @@ export default async function AboutPage({ params }: Props) {
       </Section>
 
       {/* Team grid */}
-      <Section tone="bone" size="standard">
+      <Section tone="bone" size="compact">
         <Container>
-          <div className="mb-16 grid grid-cols-1 gap-16 md:mb-20 md:grid-cols-12">
-            <div className="md:col-span-4">
+          <div className="mb-10 flex flex-col items-start justify-between gap-6 md:mb-14 md:flex-row md:items-end">
+            <div>
               <Eyebrow>{copy.teamEyebrow}</Eyebrow>
-            </div>
-            <div className="md:col-span-8">
-              <h2 className="font-display type-h2 max-w-[26ch] text-ink">
+              <h2 className="font-display type-h2 mt-4 max-w-[26ch] text-ink">
                 {copy.teamTitle}
               </h2>
             </div>
+            <LinkArrow href={localizedPath("/about/people", locale)}>
+              {locale === "es" ? "Ver el equipo completo" : "View the full team"}
+            </LinkArrow>
           </div>
 
-          <ul className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-12 lg:grid-cols-4">
             {people.map((person) => {
-              const src = PORTRAIT_BY_SLUG[person.slug];
+              const src = getPortrait(person.slug);
               return (
                 <li key={person.id} className="group">
                   <Link
                     href={localizedPath(`/about/people/${person.slug}`, locale)}
                     className="block"
                   >
-                    {src && (
-                      <div className="relative aspect-square w-full overflow-hidden">
+                    <div className="relative aspect-square w-full overflow-hidden">
+                      {src ? (
                         <Image
                           src={src}
                           alt={`${person.name} — ${t(person.role, locale)}`}
                           fill
-                          sizes="(min-width: 1024px) 18vw, (min-width: 640px) 45vw, 100vw"
+                          sizes="(min-width: 1024px) 22vw, (min-width: 768px) 24vw, 50vw"
                           className={cn(
                             "object-cover opacity-[0.96]",
                             HOVER_IMAGE,
                             "group-hover:opacity-100",
                           )}
                         />
-                        <span
-                          aria-hidden
-                          className="absolute bottom-0 left-0 h-px w-8 origin-left bg-gold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"
-                        />
-                      </div>
-                    )}
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-paper ring-1 ring-rule">
+                          <Image
+                            src="/brand/mexus-mark.png"
+                            alt="Mexus Advisory"
+                            width={80}
+                            height={80}
+                            className="h-[40%] w-auto opacity-40 transition-opacity duration-500 group-hover:opacity-70"
+                          />
+                        </div>
+                      )}
+                      <span
+                        aria-hidden
+                        className="absolute bottom-0 left-0 h-px w-8 origin-left bg-gold transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full"
+                      />
+                    </div>
                     <h3
                       className={cn(
-                        "font-display type-h3 mt-6 text-ink",
+                        "font-display mt-5 text-[1rem] leading-[1.2] tracking-[-0.015em] text-ink sm:text-[1.0625rem]",
                         HOVER_LINK,
                         "group-hover:text-navy-900",
                       )}
                     >
                       {person.name}
                     </h3>
-                    <p className="eyebrow mt-3 text-ink-muted">
+                    <p className="mt-2 text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
                       {t(person.role, locale)}
                     </p>
                   </Link>
@@ -169,12 +174,6 @@ export default async function AboutPage({ params }: Props) {
               );
             })}
           </ul>
-
-          <div className="mt-14">
-            <LinkArrow href={localizedPath("/about/people", locale)}>
-              {locale === "es" ? "Ver el equipo completo" : "View the full team"}
-            </LinkArrow>
-          </div>
         </Container>
       </Section>
 

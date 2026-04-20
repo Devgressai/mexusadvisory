@@ -138,13 +138,14 @@ function PeopleGrid({
                       )}
                     />
                   ) : (
-                    <div className="flex h-full w-full items-end bg-bone p-2 ring-1 ring-rule">
-                      <span className="font-display text-[1.5rem] leading-none text-ink-muted/40">
-                        {person.name
-                          .split(" ")
-                          .map((p) => p[0])
-                          .join("")}
-                      </span>
+                    <div className="flex h-full w-full items-center justify-center bg-paper ring-1 ring-rule">
+                      <Image
+                        src="/brand/mexus-mark.png"
+                        alt="Mexus Advisory"
+                        width={60}
+                        height={60}
+                        className="h-[50%] w-auto opacity-40"
+                      />
                     </div>
                   )}
                 </div>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Locale } from "@/types/content";
@@ -25,16 +25,19 @@ interface HeroHomeProps {
  * BCG-style centered editorial carousel.
  *
  * Interaction model:
- *   - Click a non-featured card → it becomes the featured (centered) card.
- *   - Click the featured card → navigates to the article detail page.
+ *   - Move the cursor across the carousel area to scrub through cards
+ *     (`active` is a float so cards interpolate smoothly between slots).
+ *   - When the cursor leaves the area, `active` snaps to the nearest
+ *     integer so the display settles on a clear featured card.
+ *   - Click any card (featured or sibling) to navigate to that article.
+ *     Every card is a Link; clicks are always valid because navigation is
+ *     the same target regardless of which card was clicked.
  *   - Left/right arrow buttons step through cards as a keyboard-accessible
  *     alternative.
  *
- * This replaces an earlier cursor-scrub mechanic. Scrub felt lively with
- * 6 cards but broke for 8: the scrub updated `active` continuously as the
- * cursor moved, turning side cards into moving targets that could never
- * be clicked. Click-to-feature is predictable, deterministic, and works
- * identically for 2, 6, or 20 items.
+ * The featured card is wider than siblings (it carries the author panel),
+ * so `offsetAt(d)` uses a piecewise formula to keep siblings from ever
+ * overlapping the featured card no matter how many items are in the rail.
  */
 
 const CATEGORY_GROUPS = [
@@ -102,12 +105,39 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   const items = useMemo(() => pickGroup(groupId), [groupId]);
   const len = items.length;
 
+  // Active index is a float so cards can interpolate between slots during
+  // scrub. Initial state is an integer so one card is exactly centered on
+  // first paint.
   const [active, setActive] = useState<number>(Math.floor(len / 2));
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const prev = () => setActive((a) => Math.max(0, a - 1));
-  const next = () => setActive((a) => Math.min(len - 1, a + 1));
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = carouselRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const relativeX = (e.clientX - rect.left) / rect.width;
+    const clamped = Math.max(0, Math.min(1, relativeX));
+    setActive(clamped * (len - 1));
+  };
 
-  const featured = items[active];
+  const handleLeave = () => {
+    setActive((a) => Math.round(a));
+  };
+
+  const handleTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    const rect = carouselRef.current?.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!rect || !touch) return;
+    const relativeX = (touch.clientX - rect.left) / rect.width;
+    const clamped = Math.max(0, Math.min(1, relativeX));
+    setActive(clamped * (len - 1));
+  };
+
+  const prev = () => setActive((a) => Math.max(0, Math.round(a) - 1));
+  const next = () => setActive((a) => Math.min(len - 1, Math.round(a) + 1));
+
+  // Featured is the card nearest the float active index.
+  const featuredIndex = Math.round(active);
+  const featured = items[featuredIndex];
 
   return (
     <section className="relative overflow-hidden bg-paper text-ink">
@@ -128,14 +158,20 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
         {/* Scrub hint */}
         <Reveal variant="soft" delay={0.2}>
           <p className="eyebrow mx-auto mt-10 w-fit text-ink-muted/70">
-            {locale === "es" ? "Elija un artículo" : "Select an article"}
+            {locale === "es"
+              ? "Mueva el cursor para explorar"
+              : "Move the cursor to browse"}
           </p>
         </Reveal>
 
         {/* Carousel area */}
         <Reveal variant="soft" delay={0.24}>
           <div
-            className="relative mt-8 h-[500px] select-none md:mt-10 lg:h-[560px]"
+            ref={carouselRef}
+            onMouseMove={handleMove}
+            onMouseLeave={handleLeave}
+            onTouchMove={handleTouch}
+            className="relative mt-8 h-[500px] cursor-ew-resize select-none md:mt-10 lg:h-[560px]"
             role="region"
             aria-label={locale === "es" ? "Perspectivas destacadas" : "Featured perspectives"}
           >
@@ -143,7 +179,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               const img = getImage(imagery, insight.imageId);
               const d = i - active;
               const absD = Math.abs(d);
-              const isFeatured = i === active;
+              const isFeatured = i === featuredIndex;
 
               const x = offsetAt(d);
               const scale = isFeatured ? 1 : Math.max(0.62, 1 - absD * 0.12);
@@ -171,12 +207,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                   {isFeatured ? (
                     <FeaturedCard insight={insight} img={img} locale={locale} />
                   ) : (
-                    <SiblingCard
-                      insight={insight}
-                      img={img}
-                      locale={locale}
-                      onSelect={() => setActive(i)}
-                    />
+                    <SiblingCard insight={insight} img={img} locale={locale} />
                   )}
                 </m.div>
               );
@@ -349,22 +380,18 @@ interface SiblingCardProps {
   insight: InsightEntry;
   img: ReturnType<typeof getImage>;
   locale: Locale;
-  onSelect: () => void;
 }
 
 /**
- * Sibling card: image only. Clicking promotes it to the featured slot.
- * Kept as a button (not a link) so it doesn't navigate — the featured
- * state is where the outbound link lives.
+ * Sibling card: image only. Clicking navigates to that article's detail
+ * page. Scrub determines which card is visually featured; click lands on
+ * whichever card the cursor is over at the moment of the click.
  */
-function SiblingCard({ insight, img, locale, onSelect }: SiblingCardProps) {
+function SiblingCard({ insight, img, locale }: SiblingCardProps) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      aria-label={`${t(insight.title, locale)} — ${
-        locale === "es" ? "destacar" : "feature"
-      }`}
+    <Link
+      href={localizedPath(insight.href, locale)}
+      aria-label={t(insight.title, locale)}
       className="group relative block w-full overflow-hidden text-left"
     >
       {img && (
@@ -382,6 +409,6 @@ function SiblingCard({ insight, img, locale, onSelect }: SiblingCardProps) {
           />
         </div>
       )}
-    </button>
+    </Link>
   );
 }
