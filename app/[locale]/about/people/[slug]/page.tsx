@@ -77,13 +77,13 @@ export default async function PersonPage({ params }: Props) {
                   className="object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-paper ring-1 ring-rule">
+                <div className="flex h-full w-full items-center justify-center bg-navy-900">
                   <Image
-                    src="/brand/mexus-mark.png"
+                    src="/brand/mexus-mark-gold.png"
                     alt="Mexus Advisory"
-                    width={100}
-                    height={100}
-                    className="h-[50%] w-auto opacity-40"
+                    width={140}
+                    height={140}
+                    className="h-[52%] w-auto"
                   />
                 </div>
               )}

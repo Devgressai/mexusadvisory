@@ -142,13 +142,13 @@ export default async function AboutPage({ params }: Props) {
                           )}
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-paper ring-1 ring-rule">
+                        <div className="flex h-full w-full items-center justify-center bg-navy-900">
                           <Image
-                            src="/brand/mexus-mark.png"
+                            src="/brand/mexus-mark-gold.png"
                             alt="Mexus Advisory"
-                            width={80}
-                            height={80}
-                            className="h-[40%] w-auto opacity-40 transition-opacity duration-500 group-hover:opacity-70"
+                            width={120}
+                            height={120}
+                            className="h-[48%] w-auto transition-opacity duration-500 group-hover:opacity-90"
                           />
                         </div>
                       )}
