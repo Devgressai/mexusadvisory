@@ -141,7 +141,7 @@ function PeopleGrid({
                     <div className="flex h-full w-full items-center justify-center bg-navy-900">
                       <div className="relative h-[64%] w-[64%]">
                         <Image
-                          src="/brand/mexus-mark-gold-square.png"
+                          src="/brand/mexus-mark-owl.png"
                           alt="Mexus Advisory"
                           fill
                           sizes="100px"

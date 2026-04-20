@@ -145,7 +145,7 @@ export default async function AboutPage({ params }: Props) {
                         <div className="flex h-full w-full items-center justify-center bg-navy-900">
                           <div className="relative h-[60%] w-[60%]">
                             <Image
-                              src="/brand/mexus-mark-gold-square.png"
+                              src="/brand/mexus-mark-owl.png"
                               alt="Mexus Advisory"
                               fill
                               sizes="(min-width: 1024px) 14vw, (min-width: 768px) 15vw, 30vw"
