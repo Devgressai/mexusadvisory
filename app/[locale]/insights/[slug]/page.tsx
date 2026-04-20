@@ -153,12 +153,13 @@ export default async function InsightArticlePage({ params }: Props) {
           </Reveal>
         )}
 
-        <Reveal delay={0.12}>
-          <div
-            className="prose-editorial mx-auto mt-14 md:mt-20"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        </Reveal>
+        {/* Body must not be wrapped in Reveal: whileInView with amount:0.2
+            never triggers on elements taller than the viewport, leaving the
+            article content stuck at opacity 0. */}
+        <div
+          className="prose-editorial mx-auto mt-14 md:mt-20"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
 
         <Reveal delay={0.16}>
           <div className="mx-auto mt-20 max-w-[68ch] border-t border-rule pt-10 md:mt-24 md:pt-14">
