@@ -125,7 +125,14 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   const [active, setActive] = useState<number>(Math.floor(len / 2));
   const carouselRef = useRef<HTMLDivElement>(null);
 
+  // Scrub is on by default. Once the user clicks an arrow button they've
+  // signaled explicit control — we disable hover-scrub so the featured
+  // card stays put and is reliably clickable. Changing the category tab
+  // re-enables scrub.
+  const [scrubEnabled, setScrubEnabled] = useState(true);
+
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrubEnabled) return;
     const rect = carouselRef.current?.getBoundingClientRect();
     if (!rect) return;
     const relativeX = (e.clientX - rect.left) / rect.width;
@@ -137,10 +144,12 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   };
 
   const handleLeave = () => {
+    if (!scrubEnabled) return;
     setActive((a) => Math.round(a));
   };
 
   const handleTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!scrubEnabled) return;
     const rect = carouselRef.current?.getBoundingClientRect();
     const touch = e.touches[0];
     if (!rect || !touch) return;
@@ -149,16 +158,20 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
     setActive(clamped * len);
   };
 
-  const prev = () =>
+  const prev = () => {
+    setScrubEnabled(false);
     setActive((a) => {
       const rounded = Math.round(a);
       return (rounded - 1 + len) % len;
     });
-  const next = () =>
+  };
+  const next = () => {
+    setScrubEnabled(false);
     setActive((a) => {
       const rounded = Math.round(a);
       return (rounded + 1) % len;
     });
+  };
 
   // Featured is the card nearest the float active index (wrapped to valid range).
   const featuredIndex = ((Math.round(active) % len) + len) % len;
@@ -183,9 +196,13 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
         {/* Scrub hint */}
         <Reveal variant="soft" delay={0.2}>
           <p className="eyebrow mx-auto mt-10 w-fit text-ink-muted/70">
-            {locale === "es"
-              ? "Mueva el cursor para explorar"
-              : "Move the cursor to browse"}
+            {scrubEnabled
+              ? locale === "es"
+                ? "Mueva el cursor para explorar"
+                : "Move the cursor to browse"
+              : locale === "es"
+                ? "Use las flechas o haga clic"
+                : "Use the arrows or click a card"}
           </p>
         </Reveal>
 
@@ -196,7 +213,10 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
             onTouchMove={handleTouch}
-            className="relative mt-8 h-[500px] cursor-ew-resize select-none md:mt-10 lg:h-[560px]"
+            className={cn(
+              "relative mt-8 h-[500px] select-none md:mt-10 lg:h-[560px]",
+              scrubEnabled && "cursor-ew-resize",
+            )}
             role="region"
             aria-label={locale === "es" ? "Perspectivas destacadas" : "Featured perspectives"}
           >
@@ -288,6 +308,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                     onClick={() => {
                       setGroupId(g.id);
                       setActive(Math.floor(pickGroup(g.id).length / 2));
+                      setScrubEnabled(true);
                     }}
                     className={cn(
                       "relative text-[0.75rem] uppercase tracking-[0.18em] transition-colors duration-300",
