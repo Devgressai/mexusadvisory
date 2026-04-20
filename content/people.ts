@@ -106,6 +106,16 @@ export const people: Person[] = [
     practices: ["global-immigration-consulting", "alternative-capital-sourcing"],
     languages: ["Español", "English", "Português"],
   },
+  {
+    id: "david-arase",
+    slug: "david-arase",
+    name: "David Arase",
+    role: { en: "Contributor", es: "Colaborador" },
+    location: { en: "Americas", es: "Américas" },
+    bio: { en: [], es: [] },
+    practices: [],
+    languages: ["English"],
+  },
 ];
 
 export function getPerson(slug: string): Person | undefined {

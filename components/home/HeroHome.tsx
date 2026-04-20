@@ -45,17 +45,22 @@ const CATEGORY_GROUPS = [
   {
     id: "immigration",
     label: { en: "Immigration", es: "Migración" },
-    practice: "global-immigration-consulting",
+    category: "Immigration",
   },
   {
     id: "capital",
     label: { en: "Capital", es: "Capital" },
-    practice: "alternative-capital-sourcing",
+    category: "Capital",
   },
   {
-    id: "jurisdiction",
-    label: { en: "Jurisdiction", es: "Jurisdicción" },
-    practice: "jurisdictional-optimization",
+    id: "insurance",
+    label: { en: "Insurance", es: "Seguros" },
+    category: "Insurance",
+  },
+  {
+    id: "trade",
+    label: { en: "Trade", es: "Comercio" },
+    category: "Trade",
   },
 ] as const;
 
@@ -64,8 +69,8 @@ type GroupId = (typeof CATEGORY_GROUPS)[number]["id"];
 function pickGroup(id: GroupId): InsightEntry[] {
   if (id === "spotlight") return insights;
   const group = CATEGORY_GROUPS.find((g) => g.id === id);
-  if (!group || !("practice" in group)) return insights;
-  const filtered = insights.filter((i) => i.href.includes(group.practice));
+  if (!group || !("category" in group)) return insights;
+  const filtered = insights.filter((i) => i.category.en === group.category);
   const padded = [...filtered];
   let idx = 0;
   while (padded.length < 6 && idx < insights.length) {
@@ -203,7 +208,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                           <>
                             <div
                               aria-hidden
-                              className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/25 to-transparent"
+                              className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/45 to-transparent"
                             />
                             <div className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7">
                               <p className="eyebrow text-paper/65">
@@ -219,9 +224,15 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                               <h3 className="font-display mt-3 text-[1.0625rem] leading-[1.18] tracking-[-0.015em] text-paper sm:text-[1.1875rem] lg:text-[1.375rem]">
                                 {t(insight.title, locale)}
                               </h3>
+                              <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.16em] text-paper/70">
+                                {insight.author.name}
+                              </p>
+                              <p className="mt-3 max-w-[28ch] text-[0.8125rem] leading-[1.55] text-paper/75">
+                                {t(insight.summary, locale)}
+                              </p>
                               <span
                                 aria-hidden
-                                className="mt-5 block h-px w-8 bg-gold"
+                                className="mt-4 block h-px w-8 bg-gold"
                               />
                             </div>
                           </>
