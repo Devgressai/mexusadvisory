@@ -138,13 +138,13 @@ function PeopleGrid({
                       )}
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-navy-900">
+                    <div className="relative h-full w-full bg-navy-900">
                       <Image
-                        src="/brand/mexus-mark-gold.png"
+                        src="/brand/mexus-mark-gold-square.png"
                         alt="Mexus Advisory"
-                        width={80}
-                        height={80}
-                        className="h-[55%] w-auto"
+                        fill
+                        sizes="100px"
+                        className="object-contain p-[18%]"
                       />
                     </div>
                   )}
