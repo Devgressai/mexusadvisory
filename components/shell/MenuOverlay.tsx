@@ -3,7 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useState } from "react";
 import type { Locale, LocalizedString, NavItem } from "@/types/content";
 import type { Dictionary } from "@/content/i18n/en";
@@ -213,31 +213,47 @@ export function MenuOverlay({ open, onClose, locale, dict }: MenuOverlayProps) {
                       </div>
                     </div>
 
-                    {/* ───── Mobile: stacked accordion ───── */}
-                    <nav
-                      aria-label={dict.nav.menu}
-                      className="md:hidden"
-                    >
+                    {/* ───── Mobile: stacked, generous tap targets ───── */}
+                    <nav aria-label={dict.nav.menu} className="md:hidden">
                       <ul className="divide-y divide-paper/10 border-y border-paper/10">
                         {SECTIONS.map((section) => (
                           <li key={section.id} className="py-5">
                             <Link
                               href={localizedPath(section.nav.href, locale)}
                               onClick={onClose}
-                              className="font-display block text-[1.25rem] leading-[1.2] tracking-[-0.01em] text-paper"
+                              className="font-display flex items-center justify-between gap-4 py-1 text-[1.3125rem] leading-[1.2] tracking-[-0.01em] text-paper"
                             >
-                              {t(section.nav.label, locale)}
+                              <span>{t(section.nav.label, locale)}</span>
+                              {!section.nav.children && (
+                                <ArrowRight
+                                  size={16}
+                                  strokeWidth={1.5}
+                                  className="shrink-0 text-paper/40"
+                                  aria-hidden
+                                />
+                              )}
                             </Link>
                             {section.nav.children && (
-                              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                              <p className="mt-3 text-[0.8125rem] leading-[1.55] text-paper/55">
+                                {t(section.lede, locale)}
+                              </p>
+                            )}
+                            {section.nav.children && (
+                              <ul className="mt-4 flex flex-col border-t border-paper/10">
                                 {section.nav.children.map((child) => (
-                                  <li key={child.href}>
+                                  <li key={child.href} className="border-b border-paper/10 last:border-b-0">
                                     <Link
                                       href={localizedPath(child.href, locale)}
                                       onClick={onClose}
-                                      className="eyebrow text-paper/60 transition-colors hover:text-paper"
+                                      className="flex items-center justify-between gap-4 py-3.5 text-[0.9375rem] leading-[1.3] text-paper/85 transition-colors active:text-paper"
                                     >
-                                      {t(child.label, locale)}
+                                      <span>{t(child.label, locale)}</span>
+                                      <ArrowRight
+                                        size={14}
+                                        strokeWidth={1.5}
+                                        className="shrink-0 text-paper/30"
+                                        aria-hidden
+                                      />
                                     </Link>
                                   </li>
                                 ))}

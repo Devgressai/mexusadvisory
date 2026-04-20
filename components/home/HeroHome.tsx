@@ -148,16 +148,6 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
     setActive((a) => Math.round(a));
   };
 
-  const handleTouch = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!scrubEnabled) return;
-    const rect = carouselRef.current?.getBoundingClientRect();
-    const touch = e.touches[0];
-    if (!rect || !touch) return;
-    const relativeX = (touch.clientX - rect.left) / rect.width;
-    const clamped = Math.max(0, Math.min(1, relativeX));
-    setActive(clamped * len);
-  };
-
   const prev = () => {
     setScrubEnabled(false);
     setActive((a) => {
@@ -212,10 +202,9 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
             ref={carouselRef}
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
-            onTouchMove={handleTouch}
             className={cn(
-              "relative mt-8 h-[500px] select-none md:mt-10 lg:h-[560px]",
-              scrubEnabled && "cursor-ew-resize",
+              "relative mt-8 h-[500px] touch-pan-y select-none md:mt-10 lg:h-[560px]",
+              scrubEnabled && "md:cursor-ew-resize",
             )}
             role="region"
             aria-label={locale === "es" ? "Perspectivas destacadas" : "Featured perspectives"}
