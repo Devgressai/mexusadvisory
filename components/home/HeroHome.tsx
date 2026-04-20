@@ -216,9 +216,9 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               const isFeatured = i === featuredIndex;
 
               const x = offsetAt(d);
-              const scale = isFeatured ? 1 : Math.max(0.62, 1 - absD * 0.12);
+              const scale = 1;
               const opacity = absD > 3.5 ? 0 : Math.max(0.1, 1 - absD * 0.22);
-              const y = absD * 14;
+              const y = 0;
               const zIndex = Math.round(30 - absD * 5);
 
               const featuredWidthClass =
@@ -422,7 +422,7 @@ function SiblingCard({ insight, img, locale }: SiblingCardProps) {
       className="group relative block w-full overflow-hidden text-left"
     >
       {img && (
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
+        <div className="relative h-[298px] w-full overflow-hidden sm:h-[331px] md:h-[347px] lg:h-[364px]">
           <Image
             src={img.src}
             alt={t(img.alt, locale)}
