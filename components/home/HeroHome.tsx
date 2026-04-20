@@ -100,6 +100,20 @@ function offsetAt(d: number): number {
   return sign * (firstStep + extra);
 }
 
+/**
+ * Shortest signed distance from `active` to index `i` on an infinite loop
+ * of length `len`. The carousel wraps, so every card is always within
+ * ±len/2 of the current position — no edge cards, every article reachable
+ * from any scrub position.
+ */
+function wrappedD(i: number, active: number, len: number): number {
+  const raw = i - active;
+  const candidates = [raw, raw - len, raw + len];
+  return candidates.reduce((best, c) =>
+    Math.abs(c) < Math.abs(best) ? c : best,
+  );
+}
+
 export function HeroHome({ locale, dict }: HeroHomeProps) {
   const [groupId, setGroupId] = useState<GroupId>("spotlight");
   const items = useMemo(() => pickGroup(groupId), [groupId]);
@@ -116,7 +130,10 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
     if (!rect) return;
     const relativeX = (e.clientX - rect.left) / rect.width;
     const clamped = Math.max(0, Math.min(1, relativeX));
-    setActive(clamped * (len - 1));
+    // Map across the full rail. The wrapped-distance layout means every
+    // card is still reachable from any cursor position — the extremes no
+    // longer sit alone at the edges of the region.
+    setActive(clamped * len);
   };
 
   const handleLeave = () => {
@@ -129,14 +146,22 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
     if (!rect || !touch) return;
     const relativeX = (touch.clientX - rect.left) / rect.width;
     const clamped = Math.max(0, Math.min(1, relativeX));
-    setActive(clamped * (len - 1));
+    setActive(clamped * len);
   };
 
-  const prev = () => setActive((a) => Math.max(0, Math.round(a) - 1));
-  const next = () => setActive((a) => Math.min(len - 1, Math.round(a) + 1));
+  const prev = () =>
+    setActive((a) => {
+      const rounded = Math.round(a);
+      return (rounded - 1 + len) % len;
+    });
+  const next = () =>
+    setActive((a) => {
+      const rounded = Math.round(a);
+      return (rounded + 1) % len;
+    });
 
-  // Featured is the card nearest the float active index.
-  const featuredIndex = Math.round(active);
+  // Featured is the card nearest the float active index (wrapped to valid range).
+  const featuredIndex = ((Math.round(active) % len) + len) % len;
   const featured = items[featuredIndex];
 
   return (
@@ -177,7 +202,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
           >
             {items.map((insight, i) => {
               const img = getImage(imagery, insight.imageId);
-              const d = i - active;
+              const d = wrappedD(i, active, len);
               const absD = Math.abs(d);
               const isFeatured = i === featuredIndex;
 
@@ -232,24 +257,16 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               <button
                 type="button"
                 onClick={prev}
-                disabled={active === 0}
                 aria-label={locale === "es" ? "Anterior" : "Previous"}
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors duration-300 hover:border-navy-900 hover:text-navy-900",
-                  active === 0 && "opacity-30",
-                )}
+                className="flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors duration-300 hover:border-navy-900 hover:text-navy-900"
               >
                 <ArrowLeft size={16} strokeWidth={1.5} aria-hidden />
               </button>
               <button
                 type="button"
                 onClick={next}
-                disabled={active === len - 1}
                 aria-label={locale === "es" ? "Siguiente" : "Next"}
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors duration-300 hover:border-navy-900 hover:text-navy-900",
-                  active === len - 1 && "opacity-30",
-                )}
+                className="flex h-10 w-10 items-center justify-center border border-rule text-ink transition-colors duration-300 hover:border-navy-900 hover:text-navy-900"
               >
                 <ArrowRight size={16} strokeWidth={1.5} aria-hidden />
               </button>

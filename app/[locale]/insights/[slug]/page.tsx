@@ -95,22 +95,46 @@ export default async function InsightArticlePage({ params }: Props) {
               </p>
             ) : null}
 
-            {/* Byline */}
-            <div className="mt-10 flex items-center gap-5 border-t border-rule pt-8">
-              <AuthorAvatar
-                name={insight.author.name}
-                personSlug={insight.author.personSlug}
-                size={56}
-              />
-              <div>
-                <p className="font-display text-[1rem] leading-tight tracking-[-0.01em] text-ink">
-                  {insight.author.name}
-                </p>
-                <p className="mt-1 text-[0.8125rem] uppercase tracking-[0.16em] text-ink-muted">
-                  {t(insight.author.title, locale)}
-                </p>
+            {/* Byline — links to the author's people page if resolvable */}
+            {insight.author.personSlug ? (
+              <Link
+                href={localizedPath(
+                  `/about/people/${insight.author.personSlug}`,
+                  locale,
+                )}
+                className="group mt-10 flex items-center gap-5 border-t border-rule pt-8 transition-colors duration-300"
+              >
+                <AuthorAvatar
+                  name={insight.author.name}
+                  personSlug={insight.author.personSlug}
+                  size={56}
+                />
+                <div>
+                  <p className="font-display text-[1rem] leading-tight tracking-[-0.01em] text-ink transition-colors duration-300 group-hover:text-navy-900">
+                    {insight.author.name}
+                  </p>
+                  <p className="mt-1 text-[0.8125rem] uppercase tracking-[0.16em] text-ink-muted">
+                    {t(insight.author.title, locale)}
+                  </p>
+                </div>
+              </Link>
+            ) : (
+              <div className="mt-10 flex items-center gap-5 border-t border-rule pt-8">
+                <AuthorAvatar
+                  name={insight.author.name}
+                  personSlug={insight.author.personSlug}
+                  size={56}
+                />
+                <div>
+                  <p className="font-display text-[1rem] leading-tight tracking-[-0.01em] text-ink">
+                    {insight.author.name}
+                  </p>
+                  <p className="mt-1 text-[0.8125rem] uppercase tracking-[0.16em] text-ink-muted">
+                    {t(insight.author.title, locale)}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </header>
         </Reveal>
 
