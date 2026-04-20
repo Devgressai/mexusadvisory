@@ -12,48 +12,62 @@ export interface AuthorByline {
 }
 
 /**
- * Curated editorial insights. Each entry points at an existing page
- * (focus topic or capability) — the rail is a browsing surface, not
- * a separate content model.
+ * Curated editorial insights. Each entry renders on the homepage banner
+ * card (short title + summary + byline) and on the /insights/<slug>
+ * article page (full title + author byline + hero image + body).
  */
 export interface InsightEntry {
   id: string;
+  /** Route segment for /insights/<slug>. Usually equal to id. */
+  slug: string;
   /** Referenced image id from `content/imagery.ts` */
   imageId: string;
-  /** Target route — always a valid internal path without locale prefix */
+  /** Target route — always /insights/<slug>. */
   href: string;
   category: LocalizedString;
   date: LocalizedString;
+  /** Short title for the carousel card. */
   title: LocalizedString;
+  /** Full verbatim title for the article detail page. Falls back to `title`. */
+  titleFull?: LocalizedString;
   summary: LocalizedString;
   author: AuthorByline;
+  /** Filename of the article body markdown under content/articles/. */
+  bodyFile: string;
 }
 
 export const insights: InsightEntry[] = [
   {
     id: "sale-leaseback-mexico",
+    slug: "sale-leaseback-mexico",
     imageId: "focus-trade",
-    href: "/capabilities/alternative-capital-sourcing",
+    href: "/insights/sale-leaseback-mexico",
     category: { en: "Capital", es: "Capital" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
       en: "Bypassing Traditional Financing: Sale/Leasebacks in Mexico",
       es: "Sortear el Financiamiento Tradicional: Sale/Leasebacks en México",
     },
+    titleFull: {
+      en: "Bypassing Traditional Financing and Unlocking Expansion Resources Using Your Existing Real Estate Portfolio",
+      es: "Sortear el Financiamiento Tradicional y Desbloquear Recursos de Expansión a través de su Portafolio Inmobiliario",
+    },
     summary: {
-      en: "U.S. institutional capital is reshaping how Mexican operators fund expansion — without issuing equity or taking on conventional leverage.",
-      es: "El capital institucional estadounidense está transformando la forma en que los operadores mexicanos financian su expansión — sin emitir capital ni asumir apalancamiento convencional.",
+      en: "How U.S. Capital Is Fueling the Rise of Sale/Leasebacks in Mexico.",
+      es: "Cómo el capital estadounidense está impulsando el auge de los Sale/Leasebacks en México.",
     },
     author: {
       name: "Mace K. Miller, J.D., M.B.A.",
       title: { en: "Mexus Advisory", es: "Mexus Advisory" },
       personSlug: "mace-miller",
     },
+    bodyFile: "sale-leaseback-mexico.md",
   },
   {
     id: "us-life-insurance-nexus",
+    slug: "us-life-insurance-nexus",
     imageId: "insight-wealth",
-    href: "/capabilities/wealth-advisory",
+    href: "/insights/us-life-insurance-nexus",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -61,8 +75,8 @@ export const insights: InsightEntry[] = [
       es: "Acceso al Seguro de Vida en EE. UU.: Por qué los Extranjeros Deben Demostrar Nexo con Estados Unidos",
     },
     summary: {
-      en: "Life insurance from U.S. carriers requires a demonstrable connection to the United States. What nexus means, and how foreign nationals establish it.",
-      es: "El seguro de vida con aseguradoras estadounidenses requiere una conexión demostrable con Estados Unidos. Qué significa el nexo y cómo lo establecen los extranjeros.",
+      en: "Understanding the Basic Requirements for International Policyholders.",
+      es: "Entendiendo los requisitos básicos para los asegurados internacionales.",
     },
     author: {
       name: "Darilú Cartagena, B.U.S.",
@@ -72,11 +86,13 @@ export const insights: InsightEntry[] = [
       },
       personSlug: "darilu-cartagena",
     },
+    bodyFile: "us-life-insurance-nexus.md",
   },
   {
     id: "structure-over-pressure",
+    slug: "structure-over-pressure",
     imageId: "insight-jurisdictional",
-    href: "/capabilities/wealth-advisory",
+    href: "/insights/structure-over-pressure",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -94,11 +110,13 @@ export const insights: InsightEntry[] = [
         es: "Abogado y Cofundador, DeepBrokers",
       },
     },
+    bodyFile: "structure-over-pressure.md",
   },
   {
     id: "multi-country-production",
+    slug: "multi-country-production",
     imageId: "focus-investments",
-    href: "/focus/us-mexico-trade",
+    href: "/insights/multi-country-production",
     category: { en: "Trade", es: "Comercio" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -114,11 +132,13 @@ export const insights: InsightEntry[] = [
       title: { en: "Mexus Advisory", es: "Mexus Advisory" },
       personSlug: "david-arase",
     },
+    bodyFile: "multi-country-production.md",
   },
   {
     id: "economics-of-nearshoring",
+    slug: "economics-of-nearshoring",
     imageId: "insight-capital",
-    href: "/focus/us-mexico-trade",
+    href: "/insights/economics-of-nearshoring",
     category: { en: "Trade", es: "Comercio" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -126,19 +146,21 @@ export const insights: InsightEntry[] = [
       es: "La Verdadera Economía del Nearshoring",
     },
     summary: {
-      en: "Why supply chains are moving to Mexico — and the infrastructure, energy, and policy constraints that could slow the shift.",
-      es: "Por qué las cadenas de suministro se mudan a México — y las restricciones de infraestructura, energía y política que podrían frenar el cambio.",
+      en: "Why Global Supply Chains Are Moving to Mexico and What Could Slow Them Down.",
+      es: "Por qué las cadenas de suministro globales se están mudando a México y qué podría frenarlas.",
     },
     author: {
       name: "David Arase",
       title: { en: "Mexus Advisory", es: "Mexus Advisory" },
       personSlug: "david-arase",
     },
+    bodyFile: "economics-of-nearshoring.md",
   },
   {
     id: "e2-vs-eb5",
+    slug: "e2-vs-eb5",
     imageId: "focus-immigration",
-    href: "/capabilities/global-immigration-consulting",
+    href: "/insights/e2-vs-eb5",
     category: { en: "Immigration", es: "Migración" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -154,11 +176,13 @@ export const insights: InsightEntry[] = [
       title: { en: "Mexus Advisory", es: "Mexus Advisory" },
       personSlug: "jeremy-anderson",
     },
+    bodyFile: "e2-vs-eb5.md",
   },
   {
     id: "nil-immigration-strategy",
+    slug: "nil-immigration-strategy",
     imageId: "capabilities-anchor",
-    href: "/capabilities/global-immigration-consulting",
+    href: "/insights/nil-immigration-strategy",
     category: { en: "Immigration", es: "Migración" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -174,11 +198,13 @@ export const insights: InsightEntry[] = [
       title: { en: "Mexus Advisory", es: "Mexus Advisory" },
       personSlug: "jeremy-anderson",
     },
+    bodyFile: "nil-immigration-strategy.md",
   },
   {
     id: "best-doctors-pro-portfolio",
+    slug: "best-doctors-pro-portfolio",
     imageId: "cap-capital",
-    href: "/capabilities/wealth-advisory",
+    href: "/insights/best-doctors-pro-portfolio",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
     title: {
@@ -196,5 +222,10 @@ export const insights: InsightEntry[] = [
         es: "Abogado y Cofundador, DeepBrokers",
       },
     },
+    bodyFile: "best-doctors-pro-portfolio.md",
   },
 ];
+
+export function getInsightBySlug(slug: string): InsightEntry | undefined {
+  return insights.find((i) => i.slug === slug);
+}

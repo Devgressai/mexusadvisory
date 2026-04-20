@@ -12,14 +12,7 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { Reveal } from "@/components/motion/Reveal";
 import { buildMetadata } from "@/lib/seo";
-
-const PORTRAIT_BY_SLUG: Record<string, string> = {
-  "mace-miller": "/people/mace-miller.webp",
-  "darilu-cartagena": "/people/darilu-cartagena.webp",
-  "jeremy-anderson": "/people/jeremy-anderson.webp",
-  "roberto-ortigoza": "/people/roberto-ortigoza.webp",
-  "federico-vielledent": "/people/federico-vielledent.webp",
-};
+import { getPortrait } from "@/components/primitives/AuthorAvatar";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -50,7 +43,8 @@ export default async function PersonPage({ params }: Props) {
   const person = getPerson(slug);
   if (!person) notFound();
   const dict = getDictionary(locale);
-  const src = PORTRAIT_BY_SLUG[person.slug];
+  const src = getPortrait(person.slug);
+  const emailTo = person.email ?? site.email;
 
   return (
     <section className="bg-paper pt-32 pb-24 md:pt-36 md:pb-28 lg:pt-40 lg:pb-32">
@@ -103,12 +97,18 @@ export default async function PersonPage({ params }: Props) {
               <p className="mt-1 text-[0.8125rem] italic text-ink-muted/70">
                 {t(person.location, locale)}
               </p>
+              {person.education && (
+                <p className="mt-3 text-[0.75rem] uppercase tracking-[0.14em] text-ink-muted/80">
+                  {t(person.education, locale)}
+                </p>
+              )}
               <a
-                href={`mailto:${site.email}`}
+                href={`mailto:${emailTo}`}
                 aria-label={`Email ${person.name}`}
-                className="mt-4 inline-flex h-7 w-7 items-center justify-center text-ink-muted/60 transition-colors duration-300 hover:text-navy-900"
+                className="mt-4 inline-flex items-center gap-2 text-[0.8125rem] text-ink-muted/70 transition-colors duration-300 hover:text-navy-900"
               >
                 <Mail size={15} strokeWidth={1.5} />
+                <span>{emailTo}</span>
               </a>
             </div>
           </header>

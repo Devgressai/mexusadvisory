@@ -59,6 +59,8 @@ export interface Office {
   primary?: boolean;
 }
 
+export type PersonTier = "member" | "executive";
+
 export interface Person {
   id: string;
   slug: string;
@@ -68,6 +70,12 @@ export interface Person {
   bio: LocalizedStringList;
   practices: string[];
   languages: string[];
+  /** Which roster section this person belongs to on /about/people. */
+  tier?: PersonTier;
+  /** Direct email. Falls back to site.email if not set. */
+  email?: string;
+  /** Education credentials shown on the detail page. */
+  education?: LocalizedString;
 }
 
 export interface NavItem {
