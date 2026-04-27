@@ -26,14 +26,9 @@ export interface Capability {
 export interface FocusTopic {
   id: string;
   slug: string;
-  number: string;
   title: LocalizedString;
-  lede: LocalizedString;
-  dek: LocalizedString;
-  landscape: LocalizedStringList;
-  implications: LocalizedStringList;
-  relatedCapabilities: string[];
-  dateStamp: LocalizedString;
+  sectionOverview: LocalizedStringList;
+  whatThisMeansForYou: LocalizedString;
 }
 
 export interface Office {

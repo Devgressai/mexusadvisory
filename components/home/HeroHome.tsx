@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Locale } from "@/types/content";
@@ -20,6 +20,24 @@ interface HeroHomeProps {
   locale: Locale;
   dict: Dictionary;
 }
+
+const NAV_BUTTONS = [
+  {
+    id: "focus",
+    label: { en: "Focus", es: "Enfoque" },
+    href: "/focus",
+  },
+  {
+    id: "immigration",
+    label: { en: "Immigration", es: "Migración" },
+    href: "/immigration-pathway",
+  },
+  {
+    id: "foreign-investments",
+    label: { en: "Foreign Investments", es: "Inversión Extranjera" },
+    href: "/foreign-investments",
+  },
+] as const;
 
 /**
  * BCG-style centered editorial carousel.
@@ -39,46 +57,6 @@ interface HeroHomeProps {
  * so `offsetAt(d)` uses a piecewise formula to keep siblings from ever
  * overlapping the featured card no matter how many items are in the rail.
  */
-
-const CATEGORY_GROUPS = [
-  { id: "spotlight", label: { en: "Mexus Spotlight", es: "Destacado" } },
-  {
-    id: "immigration",
-    label: { en: "Immigration", es: "Migración" },
-    category: "Immigration",
-  },
-  {
-    id: "capital",
-    label: { en: "Capital", es: "Capital" },
-    category: "Capital",
-  },
-  {
-    id: "insurance",
-    label: { en: "Insurance", es: "Seguros" },
-    category: "Insurance",
-  },
-  {
-    id: "trade",
-    label: { en: "Trade", es: "Comercio" },
-    category: "Trade",
-  },
-] as const;
-
-type GroupId = (typeof CATEGORY_GROUPS)[number]["id"];
-
-function pickGroup(id: GroupId): InsightEntry[] {
-  if (id === "spotlight") return insights;
-  const group = CATEGORY_GROUPS.find((g) => g.id === id);
-  if (!group || !("category" in group)) return insights;
-  const filtered = insights.filter((i) => i.category.en === group.category);
-  const padded = [...filtered];
-  let idx = 0;
-  while (padded.length < 6 && idx < insights.length) {
-    const next = insights[idx++];
-    if (next && !padded.some((p) => p.id === next.id)) padded.push(next);
-  }
-  return padded.slice(0, 6);
-}
 
 /**
  * Offset math. Featured card is wider than siblings (it carries the
@@ -115,8 +93,7 @@ function wrappedD(i: number, active: number, len: number): number {
 }
 
 export function HeroHome({ locale, dict }: HeroHomeProps) {
-  const [groupId, setGroupId] = useState<GroupId>("spotlight");
-  const items = useMemo(() => pickGroup(groupId), [groupId]);
+  const items: InsightEntry[] = insights;
   const len = items.length;
 
   // Active index is a float so cards can interpolate between slots during
@@ -127,8 +104,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
 
   // Scrub is on by default. Once the user clicks an arrow button they've
   // signaled explicit control — we disable hover-scrub so the featured
-  // card stays put and is reliably clickable. Changing the category tab
-  // re-enables scrub.
+  // card stays put and is reliably clickable.
   const [scrubEnabled, setScrubEnabled] = useState(true);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -228,7 +204,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
 
               return (
                 <m.div
-                  key={`${groupId}-${insight.id}`}
+                  key={insight.id}
                   initial={false}
                   animate={{ x, scale, opacity, y }}
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -281,43 +257,26 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
               </button>
             </div>
 
-            <div
-              role="tablist"
-              aria-label={locale === "es" ? "Categorías" : "Categories"}
+            <nav
+              aria-label={locale === "es" ? "Secciones" : "Sections"}
               className="col-span-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:col-span-9 lg:gap-x-10"
             >
-              {CATEGORY_GROUPS.map((g) => {
-                const isActive = g.id === groupId;
-                return (
-                  <button
-                    key={g.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => {
-                      setGroupId(g.id);
-                      setActive(Math.floor(pickGroup(g.id).length / 2));
-                      setScrubEnabled(true);
-                    }}
-                    className={cn(
-                      "relative text-[0.75rem] uppercase tracking-[0.18em] transition-colors duration-300",
-                      isActive ? "text-ink" : "text-ink-muted hover:text-ink",
-                    )}
-                  >
-                    <span className="relative">
-                      {t(g.label, locale)}
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "absolute -bottom-2 left-0 h-px w-full origin-left bg-gold transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                          isActive ? "scale-x-100" : "scale-x-0",
-                        )}
-                      />
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+              {NAV_BUTTONS.map((b) => (
+                <Link
+                  key={b.id}
+                  href={localizedPath(b.href, locale)}
+                  className="group relative text-[0.75rem] uppercase tracking-[0.18em] text-ink-muted transition-colors duration-300 hover:text-ink"
+                >
+                  <span className="relative">
+                    {t(b.label, locale)}
+                    <span
+                      aria-hidden
+                      className="absolute -bottom-2 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+                    />
+                  </span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </Reveal>
       </Container>

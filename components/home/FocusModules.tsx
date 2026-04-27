@@ -10,7 +10,7 @@ import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { Reveal } from "@/components/motion/Reveal";
 import { getImage } from "@/lib/imagery";
-import { localizedPath, t } from "@/lib/i18n";
+import { localizedPath, t, tl } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 import { HOVER_IMAGE, HOVER_LINK } from "@/components/motion/editorial";
 
@@ -41,9 +41,7 @@ export function FocusModules({ locale, dict }: FocusModulesProps) {
             title={dict.home.focusTitle}
             lede={dict.home.focusLede}
           />
-          <LinkArrow
-            href={localizedPath("/focus/immigration-volatility", locale)}
-          >
+          <LinkArrow href={localizedPath("/focus", locale)}>
             {dict.common.exploreInsights}
           </LinkArrow>
         </div>
@@ -51,8 +49,10 @@ export function FocusModules({ locale, dict }: FocusModulesProps) {
         {/* Stacked editorial rows */}
         <Reveal variant="stagger">
           <ul className="border-t border-rule">
-            {focusTopics.map((topic) => {
+            {focusTopics.map((topic, idx) => {
               const img = getImage(imagery, IMAGE_BY_SLUG[topic.slug] ?? "");
+              const overview = tl(topic.sectionOverview, locale);
+              const dek = overview[1] ?? overview[0] ?? "";
               return (
                 <li key={topic.id} className="border-b border-rule">
                   <Link
@@ -62,21 +62,15 @@ export function FocusModules({ locale, dict }: FocusModulesProps) {
                     {/* Number column */}
                     <div className="col-span-12 md:col-span-1">
                       <span className="eyebrow text-ink-muted tabular-nums">
-                        {topic.number}
+                        {String(idx + 1).padStart(2, "0")}
                       </span>
                     </div>
 
                     {/* Text column */}
                     <div className="col-span-12 mt-4 md:col-span-7 md:col-start-2 md:mt-0 lg:col-span-6">
-                      <div className="flex items-center gap-3 text-[0.6875rem] uppercase tracking-[0.16em] text-ink-muted">
-                        <span>{locale === "es" ? "Informe" : "Briefing"}</span>
-                        <span aria-hidden className="h-px w-4 bg-ink-muted/30" />
-                        <span>{t(topic.dateStamp, locale)}</span>
-                      </div>
-
                       <h3
                         className={cn(
-                          "font-display type-h2 mt-5 max-w-[22ch] text-ink",
+                          "font-display type-h2 max-w-[22ch] text-ink",
                           HOVER_LINK,
                           "group-hover:text-navy-900",
                         )}
@@ -85,7 +79,7 @@ export function FocusModules({ locale, dict }: FocusModulesProps) {
                       </h3>
 
                       <p className="mt-5 max-w-[58ch] text-[0.9375rem] leading-[1.7] text-ink-muted">
-                        {t(topic.dek, locale)}
+                        {dek}
                       </p>
 
                       <p className="mt-8 inline-flex items-baseline gap-2 text-[0.8125rem] font-medium uppercase tracking-[0.12em] text-navy-900">

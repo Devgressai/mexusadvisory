@@ -18,6 +18,9 @@ const staticRoutes: RouteSpec[] = [
   { path: "/about/people", changeFrequency: "monthly", priority: 0.7 },
   { path: "/about/offices", changeFrequency: "monthly", priority: 0.7 },
   { path: "/capabilities", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/focus", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/immigration-pathway", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/foreign-investments", changeFrequency: "monthly", priority: 0.8 },
   { path: "/partners-program", changeFrequency: "monthly", priority: 0.8 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.6 },
 ];
