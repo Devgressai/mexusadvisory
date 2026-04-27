@@ -80,10 +80,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial architectural photograph of a quiet U.S. consular waiting hall at morning, polished pale stone floor, tall narrow windows casting soft cool light, two empty rows of leather seats, a single closed wood-paneled service door at the far end, no people, no signage, no flags, no text, muted institutional palette of pearl grey and warm walnut, cinematic depth of field, medium format, photorealistic, quiet institutional weight.",
+      "Editorial photograph of a quiet consultant's desk at soft window light, an open passport with embossed pages but no legible text, a small antique brass globe to the side, a leather portfolio open beneath, a fountain pen resting on it, no people, no flags, no legible text, no logos, warm muted earth palette of pale walnut and ivory, cinematic shallow depth of field, medium format, photorealistic, quiet international advisory atmosphere.",
     alt: {
-      en: "Quiet consular waiting hall with two rows of empty leather seats facing a closed wood-paneled door",
-      es: "Sala de espera consular silenciosa con dos filas de asientos vacíos frente a una puerta de madera cerrada",
+      en: "Open passport, brass globe, and leather portfolio with a fountain pen on a sunlit consultant's desk",
+      es: "Pasaporte abierto, globo de latón y portafolio de cuero con pluma fuente sobre un escritorio iluminado por la ventana",
     },
   },
   "cap-risk": {
@@ -92,10 +92,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial photograph of a private bank vault interior corridor in soft indirect light, polished stainless steel safe-deposit boxes in long orderly rows on both walls, polished stone floor reflecting warm overhead light, no people, no text, muted cool palette of brushed steel and pearl grey, cinematic depth of field, medium format, photorealistic, quiet institutional security.",
+      "Editorial architectural photograph of a calm walled private coastal estate at dawn, tall pale stone perimeter wall, a single closed wooden gate, mature trees inside the courtyard, soft mist over a calm sea visible beyond, no people, no signage, no text, no logos or flags, muted desaturated palette of pale stone and pearl grey, cinematic wide composition, medium format, photorealistic, quiet protective composure.",
     alt: {
-      en: "Private bank vault corridor lined with safe-deposit boxes in soft warm light",
-      es: "Pasillo de bóveda de banco privado con cajas de seguridad bajo luz cálida suave",
+      en: "Walled private coastal estate at dawn with a single closed wooden gate and mature trees inside",
+      es: "Finca costera privada amurallada al amanecer con una puerta de madera cerrada y árboles maduros en el patio",
     },
   },
   "cap-capital": {
@@ -104,10 +104,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial architectural photograph of the interior atrium of a modern private bank building, tall marble columns, polished stone floors, soft indirect natural light, no people, no text, muted cool palette, cinematic scale, medium format, photorealistic, quiet institutional composition",
+      "Editorial architectural photograph of a private boutique investment firm deal room at end of day, long polished walnut conference table with leather chairs neatly aligned, a brass desk lamp lit on a side console, soft city dusk light through tall windows, no people, no text, no legible documents, no logos, muted palette of warm walnut and amber, cinematic depth of field, medium format, photorealistic, quiet boutique deliberation.",
     alt: {
-      en: "Interior atrium of a modern private bank with tall marble columns",
-      es: "Atrio interior de un banco privado moderno con altas columnas de mármol",
+      en: "Private boutique investment firm deal room at dusk with a brass lamp lit and city beyond the windows",
+      es: "Sala de operaciones de una firma de inversión boutique al anochecer, con lámpara de latón encendida y la ciudad al fondo",
     },
   },
   "cap-jurisdiction": {
@@ -116,10 +116,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial architectural photograph of a classical courthouse facade with tall stone columns, morning sun casting long shadows, clear sky, no people, no text, muted warm palette, cinematic symmetry, medium format, photorealistic, quiet institutional weight",
+      "Editorial photograph of a quiet executive strategy room at dawn, a long polished oak table with a large unfurled antique world map laid open across it, a small brass globe and a fountain pen resting beside the map, soft natural light through tall windows, no people, no legible text or country labels, no logos or flags, muted palette of warm walnut, ivory, and pale pearl, cinematic shallow depth of field, medium format, photorealistic, quiet strategic deliberation.",
     alt: {
-      en: "Classical courthouse facade with tall stone columns in morning light",
-      es: "Fachada clásica de juzgado con altas columnas de piedra bajo la luz de la mañana",
+      en: "Executive strategy room with an antique world map unfurled on a long oak table and a small brass globe beside it",
+      es: "Sala de estrategia ejecutiva con un mapa mundial antiguo extendido sobre una mesa larga de roble y un pequeño globo de latón al lado",
     },
   },
 
