@@ -80,10 +80,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial architectural photograph of a modern passport control hall at dawn, polished stone floors, curved ceiling, soft overhead lighting, no people, no signage, no text, monochromatic cool palette, architectural depth, medium format, photorealistic, quiet and institutional",
+      "Editorial architectural photograph of a quiet U.S. consular waiting hall at morning, polished pale stone floor, tall narrow windows casting soft cool light, two empty rows of leather seats, a single closed wood-paneled service door at the far end, no people, no signage, no flags, no text, muted institutional palette of pearl grey and warm walnut, cinematic depth of field, medium format, photorealistic, quiet institutional weight.",
     alt: {
-      en: "Modern passport control hall at dawn with polished stone floors and curved ceiling",
-      es: "Sala moderna de control de pasaportes al amanecer con pisos de piedra pulida y techo curvo",
+      en: "Quiet consular waiting hall with two rows of empty leather seats facing a closed wood-paneled door",
+      es: "Sala de espera consular silenciosa con dos filas de asientos vacíos frente a una puerta de madera cerrada",
     },
   },
   "cap-risk": {
