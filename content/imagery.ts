@@ -73,19 +73,7 @@ export const imagery: ImageRegistry = {
     },
   },
 
-  // ———————————————————————————————————————————— Capabilities (5)
-  "capabilities-anchor": {
-    id: "capabilities-anchor",
-    src: "/imagery/capabilities-anchor.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
-    prompt:
-      "Editorial architectural photograph of a minimalist modern stone courtyard at golden hour, tall columns casting long shadows, empty, no people, no text, warm desaturated palette, cinematic composition, medium format, architectural weight, photorealistic",
-    alt: {
-      en: "Minimalist modern stone courtyard with tall columns at golden hour",
-      es: "Patio de piedra moderno y minimalista con altas columnas en la hora dorada",
-    },
-  },
+  // ———————————————————————————————————————————— Capabilities (4)
   "cap-immigration": {
     id: "cap-immigration",
     src: "/imagery/cap-immigration.webp",
@@ -172,40 +160,88 @@ export const imagery: ImageRegistry = {
       es: "Vista aérea de un puerto logístico y de transporte marítimo moderno en la hora dorada",
     },
   },
-  "insight-jurisdictional": {
-    id: "insight-jurisdictional",
-    src: "/imagery/insight-jurisdictional.webp",
+  "insight-sale-leaseback": {
+    id: "insight-sale-leaseback",
+    src: "/imagery/insight-sale-leaseback.webp",
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial architectural photograph of a modernist government building facade with tall columns, morning light, no people, no text, muted cool palette, large format, quiet institutional composition, photorealistic",
+      "Editorial aerial photograph of a modern industrial logistics park in northern Mexico at golden hour, vast warehouse rooftops in orderly rows, neat loading bays casting long shadows, dry mountainous horizon, no people, no vehicles in motion, no text, no signage, no logos, muted warm desaturated palette of dust beige and amber, cinematic wide composition, shot from low-altitude helicopter, medium format, photorealistic, quiet industrial scale.",
     alt: {
-      en: "Modernist government building facade with tall columns in morning light",
-      es: "Fachada de edificio gubernamental modernista con altas columnas bajo la luz de la mañana",
+      en: "Aerial view of a vast industrial logistics park in northern Mexico at golden hour",
+      es: "Vista aérea de un vasto parque logístico industrial en el norte de México en la hora dorada",
     },
   },
-  "insight-capital": {
-    id: "insight-capital",
-    src: "/imagery/insight-capital.webp",
+  "insight-life-insurance": {
+    id: "insight-life-insurance",
+    src: "/imagery/insight-life-insurance.webp",
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial photograph of a sparse modern institutional archive room with steel shelving and soft indirect overhead light, cool muted palette, no people, no legible text, architectural depth, medium format, photorealistic, quiet and precise",
+      "Editorial photograph of a quiet executive desk in soft afternoon window light, a leather-bound document portfolio open with crisp pages, a fountain pen resting on it, two small framed family portraits at the edge of the desk turned slightly away so faces are not legible, warm muted earth palette, no legible text, cinematic shallow depth of field, medium format, photorealistic, quiet and protective.",
     alt: {
-      en: "Modern institutional archive room with steel shelving and soft overhead light",
-      es: "Sala de archivo institucional moderna con estanterías de acero y luz suave cenital",
+      en: "Quiet executive desk with an open document portfolio, fountain pen, and two framed family portraits",
+      es: "Escritorio ejecutivo silencioso con un portafolio de documentos abierto, pluma fuente y dos retratos familiares enmarcados",
     },
   },
-  "insight-wealth": {
-    id: "insight-wealth",
-    src: "/imagery/insight-wealth.webp",
+  "insight-clinical-corridor": {
+    id: "insight-clinical-corridor",
+    src: "/imagery/insight-clinical-corridor.webp",
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial photograph of a private study with an antique wooden desk, stacks of ledgers, a brass reading lamp lit, warm indirect light, no people, no visible text, deep walnut and amber palette, cinematic composition, publication-grade interior photography, photorealistic",
+      "Editorial architectural photograph of an empty modern hospital corridor in soft natural daylight, polished pale stone floors, smooth curved minimalist ceiling with recessed cove lighting, frosted glass doors at intervals, no people, no signage, no text, cool muted palette of pearl grey and pale teal, cinematic depth of field, medium format, photorealistic, quiet institutional.",
     alt: {
-      en: "Private study with an antique wooden desk, ledgers and a lit brass reading lamp",
-      es: "Estudio privado con escritorio antiguo de madera, libros de contabilidad y una lámpara de latón encendida",
+      en: "Empty modern hospital corridor with frosted glass doors and pale teal accents",
+      es: "Pasillo vacío de hospital moderno con puertas de vidrio esmerilado y acentos turquesa pálido",
+    },
+  },
+  "insight-manufacturing": {
+    id: "insight-manufacturing",
+    src: "/imagery/insight-manufacturing.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial photograph of a modern automotive precision manufacturing assembly line at end of shift, robotic arms still and orderly, polished concrete floors, soft overhead industrial lighting, no people, no brand logos, no text, muted industrial palette of brushed steel and warm white, cinematic wide composition, medium format, photorealistic, quiet scale.",
+    alt: {
+      en: "Modern automotive assembly line with rows of still robotic arms at end of shift",
+      es: "Línea de ensamblaje automotriz moderna con filas de brazos robóticos detenidos al final del turno",
+    },
+  },
+  "insight-border-corridor": {
+    id: "insight-border-corridor",
+    src: "/imagery/insight-border-corridor.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial aerial photograph of the U.S.-Mexico border industrial corridor at golden hour, neat rows of warehouses on both sides of an interstate highway, distant freight trucks at work, dry mountainous horizon under clear sky, desaturated warm palette of dust beige and amber, no people, no visible signage or logos, no text, cinematic wide aerial composition, shot from low-altitude helicopter, medium format, photorealistic.",
+    alt: {
+      en: "Aerial view of a U.S.–Mexico border industrial corridor at golden hour",
+      es: "Vista aérea de un corredor industrial fronterizo EE. UU.–México en la hora dorada",
+    },
+  },
+  "insight-stadium": {
+    id: "insight-stadium",
+    src: "/imagery/insight-stadium.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial photograph of an empty modern collegiate athletics stadium at twilight, stadium lights warming up, polished athletics track and well-kept field visible from a low elevated viewpoint, soft blue dusk sky with first stars, no people, no team logos, no text, cinematic muted navy and warm gold palette, medium format, photorealistic, quiet and expectant.",
+    alt: {
+      en: "Empty collegiate athletics stadium at twilight with stadium lights warming up",
+      es: "Estadio universitario de atletismo vacío al anochecer con las luces calentando",
+    },
+  },
+  "insight-clinical-suite": {
+    id: "insight-clinical-suite",
+    src: "/imagery/insight-clinical-suite.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial photograph of a quiet modern clinical examination suite at daybreak, soft window light filtering through frosted glass, polished pale stone surfaces, an empty treatment chair, no medical equipment branding visible, no people, no text, muted clinical palette of pearl white and pale blue, cinematic composition, medium format, photorealistic, calm and professional.",
+    alt: {
+      en: "Modern clinical examination suite at daybreak with frosted-glass window and treatment chair",
+      es: "Sala de examen clínico moderna al amanecer con ventana de vidrio esmerilado y sillón de tratamiento",
     },
   },
 

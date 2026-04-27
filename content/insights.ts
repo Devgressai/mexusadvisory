@@ -40,7 +40,7 @@ export const insights: InsightEntry[] = [
   {
     id: "sale-leaseback-mexico",
     slug: "sale-leaseback-mexico",
-    imageId: "focus-trade",
+    imageId: "insight-sale-leaseback",
     href: "/insights/sale-leaseback-mexico",
     category: { en: "Capital", es: "Capital" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -66,7 +66,7 @@ export const insights: InsightEntry[] = [
   {
     id: "us-life-insurance-nexus",
     slug: "us-life-insurance-nexus",
-    imageId: "insight-wealth",
+    imageId: "insight-life-insurance",
     href: "/insights/us-life-insurance-nexus",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -91,7 +91,7 @@ export const insights: InsightEntry[] = [
   {
     id: "structure-over-pressure",
     slug: "structure-over-pressure",
-    imageId: "insight-jurisdictional",
+    imageId: "insight-clinical-corridor",
     href: "/insights/structure-over-pressure",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -115,7 +115,7 @@ export const insights: InsightEntry[] = [
   {
     id: "multi-country-production",
     slug: "multi-country-production",
-    imageId: "focus-investments",
+    imageId: "insight-manufacturing",
     href: "/insights/multi-country-production",
     category: { en: "Trade", es: "Comercio" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -137,7 +137,7 @@ export const insights: InsightEntry[] = [
   {
     id: "economics-of-nearshoring",
     slug: "economics-of-nearshoring",
-    imageId: "insight-capital",
+    imageId: "insight-border-corridor",
     href: "/insights/economics-of-nearshoring",
     category: { en: "Trade", es: "Comercio" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -181,7 +181,7 @@ export const insights: InsightEntry[] = [
   {
     id: "nil-immigration-strategy",
     slug: "nil-immigration-strategy",
-    imageId: "capabilities-anchor",
+    imageId: "insight-stadium",
     href: "/insights/nil-immigration-strategy",
     category: { en: "Immigration", es: "Migración" },
     date: { en: "April 2026", es: "Abril 2026" },
@@ -203,7 +203,7 @@ export const insights: InsightEntry[] = [
   {
     id: "best-doctors-pro-portfolio",
     slug: "best-doctors-pro-portfolio",
-    imageId: "cap-capital",
+    imageId: "insight-clinical-suite",
     href: "/insights/best-doctors-pro-portfolio",
     category: { en: "Insurance", es: "Seguros" },
     date: { en: "April 2026", es: "Abril 2026" },
