@@ -74,6 +74,12 @@ function offsetAt(d: number): number {
   const sign = Math.sign(d);
   const absD = Math.abs(d);
   const firstStep = FEATURED_HALF + SIBLING_HALF + FIRST_GAP;
+  // For fractional distance (|d| < 1), interpolate linearly from center
+  // to the first sibling slot so the featured card slides cleanly through
+  // 0 instead of jumping when active crosses an integer.
+  if (absD < 1) {
+    return sign * absD * firstStep;
+  }
   const extra = (absD - 1) * (SIBLING_HALF * 2 + SIBLING_GAP);
   return sign * (firstStep + extra);
 }
@@ -107,12 +113,17 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   // card stays put and is reliably clickable.
   const [scrubEnabled, setScrubEnabled] = useState(true);
 
+  // Cards follow the cursor near-instantly while scrubbing so the
+  // featured slot stays under the mouse, then ease into place on snap.
+  const [isScrubbing, setIsScrubbing] = useState(false);
+
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!scrubEnabled) return;
     const rect = carouselRef.current?.getBoundingClientRect();
     if (!rect) return;
     const relativeX = (e.clientX - rect.left) / rect.width;
     const clamped = Math.max(0, Math.min(1, relativeX));
+    if (!isScrubbing) setIsScrubbing(true);
     // Map across the full rail. The wrapped-distance layout means every
     // card is still reachable from any cursor position — the extremes no
     // longer sit alone at the edges of the region.
@@ -121,11 +132,13 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
 
   const handleLeave = () => {
     if (!scrubEnabled) return;
+    setIsScrubbing(false);
     setActive((a) => Math.round(a));
   };
 
   const prev = () => {
     setScrubEnabled(false);
+    setIsScrubbing(false);
     setActive((a) => {
       const rounded = Math.round(a);
       return (rounded - 1 + len) % len;
@@ -133,6 +146,7 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
   };
   const next = () => {
     setScrubEnabled(false);
+    setIsScrubbing(false);
     setActive((a) => {
       const rounded = Math.round(a);
       return (rounded + 1) % len;
@@ -207,7 +221,11 @@ export function HeroHome({ locale, dict }: HeroHomeProps) {
                   key={insight.id}
                   initial={false}
                   animate={{ x, scale, opacity, y }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  transition={
+                    isScrubbing
+                      ? { duration: 0.08, ease: "linear" }
+                      : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+                  }
                   className={cn(
                     "absolute left-1/2 top-0 -translate-x-1/2 will-change-transform",
                     isFeatured ? featuredWidthClass : siblingWidthClass,
