@@ -92,10 +92,10 @@ export const imagery: ImageRegistry = {
     aspect: "landscape",
     source: "google-gemini-flash",
     prompt:
-      "Editorial photograph of a sparse modern security operations room with long desks and soft ambient monitor glow, muted blue-grey palette, no people, no legible text, architectural composition, cinematic depth, medium format, photorealistic, quiet institutional interior",
+      "Editorial photograph of a private bank vault interior corridor in soft indirect light, polished stainless steel safe-deposit boxes in long orderly rows on both walls, polished stone floor reflecting warm overhead light, no people, no text, muted cool palette of brushed steel and pearl grey, cinematic depth of field, medium format, photorealistic, quiet institutional security.",
     alt: {
-      en: "Sparse modern operations room with long desks and soft ambient light",
-      es: "Sala de operaciones moderna con escritorios largos y luz ambiental suave",
+      en: "Private bank vault corridor lined with safe-deposit boxes in soft warm light",
+      es: "Pasillo de bóveda de banco privado con cajas de seguridad bajo luz cálida suave",
     },
   },
   "cap-capital": {
