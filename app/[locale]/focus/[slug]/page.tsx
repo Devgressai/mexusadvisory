@@ -115,8 +115,7 @@ export default async function FocusTopicPage({ params }: Props) {
                     className="group block"
                   >
                     <span aria-hidden className="block h-px w-6 bg-gold transition-all duration-500 group-hover:w-full" />
-                    <p className="eyebrow mt-5 text-ink-muted">{cap.number}</p>
-                    <h3 className="font-display mt-3 text-[1.25rem] leading-[1.2] tracking-[-0.015em] text-ink">
+                    <h3 className="font-display mt-5 text-[1.25rem] leading-[1.2] tracking-[-0.015em] text-ink">
                       {t(cap.title, locale)}
                     </h3>
                   </Link>

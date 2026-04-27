@@ -18,10 +18,6 @@ export const primaryNav: NavItem[] = [
         href: "/capabilities/risk-management",
       },
       {
-        label: { en: "Wealth Advisory", es: "Asesoría Patrimonial" },
-        href: "/capabilities/wealth-advisory",
-      },
-      {
         label: { en: "Alternative Capital Sourcing", es: "Fuentes Alternativas de Capital" },
         href: "/capabilities/alternative-capital-sourcing",
       },

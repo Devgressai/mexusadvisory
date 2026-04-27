@@ -6,14 +6,14 @@ import { t } from "./i18n";
 interface BuildMetadataArgs {
   locale: Locale;
   title: string;
-  description: string;
+  description?: string;
   path?: string;
 }
 
 export function buildMetadata({
   locale,
   title,
-  description,
+  description = t(site.description, locale),
   path = "/",
 }: BuildMetadataArgs): Metadata {
   const url = `${site.baseUrl}${locale === "en" ? "" : "/es"}${path === "/" ? "" : path}`;

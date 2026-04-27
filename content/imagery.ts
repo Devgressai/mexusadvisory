@@ -110,18 +110,6 @@ export const imagery: ImageRegistry = {
       es: "Sala de operaciones moderna con escritorios largos y luz ambiental suave",
     },
   },
-  "cap-wealth": {
-    id: "cap-wealth",
-    src: "/imagery/cap-wealth.webp",
-    aspect: "landscape",
-    source: "google-gemini-flash",
-    prompt:
-      "Editorial interior photograph of a private family office library with dark walnut paneling, an empty leather reading chair, brass reading lamp, warm indirect light, no people, no visible text, deep walnut and soft amber palette, cinematic composition, medium format, photorealistic, quiet luxury",
-    alt: {
-      en: "Private family office library with dark walnut paneling and a lit brass reading lamp",
-      es: "Biblioteca de family office con paneles de nogal oscuro y una lámpara de latón encendida",
-    },
-  },
   "cap-capital": {
     id: "cap-capital",
     src: "/imagery/cap-capital.webp",

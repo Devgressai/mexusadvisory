@@ -87,7 +87,7 @@ export const focusTopics: FocusTopic[] = [
         "La estructura correcta puede superar a la tesis correcta.",
       ],
     },
-    relatedCapabilities: ["wealth-advisory", "alternative-capital-sourcing", "jurisdictional-optimization"],
+    relatedCapabilities: ["alternative-capital-sourcing", "jurisdictional-optimization"],
     dateStamp: {
       en: "April 2026",
       es: "Abril 2026",

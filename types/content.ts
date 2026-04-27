@@ -16,21 +16,10 @@ export interface LocalizedStringList {
 export interface Capability {
   id: string;
   slug: string;
-  number: string;
   title: LocalizedString;
-  lede: LocalizedString;
-  thesis: LocalizedString;
-  advisesOn: LocalizedStringList;
-  audience: Array<{
-    title: LocalizedString;
-    description: LocalizedString;
-  }>;
-  themes: LocalizedStringList;
-  process: Array<{
-    step: string;
-    title: LocalizedString;
-    description: LocalizedString;
-  }>;
+  overview: LocalizedStringList;
+  roleInPlatform: LocalizedString;
+  valueProposition: LocalizedString;
   relatedFocus: string[];
 }
 

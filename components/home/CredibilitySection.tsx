@@ -26,7 +26,7 @@ export function CredibilitySection({ locale, dict }: CredibilitySectionProps) {
 
   const meta = [
     { label: dict.home.credibilityMeta.founded, value: "2019" },
-    { label: dict.home.credibilityMeta.practices, value: "5" },
+    { label: dict.home.credibilityMeta.practices, value: "4" },
     { label: dict.home.credibilityMeta.offices, value: "4" },
     { label: dict.home.credibilityMeta.languages, value: "EN · ES · PT" },
   ];

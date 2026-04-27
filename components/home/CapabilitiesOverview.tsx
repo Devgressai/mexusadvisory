@@ -10,7 +10,7 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { LinkArrow } from "@/components/primitives/LinkArrow";
 import { Reveal } from "@/components/motion/Reveal";
 import { getImage } from "@/lib/imagery";
-import { localizedPath, t } from "@/lib/i18n";
+import { localizedPath, t, tl } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 import { HOVER_IMAGE, HOVER_LINK } from "@/components/motion/editorial";
 
@@ -22,7 +22,6 @@ interface CapabilitiesOverviewProps {
 const IMAGE_BY_SLUG: Record<string, string> = {
   "global-immigration-consulting": "cap-immigration",
   "risk-management": "cap-risk",
-  "wealth-advisory": "cap-wealth",
   "alternative-capital-sourcing": "cap-capital",
   "jurisdictional-optimization": "cap-jurisdiction",
 };
@@ -56,7 +55,7 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
 
         {/* Compact 5-up grid */}
         <Reveal variant="stagger" className="mt-12 md:mt-16 lg:mt-20">
-          <ul className="grid grid-cols-1 gap-x-5 gap-y-12 border-t border-rule pt-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <ul className="grid grid-cols-1 gap-x-5 gap-y-12 border-t border-rule pt-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {capabilities.map((cap) => {
               const img = getImage(imagery, IMAGE_BY_SLUG[cap.slug] ?? "");
               return (
@@ -96,7 +95,7 @@ export function CapabilitiesOverview({ locale, dict }: CapabilitiesOverviewProps
                     </h3>
 
                     <p className="mt-4 text-[0.875rem] leading-[1.6] text-ink-muted">
-                      {t(cap.lede, locale)}
+                      {tl(cap.overview, locale)[0]}
                     </p>
 
                     <p className="mt-auto inline-flex items-baseline gap-2 pt-6 text-[0.75rem] font-medium uppercase tracking-[0.14em] text-navy-900">
