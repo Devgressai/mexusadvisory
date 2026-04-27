@@ -160,6 +160,18 @@ export const imagery: ImageRegistry = {
       es: "Vista aérea de un puerto logístico y de transporte marítimo moderno en la hora dorada",
     },
   },
+  "insight-e2-eb5": {
+    id: "insight-e2-eb5",
+    src: "/imagery/insight-e2-eb5.webp",
+    aspect: "landscape",
+    source: "google-gemini-flash",
+    prompt:
+      "Editorial architectural photograph of a private investor's office at soft afternoon light, a polished walnut desk with two leather portfolios open side-by-side, a fountain pen resting between them, a faint city skyline visible through tall windows beyond, no people, no legible text, no logos or flags, muted palette of warm walnut and pale pearl, cinematic shallow depth of field, medium format, photorealistic, quiet decisional weight.",
+    alt: {
+      en: "Two leather portfolios on a polished walnut desk with a faint U.S. city skyline through tall windows",
+      es: "Dos portafolios de cuero sobre un escritorio pulido de nogal con un horizonte tenue de ciudad estadounidense al fondo",
+    },
+  },
   "insight-sale-leaseback": {
     id: "insight-sale-leaseback",
     src: "/imagery/insight-sale-leaseback.webp",

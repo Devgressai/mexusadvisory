@@ -159,7 +159,7 @@ export const insights: InsightEntry[] = [
   {
     id: "e2-vs-eb5",
     slug: "e2-vs-eb5",
-    imageId: "focus-immigration",
+    imageId: "insight-e2-eb5",
     href: "/insights/e2-vs-eb5",
     category: { en: "Immigration", es: "Migración" },
     date: { en: "April 2026", es: "Abril 2026" },
